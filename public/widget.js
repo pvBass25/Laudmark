@@ -1,23 +1,72 @@
-// Trustwall live widget — < 50KB, no framework, async
-// Full implementation in M4.
+// Trustwall live widget — async, lazy-loaded, no framework, < 50KB
+// Usage: <script async src="https://yourdomain.com/widget.js" data-wall="WALL_ID"></script>
 (function () {
-  var scripts = document.querySelectorAll('script[data-wall]');
-  scripts.forEach(function (script) {
-    var wallId = script.getAttribute('data-wall');
+  'use strict';
+
+  function injectJsonLd(jsonLd) {
+    var s = document.createElement('script');
+    s.type = 'application/ld+json';
+    s.textContent = JSON.stringify(jsonLd);
+    document.head.appendChild(s);
+  }
+
+  function loadWall(scriptEl) {
+    var wallId = scriptEl.getAttribute('data-wall');
     if (!wallId) return;
-    var host = script.src.replace(/\/widget\.js.*$/, '');
+
+    // Derive host from this script's src (works even if async)
+    var src = scriptEl.src || '';
+    var host = src.indexOf('/widget.js') !== -1
+      ? src.split('/widget.js')[0]
+      : window.location.origin;
+
+    // Create a placeholder that reserves space → prevents layout shift
     var container = document.createElement('div');
-    container.setAttribute('data-trustwall', wallId);
-    script.parentNode.insertBefore(container, script.nextSibling);
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (!entry.isIntersecting) return;
-        observer.disconnect();
-        fetch(host + '/api/embed/' + wallId)
-          .then(function (r) { return r.text(); })
-          .then(function (html) { container.innerHTML = html; });
-      });
-    }, { rootMargin: '200px' });
-    observer.observe(container);
-  });
+    container.setAttribute('data-trustwall-wall', wallId);
+    container.style.cssText = 'min-height:200px;box-sizing:border-box;';
+    scriptEl.parentNode.insertBefore(container, scriptEl.nextSibling);
+
+    function fetch_and_render() {
+      fetch(host + '/api/embed/' + wallId)
+        .then(function (r) {
+          if (!r.ok) throw new Error('embed ' + r.status);
+          return r.json();
+        })
+        .then(function (data) {
+          container.style.minHeight = '';
+          container.innerHTML = data.html || '';
+          if (data.jsonLd) injectJsonLd(data.jsonLd);
+        })
+        .catch(function () {
+          container.style.minHeight = '';
+        });
+    }
+
+    // Lazy-load: only fetch when container is near the viewport
+    if ('IntersectionObserver' in window) {
+      var obs = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) {
+          obs.disconnect();
+          fetch_and_render();
+        }
+      }, { rootMargin: '200px' });
+      obs.observe(container);
+    } else {
+      // Fallback for old browsers
+      fetch_and_render();
+    }
+  }
+
+  function init() {
+    var scripts = document.querySelectorAll('script[data-wall]');
+    for (var i = 0; i < scripts.length; i++) {
+      loadWall(scripts[i]);
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 })();
