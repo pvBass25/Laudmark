@@ -17,8 +17,16 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         <NavLink href="/app/walls">Walls</NavLink>
         <NavLink href="/app/settings">Settings</NavLink>
         <NavLink href="/app/billing">Billing</NavLink>
+        <div className="mt-auto pt-4 border-t border-gray-100">
+          <form action="/auth/signout" method="post">
+            <button className="w-full text-left px-3 py-2 text-sm text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-50 transition-colors">
+              Sign out
+            </button>
+          </form>
+          <p className="px-3 pt-2 text-xs text-gray-300 truncate">{user.email}</p>
+        </div>
       </aside>
-      <main className="flex-1 p-8">{children}</main>
+      <main className="flex-1 p-8 overflow-auto">{children}</main>
     </div>
   )
 }
