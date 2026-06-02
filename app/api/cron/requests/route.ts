@@ -4,7 +4,9 @@ import { generateRequest } from '@/lib/claude'
 import { sendRequestEmail } from '@/lib/email'
 import { PLANS } from '@/lib/plans'
 
-// Vercel Cron: add to vercel.json — { "crons": [{ "path": "/api/cron/requests", "schedule": "0 * * * *" }] }
+// Vercel Cron (see vercel.json). Daily at 14:00 UTC — the Hobby plan allows
+// once-daily cron, which is plenty since request steps are spaced 3 and 7 days
+// apart. On Pro you can raise this to hourly ("0 * * * *") for faster first nudges.
 
 const STEP_DELAYS_DAYS = [3, 7] // after step 0 → +3d; after step 1 → +7d
 
