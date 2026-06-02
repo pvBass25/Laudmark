@@ -85,7 +85,7 @@ function buildEmbedHtml(items: Testimonial[], layout: string, brandingFooter: bo
   const footer = brandingFooter
     ? `<p style="text-align:center;margin:16px 0 0;font-size:12px;color:#9ca3af;font-family:system-ui,sans-serif;">
         Powered by <a href="https://trustwall.app" target="_blank" rel="noopener noreferrer"
-          style="color:#6366f1;text-decoration:none;font-weight:500;">Trustwall</a>
+          style="color:#A8531B;text-decoration:none;font-weight:500;">Trustwall</a>
        </p>`
     : ''
 
@@ -112,7 +112,7 @@ function buildCard(t: Testimonial, layout: string): string {
   const avatar = t.author_photo_url
     ? `<img src="${esc(t.author_photo_url)}" alt="${esc(t.author_name)}" width="36" height="36"
          style="width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0;" />`
-    : `<div aria-hidden="true" style="width:36px;height:36px;border-radius:50%;background:#e0e7ff;color:#4f46e5;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">${initials(t.author_name)}</div>`
+    : `<div aria-hidden="true" style="width:36px;height:36px;border-radius:50%;background:#F4ECDE;color:#A8531B;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">${initials(t.author_name)}</div>`
 
   const title = t.author_title
     ? `<span style="display:block;font-size:12px;color:#9ca3af;margin-top:1px;">${esc(t.author_title)}</span>`

@@ -25,6 +25,7 @@ export function CollectionForm({ page, brand }: { page: PageData; brand: BrandDa
   const [text, setText] = useState('')
   const [authorName, setAuthorName] = useState('')
   const [authorTitle, setAuthorTitle] = useState('')
+  const [authorEmail, setAuthorEmail] = useState('')
   const [authorPhotoUrl, setAuthorPhotoUrl] = useState<string | null>(null)
   const [rating, setRating] = useState<number | null>(null)
   const [consent, setConsent] = useState(false)
@@ -69,6 +70,7 @@ export function CollectionForm({ page, brand }: { page: PageData; brand: BrandDa
         consent: true,
       }
       if (authorTitle.trim()) body.authorTitle = authorTitle.trim()
+      if (authorEmail.trim()) body.authorEmail = authorEmail.trim()
       if (authorPhotoUrl) body.authorPhotoUrl = authorPhotoUrl
       if (rating !== null) body.rating = rating
       if (testimonialType === 'text') body.text = text
@@ -163,7 +165,7 @@ export function CollectionForm({ page, brand }: { page: PageData; brand: BrandDa
               onChange={e => setText(e.target.value)}
               placeholder={prompt}
               rows={6}
-              className="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm resize-none focus:outline-none focus:border-transparent focus:ring-2"
+              className="w-full rounded-2xl border border-gray-200 bg-grey10 px-4 py-3 text-sm resize-none focus:outline-none focus:border-transparent focus:ring-2"
               style={{ '--tw-ring-color': brandColor } as React.CSSProperties}
             />
             <div className="flex gap-3">
@@ -198,7 +200,7 @@ export function CollectionForm({ page, brand }: { page: PageData; brand: BrandDa
                 onChange={e => setAuthorName(e.target.value)}
                 placeholder="Jane Smith"
                 autoComplete="name"
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2"
+                className="w-full rounded-xl border border-gray-200 bg-grey10 px-4 py-3 text-sm focus:outline-none focus:ring-2"
                 style={{ '--tw-ring-color': brandColor } as React.CSSProperties}
               />
             </div>
@@ -213,9 +215,26 @@ export function CollectionForm({ page, brand }: { page: PageData; brand: BrandDa
                 value={authorTitle}
                 onChange={e => setAuthorTitle(e.target.value)}
                 placeholder="Life coach at Bloom Coaching"
-                className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:ring-2"
+                className="w-full rounded-xl border border-gray-200 bg-grey10 px-4 py-3 text-sm focus:outline-none focus:ring-2"
                 style={{ '--tw-ring-color': brandColor } as React.CSSProperties}
               />
+            </div>
+
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                Email <span className="text-gray-400 font-normal">(optional)</span>
+              </label>
+              <input
+                type="email"
+                value={authorEmail}
+                onChange={e => setAuthorEmail(e.target.value)}
+                placeholder="you@example.com"
+                autoComplete="email"
+                className="w-full rounded-xl border border-gray-200 bg-grey10 px-4 py-3 text-sm focus:outline-none focus:ring-2"
+                style={{ '--tw-ring-color': brandColor } as React.CSSProperties}
+              />
+              <p className="text-xs text-gray-400 mt-1">We&apos;ll let you know when your testimonial is published.</p>
             </div>
 
             {/* Photo */}

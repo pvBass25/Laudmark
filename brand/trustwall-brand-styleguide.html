@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TrustWall — Brand & Identity System (3 directions)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Space+Grotesk:wght@400;500;600;700&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Inter:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"Inter",system-ui,sans-serif;background:#EFEEEA;color:#1F1E1B;line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+  section{padding:64px 0;border-top:1px solid #E1DFD8}
+  h1,h2,h3,h4{line-height:1.12;letter-spacing:-0.02em;font-weight:700}
+  h2{font-size:30px;margin-bottom:6px}
+  h3{font-size:19px;margin-bottom:14px;letter-spacing:-0.01em}
+  .eyebrow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;color:#8A8275;margin-bottom:12px}
+  .lede{font-size:17px;color:#54504A;max-width:62ch}
+  .mono{font-family:"JetBrains Mono",monospace}
+  .grid2{display:grid;grid-template-columns:1.1fr 1fr;gap:34px;align-items:start}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{background:#fff;border:1px solid #E6E3DB;border-radius:16px;padding:22px}
+  .pill{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:999px;background:#EDEAE2;color:#6A6358}
+  .swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(132px,1fr));gap:12px}
+  .sw .chip{height:56px;border-radius:10px;border:1px solid rgba(0,0,0,.08)}
+  .sw .nm{font-size:12.5px;font-weight:600;margin-top:7px}
+  .sw .hx{font-family:"JetBrains Mono",monospace;font-size:11px;color:#8A8275}
+  .sw .role{font-size:11px;color:#9A9389;line-height:1.3}
+  .cover{padding:88px 0 64px;border:0}
+  .badge-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px}
+  .badge{font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:999px;border:1px solid #DAD7CE;color:#54504A;background:#fff}
+  .avoid{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+  .avoid .a{flex:1;min-width:150px;border:1px solid #E6E3DB;border-radius:12px;overflow:hidden;background:#fff}
+  .avoid .a .bar{height:46px}
+  .avoid .a .t{padding:8px 12px;font-size:12.5px}
+  .avoid .a .t b{font-weight:600}
+  .strike{position:relative}
+  .note{font-size:13px;color:#6A6358}
+  .logorow{display:flex;align-items:center;gap:22px;flex-wrap:wrap}
+  /* themed component block */
+  .theme{border-radius:20px;border:1px solid #E6E3DB;overflow:hidden;margin-top:18px}
+  .theme .head{padding:20px 24px;display:flex;align-items:baseline;justify-content:space-between;gap:12px}
+  .theme .body{padding:24px;background:var(--c-canvas);color:var(--c-ink)}
+  .theme .dname{font-family:var(--font-display);font-size:26px;font-weight:600;letter-spacing:-0.01em}
+  .theme .dtag{font-size:14px;color:var(--c-muted)}
+  .btn{font-family:var(--font-body);border:none;border-radius:12px;padding:11px 18px;font-size:14px;font-weight:600;cursor:pointer;transition:background .15s}
+  .btn-primary{background:var(--c-brand);color:var(--c-on-brand)}
+  .btn-primary:hover{background:var(--c-brand-strong)}
+  .btn-primary:disabled{opacity:.45;cursor:not-allowed}
+  .btn-outline{background:transparent;color:var(--c-ink);border:1px solid var(--c-line)}
+  .btn-outline:hover{background:var(--c-subtle)}
+  .link{color:var(--c-brand);font-weight:600;text-decoration:underline;text-underline-offset:3px;cursor:pointer}
+  .link:hover{color:var(--c-brand-strong)}
+  .field{width:100%;background:var(--c-grey10);border:1px solid var(--c-line);border-radius:12px;padding:11px 14px;font-size:14px;color:var(--c-ink);font-family:var(--font-body)}
+  .field::placeholder{color:var(--c-muted)}
+  .uicard{background:var(--c-surface);border:1px solid var(--c-line);border-radius:16px;padding:18px}
+  .stars{color:var(--c-brand);letter-spacing:2px;font-size:15px}
+  .specimen .big{font-family:var(--font-display);font-weight:600;font-size:40px;letter-spacing:-0.02em;line-height:1.05;color:var(--c-ink)}
+  .specimen .lead{font-family:var(--font-body);font-size:15px;color:var(--c-muted);max-width:48ch;margin-top:8px}
+  .scale > div{display:flex;align-items:baseline;gap:14px;padding:7px 0;border-top:1px solid var(--c-line)}
+  .scale .lbl{font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--c-muted);width:64px;flex:none}
+  .chiprow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .tagpill{background:var(--c-accent-soft);color:var(--c-brand-strong);font-size:12px;font-weight:600;padding:4px 11px;border-radius:999px}
+  .footer{padding:40px 0 70px;color:#8A8275;font-size:13px}
+  .kbd{font-family:"JetBrains Mono",monospace;font-size:12px;background:#1F1E1B;color:#F3F0E8;padding:2px 7px;border-radius:6px}
+  @media(max-width:760px){.grid2,.grid3{grid-template-columns:1fr}.specimen .big{font-size:30px}}
+  @page{size:A4;margin:14mm 13mm}
+  @media print{
+    body{background:#fff}
+    .wrap{max-width:none;padding:0}
+    section{padding:22px 0}
+    .cover{padding:4px 0 18px}
+    .card,.sw,.uicard,.specimen,.avoid .a,.scale>div,.theme .head{break-inside:avoid}
+    .theme,.grid2{break-inside:avoid}
+    h2,h3,h4{break-after:avoid}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ============ COVER ============ -->
+  <section class="cover">
+    <div class="eyebrow">Brand &amp; identity system · proposal v1 · June 2026</div>
+    <h1 style="font-size:54px;letter-spacing:-0.03em;max-width:18ch">TrustWall brand system</h1>
+    <p class="lede" style="margin-top:18px">Three fresh, honest directions for a testimonial tool whose entire promise is trust — built to look like <em>nothing else</em> in the category. Every color here is verified to WCAG&nbsp;AA, and in each system one interactive color does all the work: links and buttons are the same.</p>
+    <div class="badge-row">
+      <span class="badge">Trustworthy</span>
+      <span class="badge">Honest</span>
+      <span class="badge">Fresh — not category-default</span>
+      <span class="badge">WCAG AA verified</span>
+      <span class="badge">Drop-in Tailwind tokens</span>
+    </div>
+  </section>
+
+  <!-- ============ STRATEGY / WHAT WE AVOIDED ============ -->
+  <section>
+    <div class="eyebrow">01 · Positioning</div>
+    <h2>Why these look different on purpose</h2>
+    <p class="lede" style="margin-bottom:26px">TrustWall sells trust: real consent, no fabrication, SEO-honest embeds. The brand has to <em>feel</em> credible at a glance — but the review/testimonial category is a monoculture of two colors. Standing out is itself a trust signal: it reads as a real, considered product rather than another clone.</p>
+    <div class="grid2">
+      <div>
+        <h3>The category we’re escaping</h3>
+        <div class="avoid">
+          <div class="a"><div class="bar" style="background:#6B4EFF"></div><div class="t"><b>Testimonial.to</b><br><span class="note">violet</span></div></div>
+          <div class="a"><div class="bar" style="background:#7C3AED"></div><div class="t"><b>Senja</b><br><span class="note">purple</span></div></div>
+          <div class="a"><div class="bar" style="background:#00B67A"></div><div class="t"><b>Trustpilot</b><br><span class="note">green</span></div></div>
+          <div class="a"><div class="bar" style="background:#4F46E5"></div><div class="t"><b>TrustWall today</b><br><span class="note">indigo</span></div></div>
+        </div>
+        <p class="note" style="margin-top:12px">Blue/indigo, violet/purple and review-green are the reflexive defaults. All three directions below deliberately avoid them.</p>
+      </div>
+      <div>
+        <h3>Where we’re playing instead</h3>
+        <p style="color:#54504A;margin-bottom:14px">2026 brand research points to the open lane: warm earth tones (clay, terracotta, sandstone) that read as “trust, calmness, long-term value,” deep-ink contrast with a single confident accent, smoky jewel tones, and a serif revival that signals authority + warmth.</p>
+        <div class="chiprow">
+          <span class="pill" style="background:#F6E8D4;color:#844014">Warm paper + ink</span>
+          <span class="pill" style="background:#F7E7EE;color:#6E1E40">Mulberry jewel tone</span>
+          <span class="pill" style="background:#FCE4D8;color:#9C3214">Friendly coral</span>
+          <span class="pill" style="background:#EDEAE2;color:#5E5341">Serif headlines</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LOGOS ============ -->
+  <section>
+    <div class="eyebrow">02 · Logo concepts</div>
+    <h2>Three marks for “TrustWall”</h2>
+    <p class="lede" style="margin-bottom:24px">The product keeps its name visible in-app, so each mark is a lockup (icon + wordmark) that doubles as the app logo. Any mark works with any palette — accents shown are illustrative.</p>
+    <div class="grid3">
+
+      <div class="card">
+        <div style="background:#fff;border:1px solid #EFEDE6;border-radius:12px;padding:18px;display:flex;justify-content:center">
+          <svg viewBox="0 0 200 64" width="100%" style="max-width:210px;height:auto" role="img" aria-label="TrustWall Keystone logo">
+            <rect x="4" y="4" width="56" height="56" rx="16" fill="#A8531B"/>
+            <line x1="4" y1="23" x2="60" y2="23" stroke="#fff" stroke-opacity=".20" stroke-width="2"/>
+            <line x1="4" y1="41" x2="60" y2="41" stroke="#fff" stroke-opacity=".20" stroke-width="2"/>
+            <line x1="26" y1="4" x2="26" y2="23" stroke="#fff" stroke-opacity=".13" stroke-width="2"/>
+            <line x1="40" y1="41" x2="40" y2="60" stroke="#fff" stroke-opacity=".13" stroke-width="2"/>
+            <path d="M17 33 L26 42 L47 19" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+            <text x="72" y="41" font-family="'Space Grotesk',sans-serif" font-size="28" font-weight="700" letter-spacing="-0.5"><tspan fill="#1A1A17">Trust</tspan><tspan fill="#A8531B">Wall</tspan></text>
+          </svg>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px">
+          <div style="width:44px;height:44px;border-radius:13px;background:#A8531B;display:flex;align-items:center;justify-content:center"><svg width="24" height="24" viewBox="0 0 24 24"><path d="M5 12 L10 17 L19 6" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div style="width:44px;height:44px;border-radius:13px;background:#211C16;display:flex;align-items:center;justify-content:center;color:#A8531B;font-weight:700;font-family:'Space Grotesk',sans-serif">TW</div>
+        </div>
+        <h3 style="margin:16px 0 6px">1 · Keystone</h3>
+        <p class="note">A verified wall-tile: brick seams + a checkmark. The most literal and credibility-forward mark — “every brick is vouched for.”</p>
+      </div>
+
+      <div class="card">
+        <div style="background:#fff;border:1px solid #EFEDE6;border-radius:12px;padding:18px;display:flex;justify-content:center">
+          <svg viewBox="0 0 200 64" width="100%" style="max-width:210px;height:auto" role="img" aria-label="TrustWall Quotemark logo">
+            <rect x="4" y="4" width="56" height="56" rx="16" fill="#8A2A52"/>
+            <g fill="#fff">
+              <path d="M15 17 h12 a3 3 0 0 1 3 3 v9 c0 8 -4 13 -12 16 a1.6 1.6 0 0 1 -1.6 -2.8 c4 -2.4 5.6 -5 5.6 -8.2 h-7 a3 3 0 0 1 -3 -3 v-11 a3 3 0 0 1 3 -3 z"/>
+              <path d="M34 17 h12 a3 3 0 0 1 3 3 v9 c0 8 -4 13 -12 16 a1.6 1.6 0 0 1 -1.6 -2.8 c4 -2.4 5.6 -5 5.6 -8.2 h-7 a3 3 0 0 1 -3 -3 v-11 a3 3 0 0 1 3 -3 z"/>
+            </g>
+            <text x="72" y="41" font-family="'Space Grotesk',sans-serif" font-size="28" font-weight="700" letter-spacing="-0.5"><tspan fill="#1A1A17">Trust</tspan><tspan fill="#8A2A52">Wall</tspan></text>
+          </svg>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px">
+          <div style="width:44px;height:44px;border-radius:13px;background:#8A2A52;display:flex;align-items:center;justify-content:center;color:#fff;font-family:Georgia,serif;font-size:30px;font-weight:700;line-height:1">&#8220;</div>
+          <div style="width:44px;height:44px;border-radius:13px;background:#211C16;display:flex;align-items:center;justify-content:center;color:#E59ABF;font-weight:700;font-family:'Space Grotesk',sans-serif">TW</div>
+        </div>
+        <h3 style="margin:16px 0 6px">2 · Quotemark</h3>
+        <p class="note">The universal symbol of a testimonial, built into a tile. Warm and human — “real words from real people.”</p>
+      </div>
+
+      <div class="card">
+        <div style="background:#fff;border:1px solid #EFEDE6;border-radius:12px;padding:18px;display:flex;justify-content:center">
+          <svg viewBox="0 0 200 64" width="100%" style="max-width:210px;height:auto" role="img" aria-label="TrustWall Chorus logo">
+            <circle cx="12" cy="13" r="6" fill="#C2401C"/><rect x="23" y="7" width="35" height="12" rx="6" fill="#C2401C"/>
+            <circle cx="12" cy="33" r="6" fill="#1A1A17"/><rect x="23" y="27" width="25" height="12" rx="6" fill="#1A1A17"/>
+            <circle cx="12" cy="53" r="6" fill="#1A1A17"/><rect x="23" y="47" width="31" height="12" rx="6" fill="#1A1A17"/>
+            <text x="72" y="41" font-family="'Space Grotesk',sans-serif" font-size="28" font-weight="700" letter-spacing="-0.5"><tspan fill="#1A1A17">Trust</tspan><tspan fill="#C2401C">Wall</tspan></text>
+          </svg>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:14px">
+          <div style="width:44px;height:44px;border-radius:13px;background:#FFF3EE;border:1px solid #F0E1D8;display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center">
+            <div style="width:18px;height:3px;border-radius:2px;background:#C2401C"></div><div style="width:12px;height:3px;border-radius:2px;background:#1A1A17"></div><div style="width:15px;height:3px;border-radius:2px;background:#1A1A17"></div>
+          </div>
+          <div style="width:44px;height:44px;border-radius:13px;background:#211C16;display:flex;align-items:center;justify-content:center;color:#E68A66;font-weight:700;font-family:'Space Grotesk',sans-serif">TW</div>
+        </div>
+        <h3 style="margin:16px 0 6px">3 · Chorus</h3>
+        <p class="note">A wall of voices — stacked testimonial rows, the top one highlighted. The freshest and most abstract; scales down to a crisp favicon.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ DIRECTIONS ============ -->
+  <section>
+    <div class="eyebrow">03 · Color &amp; type directions</div>
+    <h2>Three complete systems</h2>
+    <p class="lede">Each is a full design system mapped onto your existing token names — so the whole app reskins by swapping one <span class="kbd">@theme</span> block. Pick one to refine.</p>
+
+    <!-- DIRECTION A: TESTAMENT -->
+    <div class="theme" style="--c-canvas:#FBF8F2;--c-subtle:#F4ECDE;--c-surface:#FFFFFF;--c-line:#E9DECB;--c-grey10:#F6F0E6;--c-ink:#211C16;--c-muted:#5E5341;--c-brand:#A8531B;--c-brand-strong:#844014;--c-on-brand:#FFFFFF;--c-on-brand-soft:#F4DEC8;--c-highlight:#8A4514;--c-accent-soft:#F6E8D4;--c-secondary:#9A3412;--c-tertiary:#8C7B63;--c-spark:#E0A23C;--font-display:'Fraunces',serif;--font-body:'Inter',sans-serif">
+      <div class="head" style="background:#F4ECDE">
+        <div><div class="dname" style="color:#211C16">A · Testament</div><div class="dtag">Editorial trust · premium, honest, established</div></div>
+        <span class="pill" style="background:#A8531B;color:#fff">Fraunces + Inter</span>
+      </div>
+      <div class="body">
+        <p style="font-family:var(--font-body);font-size:14px;color:var(--c-muted);max-width:64ch;margin-bottom:20px">Warm paper, deep ink, and a high-contrast serif headline — the look of a respected publication or a signed statement. Best when the audience values craft and credibility (coaches, premium course creators).</p>
+
+        <h4 style="font-family:var(--font-body);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--c-muted);margin-bottom:12px">Palette</h4>
+        <div class="swatches" style="margin-bottom:26px">
+          <div class="sw"><div class="chip" style="background:#A8531B"></div><div class="nm">Brand</div><div class="hx">#A8531B</div><div class="role">Links + buttons · 5.1:1</div></div>
+          <div class="sw"><div class="chip" style="background:#844014"></div><div class="nm">Brand-strong</div><div class="hx">#844014</div><div class="role">Hover · 7.3:1</div></div>
+          <div class="sw"><div class="chip" style="background:#9A3412"></div><div class="nm">Secondary</div><div class="hx">#9A3412</div><div class="role">Terracotta · 6.9:1</div></div>
+          <div class="sw"><div class="chip" style="background:#E0A23C"></div><div class="nm">Spark</div><div class="hx">#E0A23C</div><div class="role">Marigold · decorative</div></div>
+          <div class="sw"><div class="chip" style="background:#8C7B63"></div><div class="nm">Tertiary</div><div class="hx">#8C7B63</div><div class="role">Warm stone</div></div>
+          <div class="sw"><div class="chip" style="background:#211C16"></div><div class="nm">Ink</div><div class="hx">#211C16</div><div class="role">Text · 15.9:1</div></div>
+          <div class="sw"><div class="chip" style="background:#5E5341"></div><div class="nm">Muted</div><div class="hx">#5E5341</div><div class="role">2nd text · 7.1:1</div></div>
+          <div class="sw"><div class="chip" style="background:#FBF8F2"></div><div class="nm">Canvas</div><div class="hx">#FBF8F2</div><div class="role">Page bg</div></div>
+          <div class="sw"><div class="chip" style="background:#F4ECDE"></div><div class="nm">Subtle</div><div class="hx">#F4ECDE</div><div class="role">Section band</div></div>
+          <div class="sw"><div class="chip" style="background:#F6E8D4"></div><div class="nm">Accent-soft</div><div class="hx">#F6E8D4</div><div class="role">Chips / pills</div></div>
+        </div>
+
+        <div class="grid2">
+          <div>
+            <h4 style="font-family:var(--font-body);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--c-muted);margin-bottom:12px">Type</h4>
+            <div class="specimen"><div class="big">Real proof,<br>beautifully kept.</div><div class="lead">Inter carries the body — neutral, tall x-height, endlessly legible — while Fraunces leads with warmth and authority.</div></div>
+            <div class="scale" style="margin-top:18px">
+              <div><span class="lbl">Hero</span><span style="font-family:var(--font-display);font-weight:600;font-size:26px">Wall of love</span></div>
+              <div><span class="lbl">H2</span><span style="font-family:var(--font-display);font-weight:600;font-size:20px">Wall of love</span></div>
+              <div><span class="lbl">Body</span><span style="font-family:var(--font-body);font-size:15px">Collect video + text in one link.</span></div>
+              <div><span class="lbl">Mono</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--c-muted)">verified ✓ consent ✓</span></div>
+            </div>
+          </div>
+          <div>
+            <h4 style="font-family:var(--font-body);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--c-muted);margin-bottom:12px">Interactive · components</h4>
+            <div class="chiprow" style="margin-bottom:14px">
+              <button class="btn btn-primary">Collect a testimonial</button>
+              <button class="btn btn-outline">Preview</button>
+              <button class="btn btn-primary" disabled>Disabled</button>
+            </div>
+            <p style="font-size:14px;color:var(--c-muted);margin-bottom:16px">Read the <span class="link">embed guide</span> — links use the exact same color as buttons. <span class="tagpill">SEO embed</span></p>
+            <input class="field" placeholder="you@business.com" style="margin-bottom:12px">
+            <div class="uicard">
+              <div class="stars">★★★★★</div>
+              <p style="font-family:var(--font-display);font-weight:500;font-size:17px;margin:6px 0 8px;color:var(--c-ink)">“It actually helped my Google ranking.”</p>
+              <p style="font-size:13px;color:var(--c-muted)">Maya R. · business coach</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIRECTION B: PROOF -->
+    <div class="theme" style="--c-canvas:#FFFFFF;--c-subtle:#F5F5F3;--c-surface:#FFFFFF;--c-line:#E6E5E0;--c-grey10:#F4F4F2;--c-ink:#1A1916;--c-muted:#5B5A52;--c-brand:#8A2A52;--c-brand-strong:#6E1E40;--c-on-brand:#FFFFFF;--c-on-brand-soft:#F3D9E4;--c-highlight:#6E1E40;--c-accent-soft:#F7E7EE;--c-secondary:#211F1A;--c-tertiary:#C7E03A;--c-spark:#C7E03A;--font-display:'Space Grotesk',sans-serif;--font-body:'Inter',sans-serif">
+      <div class="head" style="background:#1A1916">
+        <div><div class="dname" style="color:#fff">B · Proof</div><div class="dtag" style="color:#A7A59C">Crisp modern · confident, exact, high-contrast</div></div>
+        <span class="pill" style="background:#8A2A52;color:#fff">Space Grotesk + Inter</span>
+      </div>
+      <div class="body">
+        <p style="font-family:var(--font-body);font-size:14px;color:var(--c-muted);max-width:64ch;margin-bottom:20px">Pure white, near-black, and a deep mulberry that reads as precision — with a citron spark for energy. A geometric grotesque and mono details give it a “receipts, not promises” feel. Best for a sharper, more product-led, tech-credible posture.</p>
+
+        <h4 style="font-family:var(--font-body);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--c-muted);margin-bottom:12px">Palette</h4>
+        <div class="swatches" style="margin-bottom:26px">
+          <div class="sw"><div class="chip" style="background:#8A2A52"></div><div class="nm">Brand</div><div class="hx">#8A2A52</div><div class="role">Links + buttons · 8.3:1</div></div>
+          <div class="sw"><div class="chip" style="background:#6E1E40"></div><div class="nm">Brand-strong</div><div class="hx">#6E1E40</div><div class="role">Hover · 10.9:1</div></div>
+          <div class="sw"><div class="chip" style="background:#211F1A"></div><div class="nm">Secondary</div><div class="hx">#211F1A</div><div class="role">Obsidian sections</div></div>
+          <div class="sw"><div class="chip" style="background:#C7E03A"></div><div class="nm">Spark</div><div class="hx">#C7E03A</div><div class="role">Citron · decorative only</div></div>
+          <div class="sw"><div class="chip" style="background:#1A1916"></div><div class="nm">Ink</div><div class="hx">#1A1916</div><div class="role">Text · 17.6:1</div></div>
+          <div class="sw"><div class="chip" style="background:#5B5A52"></div><div class="nm">Muted</div><div class="hx">#5B5A52</div><div class="role">2nd text · 6.9:1</div></div>
+          <div class="sw"><div class="chip" style="background:#FFFFFF"></div><div class="nm">Canvas</div><div class="hx">#FFFFFF</div><div class="role">Page bg</div></div>
+          <div class="sw"><div class="chip" style="background:#F5F5F3"></div><div class="nm">Subtle</div><div class="hx">#F5F5F3</div><div class="role">Section band</div></div>
+          <div class="sw"><div class="chip" style="background:#F7E7EE"></div><div class="nm">Accent-soft</div><div class="hx">#F7E7EE</div><div class="role">Chips / pills</div></div>
+          <div class="sw"><div class="chip" style="background:#E6E5E0"></div><div class="nm">Line</div><div class="hx">#E6E5E0</div><div class="role">Borders</div></div>
+        </div>
+
+        <div class="grid2">
+          <div>
+            <h4 style="font-family:var(--font-body);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--c-muted);margin-bottom:12px">Type</h4>
+            <div class="specimen"><div class="big">Receipts,<br>not promises.</div><div class="lead">Space Grotesk’s technical terminals give headlines character; Inter and a touch of mono keep everything exact.</div></div>
+            <div class="scale" style="margin-top:18px">
+              <div><span class="lbl">Hero</span><span style="font-family:var(--font-display);font-weight:500;font-size:26px">Wall of love</span></div>
+              <div><span class="lbl">H2</span><span style="font-family:var(--font-display);font-weight:500;font-size:20px">Wall of love</span></div>
+              <div><span class="lbl">Body</span><span style="font-family:var(--font-body);font-size:15px">Collect video + text in one link.</span></div>
+              <div><span class="lbl">Mono</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--c-brand)">200 reviews · 4.9 avg</span></div>
+            </div>
+          </div>
+          <div>
+            <h4 style="font-family:var(--font-body);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--c-muted);margin-bottom:12px">Interactive · components</h4>
+            <div class="chiprow" style="margin-bottom:14px">
+              <button class="btn btn-primary">Collect a testimonial</button>
+              <button class="btn btn-outline">Preview</button>
+              <button class="btn btn-primary" disabled>Disabled</button>
+            </div>
+            <p style="font-size:14px;color:var(--c-muted);margin-bottom:16px">Read the <span class="link">embed guide</span> — one interactive color for links and buttons. <span class="tagpill">JSON-LD</span></p>
+            <input class="field" placeholder="you@business.com" style="margin-bottom:12px">
+            <div class="uicard">
+              <div class="stars">★★★★★</div>
+              <p style="font-family:var(--font-display);font-weight:500;font-size:17px;margin:6px 0 8px;color:var(--c-ink)">“It actually helped my Google ranking.”</p>
+              <p style="font-size:13px;color:var(--c-muted)">Maya R. · business coach</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DIRECTION C: CHORUS -->
+    <div class="theme" style="--c-canvas:#FFF8F4;--c-subtle:#FBEFE8;--c-surface:#FFFFFF;--c-line:#F0E1D8;--c-grey10:#FAEDE5;--c-ink:#2A1D17;--c-muted:#6E5B50;--c-brand:#C2401C;--c-brand-strong:#9C3214;--c-on-brand:#FFFFFF;--c-on-brand-soft:#FCE0D2;--c-highlight:#9C3214;--c-accent-soft:#FCE4D8;--c-secondary:#7B2D52;--c-tertiary:#E7A33C;--c-spark:#E7A33C;--font-display:'Bricolage Grotesque',sans-serif;--font-body:'Manrope',sans-serif">
+      <div class="head" style="background:#FBEFE8">
+        <div><div class="dname" style="color:#2A1D17">C · Chorus</div><div class="dtag">Friendly humanist · warm, optimistic, human</div></div>
+        <span class="pill" style="background:#C2401C;color:#fff">Bricolage + Manrope</span>
+      </div>
+      <div class="body">
+        <p style="font-family:var(--font-body);font-size:14px;color:var(--c-muted);max-width:64ch;margin-bottom:20px">Soft warm white, a friendly coral, and a plum second voice. Characterful display type keeps it approachable without sacrificing credibility. Best for a welcoming, creator-first, community feel.</p>
+
+        <h4 style="font-family:var(--font-body);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--c-muted);margin-bottom:12px">Palette</h4>
+        <div class="swatches" style="margin-bottom:26px">
+          <div class="sw"><div class="chip" style="background:#C2401C"></div><div class="nm">Brand</div><div class="hx">#C2401C</div><div class="role">Links + buttons · 4.9:1</div></div>
+          <div class="sw"><div class="chip" style="background:#9C3214"></div><div class="nm">Brand-strong</div><div class="hx">#9C3214</div><div class="role">Hover · 6.9:1</div></div>
+          <div class="sw"><div class="chip" style="background:#7B2D52"></div><div class="nm">Secondary</div><div class="hx">#7B2D52</div><div class="role">Plum · 8.5:1</div></div>
+          <div class="sw"><div class="chip" style="background:#E7A33C"></div><div class="nm">Tertiary</div><div class="hx">#E7A33C</div><div class="role">Marigold · large/deco</div></div>
+          <div class="sw"><div class="chip" style="background:#2A1D17"></div><div class="nm">Ink</div><div class="hx">#2A1D17</div><div class="role">Text · 15.5:1</div></div>
+          <div class="sw"><div class="chip" style="background:#6E5B50"></div><div class="nm">Muted</div><div class="hx">#6E5B50</div><div class="role">2nd text · 6.1:1</div></div>
+          <div class="sw"><div class="chip" style="background:#FFF8F4"></div><div class="nm">Canvas</div><div class="hx">#FFF8F4</div><div class="role">Page bg</div></div>
+          <div class="sw"><div class="chip" style="background:#FBEFE8"></div><div class="nm">Subtle</div><div class="hx">#FBEFE8</div><div class="role">Section band</div></div>
+          <div class="sw"><div class="chip" style="background:#FCE4D8"></div><div class="nm">Accent-soft</div><div class="hx">#FCE4D8</div><div class="role">Chips / pills</div></div>
+          <div class="sw"><div class="chip" style="background:#F0E1D8"></div><div class="nm">Line</div><div class="hx">#F0E1D8</div><div class="role">Borders</div></div>
+        </div>
+
+        <div class="grid2">
+          <div>
+            <h4 style="font-family:var(--font-body);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--c-muted);margin-bottom:12px">Type</h4>
+            <div class="specimen"><div class="big">Every voice<br>on your wall.</div><div class="lead">Bricolage Grotesque adds friendly personality up top; Manrope keeps the body rounded, warm, and easy to read.</div></div>
+            <div class="scale" style="margin-top:18px">
+              <div><span class="lbl">Hero</span><span style="font-family:var(--font-display);font-weight:600;font-size:26px">Wall of love</span></div>
+              <div><span class="lbl">H2</span><span style="font-family:var(--font-display);font-weight:600;font-size:20px">Wall of love</span></div>
+              <div><span class="lbl">Body</span><span style="font-family:var(--font-body);font-size:15px">Collect video + text in one link.</span></div>
+              <div><span class="lbl">Mono</span><span style="font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--c-muted)">consent captured ✓</span></div>
+            </div>
+          </div>
+          <div>
+            <h4 style="font-family:var(--font-body);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--c-muted);margin-bottom:12px">Interactive · components</h4>
+            <div class="chiprow" style="margin-bottom:14px">
+              <button class="btn btn-primary">Collect a testimonial</button>
+              <button class="btn btn-outline">Preview</button>
+              <button class="btn btn-primary" disabled>Disabled</button>
+            </div>
+            <p style="font-size:14px;color:var(--c-muted);margin-bottom:16px">Read the <span class="link">embed guide</span> — links and buttons share one color. <span class="tagpill">automation</span></p>
+            <input class="field" placeholder="you@business.com" style="margin-bottom:12px">
+            <div class="uicard">
+              <div class="stars">★★★★★</div>
+              <p style="font-family:var(--font-display);font-weight:600;font-size:17px;margin:6px 0 8px;color:var(--c-ink)">“It actually helped my Google ranking.”</p>
+              <p style="font-size:13px;color:var(--c-muted)">Maya R. · business coach</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ============ APPLY ============ -->
+  <section>
+    <div class="eyebrow">04 · How to apply</div>
+    <h2>One block to reskin the app</h2>
+    <p class="lede" style="margin-bottom:18px">All three directions are pre-written in <span class="kbd">brand/trustwall-design-tokens.css</span>. To apply one, copy its <span class="kbd">@theme</span> block into <span class="kbd">app/globals.css</span>, replacing the current “Indigo Trust” block, and add the matching font link. No component markup changes — every <span class="kbd">bg-brand</span> / <span class="kbd">text-ink</span> utility already points at these tokens.</p>
+    <div class="card" style="background:#1F1E1B;border:0;color:#E9E5DB;font-family:'JetBrains Mono',monospace;font-size:12.5px;line-height:1.7;overflow:auto">
+<span style="color:#8A8275">/* app/globals.css — Direction A · Testament */</span><br>
+@theme {<br>
+&nbsp;&nbsp;--color-canvas:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#FBF8F2;<br>
+&nbsp;&nbsp;--color-ink:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#211C16;<br>
+&nbsp;&nbsp;--color-brand:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#E0A23C">#A8531B</span>;&nbsp;&nbsp;<span style="color:#8A8275">/* links + buttons */</span><br>
+&nbsp;&nbsp;--color-brand-strong:&nbsp;<span style="color:#E0A23C">#844014</span>;<br>
+&nbsp;&nbsp;<span style="color:#8A8275">/* …full block in trustwall-design-tokens.css */</span><br>
+}
+    </div>
+  </section>
+
+  <div class="footer wrap">
+    TrustWall brand system · proposal v1 · prepared June 2026 · 3 logo concepts × 3 color/type directions. Colors verified WCAG 2.1 AA. Name kept as the in-app wordmark per brief.
+  </div>
+
+</div>
+</body>
+</html>

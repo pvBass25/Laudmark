@@ -44,13 +44,13 @@ export default function LoginForm({ next }: { next?: string }) {
         placeholder="you@example.com"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="w-full rounded-lg border border-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-black"
+        className="w-full rounded-lg border border-gray-200 bg-grey10 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40"
       />
       {error && <p className="text-sm text-red-500">{error}</p>}
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded-lg bg-black text-white text-sm font-medium py-2.5 hover:bg-gray-800 disabled:opacity-50 transition-colors"
+        className="w-full rounded-lg bg-brand text-on-brand text-sm font-medium py-2.5 hover:bg-brand-strong disabled:opacity-50 transition-colors"
       >
         {loading ? 'Sending…' : 'Send magic link'}
       </button>

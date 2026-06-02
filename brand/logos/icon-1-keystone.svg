@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72" width="72" height="72" role="img" aria-label="TrustWall icon">
+  <rect x="8" y="8" width="56" height="56" rx="16" fill="#A8531B"/>
+  <line x1="8"  y1="27" x2="64" y2="27" stroke="#ffffff" stroke-opacity="0.20" stroke-width="2"/>
+  <line x1="8"  y1="45" x2="64" y2="45" stroke="#ffffff" stroke-opacity="0.20" stroke-width="2"/>
+  <line x1="30" y1="8"  x2="30" y2="27" stroke="#ffffff" stroke-opacity="0.13" stroke-width="2"/>
+  <line x1="44" y1="45" x2="44" y2="64" stroke="#ffffff" stroke-opacity="0.13" stroke-width="2"/>
+  <path d="M21 37 L30 46 L51 23" fill="none" stroke="#ffffff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

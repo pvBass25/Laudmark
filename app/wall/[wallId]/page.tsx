@@ -117,7 +117,7 @@ export default async function WallPage({ params }: Props) {
         {planConfig.brandingFooter && (
           <div className="text-center mt-10 text-xs text-gray-400">
             Powered by{' '}
-            <a href="https://trustwall.app" target="_blank" rel="noopener noreferrer" className="text-indigo-500 hover:underline">
+            <a href="https://trustwall.app" target="_blank" rel="noopener noreferrer" className="text-brand hover:underline">
               Trustwall
             </a>
           </div>
@@ -174,7 +174,7 @@ function Card({ t }: { t: Testimonial }) {
             className="w-10 h-10 rounded-full object-cover shrink-0"
           />
         ) : (
-          <div className="w-10 h-10 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-sm font-bold shrink-0" aria-hidden>
+          <div className="w-10 h-10 rounded-full bg-accent-soft text-brand flex items-center justify-center text-sm font-bold shrink-0" aria-hidden>
             {initials}
           </div>
         )}

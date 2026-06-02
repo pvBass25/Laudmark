@@ -65,7 +65,10 @@ export async function GET(req: NextRequest) {
       const subject = generated?.subject ?? `Could you share a quick testimonial?`
       const bodyText = generated?.body ?? `Hi ${name},\n\nWould you be willing to share a quick testimonial? It would mean a lot.\n\n${link}\n\nThank you!`
 
-      await sendRequestEmail({ to: req_item.recipient_email, subject, bodyText, link })
+      // The request id is an unguessable v4 uuid → safe to use as the opt-out token.
+      const unsubscribeUrl = `${appUrl}/unsubscribe?token=${req_item.id}`
+
+      await sendRequestEmail({ to: req_item.recipient_email, subject, bodyText, link, unsubscribeUrl })
 
       // Advance or complete the sequence
       const nextStep = req_item.sequence_step + 1

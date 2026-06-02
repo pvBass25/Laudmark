@@ -62,7 +62,7 @@ export default function PricingPage() {
       {/* Nav */}
       <div className="max-w-5xl mx-auto mb-2 flex items-center justify-between">
         <Link href="/" className="font-bold text-gray-900">Trustwall</Link>
-        <Link href="/login" className="text-sm text-indigo-600 hover:underline">Sign in →</Link>
+        <Link href="/login" className="text-sm text-brand hover:underline">Sign in →</Link>
       </div>
 
       {/* Header */}
@@ -78,12 +78,12 @@ export default function PricingPage() {
             key={plan.name}
             className={`rounded-2xl border-2 p-7 flex flex-col ${
               plan.highlighted
-                ? 'border-indigo-400 bg-white shadow-lg shadow-indigo-100'
+                ? 'border-brand bg-white shadow-lg shadow-accent-soft'
                 : 'border-gray-100 bg-white'
             }`}
           >
             {plan.highlighted && (
-              <div className="text-xs font-semibold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full w-fit mb-3">
+              <div className="text-xs font-semibold text-brand bg-accent-soft px-3 py-1 rounded-full w-fit mb-3">
                 Most popular
               </div>
             )}
@@ -111,7 +111,7 @@ export default function PricingPage() {
               href={plan.href}
               className={`text-center py-2.5 rounded-xl text-sm font-semibold transition-colors ${
                 plan.highlighted
-                  ? 'bg-indigo-600 text-white hover:bg-indigo-700'
+                  ? 'bg-brand text-white hover:bg-brand-strong'
                   : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
               }`}
             >

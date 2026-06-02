@@ -3,7 +3,7 @@ import Link from 'next/link'
 export default function PrivacyPage() {
   return (
     <main className="max-w-2xl mx-auto px-6 py-16">
-      <Link href="/" className="text-sm text-indigo-600 hover:underline mb-8 block">← Trustwall</Link>
+      <Link href="/" className="text-sm text-brand hover:underline mb-8 block">← Trustwall</Link>
       <h1 className="text-3xl font-bold text-gray-900 mb-2">Privacy Policy</h1>
       <p className="text-sm text-gray-400 mb-8">Last updated: June 2026</p>
 
@@ -48,7 +48,7 @@ export default function PrivacyPage() {
 
         <section>
           <h2 className="font-semibold text-gray-900 text-base mb-2">Contact</h2>
-          <p>Questions? Email us at <a href="mailto:privacy@trustwall.app" className="text-indigo-600 hover:underline">privacy@trustwall.app</a></p>
+          <p>Questions? Email us at <a href="mailto:privacy@trustwall.app" className="text-brand hover:underline">privacy@trustwall.app</a></p>
         </section>
       </div>
     </main>

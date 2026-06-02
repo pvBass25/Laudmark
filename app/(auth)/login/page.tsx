@@ -13,11 +13,11 @@ export default async function LoginPage({
   if (user) redirect(next ?? '/app')
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-sm space-y-6 p-8 bg-white rounded-2xl shadow-sm border border-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-subtle">
+      <div className="w-full max-w-sm space-y-6 p-8 bg-surface rounded-2xl shadow-sm border border-line">
         <div className="text-center">
           <h1 className="text-2xl font-bold tracking-tight">Trustwall</h1>
-          <p className="mt-2 text-sm text-gray-500">Sign in with your email — we'll send a magic link.</p>
+          <p className="mt-2 text-sm text-gray-500">Sign in with your email — we&apos;ll send a magic link.</p>
         </div>
         <LoginForm next={next} />
       </div>

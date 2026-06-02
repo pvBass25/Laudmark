@@ -27,7 +27,7 @@ export default async function SettingsPage() {
             name="brand_name"
             defaultValue={profile?.brand_name ?? ''}
             placeholder="Acme Coaching"
-            className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
+            className="w-full rounded-xl border border-gray-200 bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40"
           />
         </div>
 
@@ -50,14 +50,14 @@ export default async function SettingsPage() {
             name="niche"
             defaultValue={profile?.niche ?? 'coach'}
             placeholder="coach, course creator, consultant…"
-            className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
+            className="w-full rounded-xl border border-gray-200 bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40"
           />
           <p className="text-xs text-gray-400 mt-1">Used by AI to generate better prompt questions and request emails</p>
         </div>
 
         <button
           type="submit"
-          className="px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-xl hover:bg-indigo-700 transition-colors"
+          className="px-4 py-2 bg-brand text-white text-sm font-medium rounded-xl hover:bg-brand-strong transition-colors"
         >
           Save settings
         </button>

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72" width="72" height="72" role="img" aria-label="TrustWall icon">
+  <!-- optional tile backdrop for app-icon use; remove for a bare favicon -->
+  <rect x="4" y="4" width="64" height="64" rx="16" fill="#FFF8F4"/>
+  <circle cx="24" cy="25" r="6" fill="#C2401C"/>
+  <rect x="35" y="19" width="29" height="12" rx="6" fill="#C2401C"/>
+  <circle cx="24" cy="43" r="6" fill="#2A1D17"/>
+  <rect x="35" y="37" width="20" height="12" rx="6" fill="#2A1D17"/>
+  <circle cx="24" cy="61" r="6" fill="#2A1D17"/>
+  <rect x="35" y="55" width="26" height="12" rx="6" fill="#2A1D17"/>
+</svg>

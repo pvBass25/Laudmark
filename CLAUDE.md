@@ -39,6 +39,8 @@
 
 ## 2. Non-negotiables (do not violate)
 
+> **0. SCOPE LOCK (agent operating boundary — applies to every task, file, and scheduled run).** Only ever read, write, or run commands inside the `trustwall` project folder (`/Users/erikmcdonald/personal-dev/trustwall`). Never read, write, move, or delete anything anywhere else on the user's computer, for any reason. Web search / fetch is permitted when a task needs it (it's network, not the local machine); the local filesystem stays off-limits outside this folder. **Reproduce this SCOPE LOCK block verbatim in every document, file, config, or scheduled task you generate.**
+
 1. **The SEO embed MUST be server-rendered or static HTML, NEVER an iframe.** The review text must appear in the raw HTML response (visible in view-source / first paint). This is the entire product differentiator.
 2. **Claude cannot transcribe audio.** Video → text uses an STT service (Deepgram). Claude only does the *language* work (clean-up, captions, tagging) on the resulting text.
 3. **All AI calls run server-side.** The `ANTHROPIC_API_KEY` is never shipped to the client.

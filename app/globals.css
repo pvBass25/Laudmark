@@ -1,26 +1,57 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ──────────────────────────────────────────────────────────────
+   BRAND PALETTE — "Testament" (warm editorial, WCAG 2.1 AA / AAA)
+   Swap this whole block to re-skin the entire site.
+   Verified contrast vs --color-canvas (#FBF8F2):
+     ink      15.9 : 1  (AAA)   muted     7.1 : 1 (AAA)
+     brand     5.1 : 1  (AA)    brand-strong / highlight  7.3 / 6.7 : 1 (AA)
+     secondary 6.9 : 1  (AA)
+   On-brand pairs (vs --color-brand #A8531B):
+     on-brand (white on brand)         5.4 : 1 (AA)
+     on-brand-soft (#F4DEC8 on brand)  4.1 : 1 (AA large/secondary text)
+   Interactive rule: --color-brand is the ONE color for links AND buttons;
+   --color-brand-strong is only its hover/pressed shade.
+   ────────────────────────────────────────────────────────────── */
+@theme {
+  --color-canvas:           #FBF8F2;  /* page background (warm paper)   */
+  --color-subtle:           #F4ECDE;  /* alternating section bands      */
+  --color-surface:          #FFFFFF;  /* cards                          */
+  --color-line:             #E9DECB;  /* borders / hairlines            */
+  --color-grey10:           #F6F0E6;  /* form field fill                */
+  --color-ink:              #211C16;  /* primary text                   */
+  --color-muted:            #5E5341;  /* secondary text                 */
+  --color-brand:            #A8531B;  /* links + buttons (the accent)   */
+  --color-brand-strong:     #844014;  /* hover / emphasis               */
+  --color-on-brand:         #FFFFFF;  /* text on a brand surface        */
+  --color-on-brand-soft:    #F4DEC8;  /* muted text on brand            */
+  --color-highlight:        #8A4514;  /* highlighted words              */
+  --color-accent-soft:      #F6E8D4;  /* tinted chips / pills           */
+  --color-secondary:        #9A3412;  /* terracotta — 2nd accent        */
+  --color-secondary-strong: #7C2A0E;  /* terracotta hover               */
+  --color-tertiary:         #8C7B63;  /* warm stone — borders / illus.  */
+  --color-tertiary-soft:    #E8DFD0;  /* stone tint                     */
+  --color-spark:            #E0A23C;  /* marigold — decorative / stars  */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans:    var(--font-inter);
+  --font-display: var(--font-fraunces);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", Roboto,
+    Arial, sans-serif;
+}
+
+/* Editorial voice: large headings use the Fraunces display serif.
+   Small UI labels (h3/h4, card headings) stay in the sans for legibility. */
+h1, h2 {
+  font-family: var(--font-display), Georgia, "Times New Roman", serif;
+  letter-spacing: -0.02em;
+}
+
+::selection {
+  background: var(--color-accent-soft);
+  color: var(--color-ink);
 }

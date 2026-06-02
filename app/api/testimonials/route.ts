@@ -5,12 +5,14 @@ import { createServiceClient } from '@/lib/supabase/server'
 import { captureConsent } from '@/lib/consent'
 import { transcribe } from '@/lib/deepgram'
 import { polishTestimonial, extractAssets, tagTestimonial } from '@/lib/claude'
+import { hit, clientIp } from '@/lib/rate-limit'
 
 const SubmitSchema = z.object({
   slug: z.string().min(1),
   type: z.enum(['video', 'text']),
   authorName: z.string().min(1).max(120),
   authorTitle: z.string().max(160).optional(),
+  authorEmail: z.string().email().max(254).optional(),
   authorPhotoUrl: z.string().url().optional(),
   rating: z.number().int().min(1).max(5).optional(),
   text: z.string().max(5000).optional(),
@@ -19,13 +21,23 @@ const SubmitSchema = z.object({
 })
 
 export async function POST(req: NextRequest) {
+  // Rate limit: 5 submissions / minute / IP. Submitting a testimonial is a rare
+  // human action, so a low cap stops spam without affecting real visitors.
+  const rl = hit(`testimonials:${clientIp(req)}`, 5, 60_000)
+  if (!rl.ok) {
+    return NextResponse.json(
+      { error: 'Too many requests. Please slow down.' },
+      { status: 429, headers: { 'Retry-After': String(rl.retryAfter) } },
+    )
+  }
+
   const body = await req.json().catch(() => null)
   const parsed = SubmitSchema.safeParse(body)
   if (!parsed.success) {
     return NextResponse.json({ error: 'Invalid input' }, { status: 400 })
   }
 
-  const { slug, type, authorName, authorTitle, authorPhotoUrl, rating, text, videoUrl } = parsed.data
+  const { slug, type, authorName, authorTitle, authorEmail, authorPhotoUrl, rating, text, videoUrl } = parsed.data
 
   if (type === 'text' && !text?.trim()) {
     return NextResponse.json({ error: 'text is required for text testimonials' }, { status: 400 })
@@ -46,21 +58,26 @@ export async function POST(req: NextRequest) {
 
   const consentData = captureConsent(req)
 
+  const insertData: Record<string, unknown> = {
+    page_id: page.id,
+    user_id: page.user_id,
+    type,
+    author_name: authorName,
+    author_title: authorTitle ?? null,
+    author_photo_url: authorPhotoUrl ?? null,
+    rating: rating ?? null,
+    raw_text: text ?? null,
+    video_url: videoUrl ?? null,
+    status: 'pending',
+    ...consentData,
+  }
+  // Only set author_email when provided so a submission still succeeds if the
+  // 0002 migration (which adds the column) hasn't been applied yet.
+  if (authorEmail) insertData.author_email = authorEmail
+
   const { data, error } = await supabase
     .from('testimonials')
-    .insert({
-      page_id: page.id,
-      user_id: page.user_id,
-      type,
-      author_name: authorName,
-      author_title: authorTitle ?? null,
-      author_photo_url: authorPhotoUrl ?? null,
-      rating: rating ?? null,
-      raw_text: text ?? null,
-      video_url: videoUrl ?? null,
-      status: 'pending',
-      ...consentData,
-    })
+    .insert(insertData)
     .select('id')
     .single()
 

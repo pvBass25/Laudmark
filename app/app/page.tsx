@@ -37,12 +37,12 @@ export default async function DashboardPage() {
       <div>
         <div className="flex items-center justify-between mb-3">
           <h2 className="font-semibold text-gray-700">Your walls</h2>
-          <Link href="/app/walls" className="text-sm text-indigo-600 hover:underline">View all</Link>
+          <Link href="/app/walls" className="text-sm text-brand hover:underline">View all</Link>
         </div>
         {!walls?.length ? (
           <div className="bg-white rounded-2xl border border-gray-100 p-8 text-center text-gray-400 text-sm">
             No walls yet.{' '}
-            <Link href="/app/walls" className="text-indigo-600 hover:underline">Create one</Link>
+            <Link href="/app/walls" className="text-brand hover:underline">Create one</Link>
           </div>
         ) : (
           <div className="space-y-2">

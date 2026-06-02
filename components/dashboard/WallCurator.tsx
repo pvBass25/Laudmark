@@ -2,6 +2,7 @@
 import { useState, useTransition } from 'react'
 import { updateWall } from '@/app/app/walls/actions'
 import { CopyButton } from './CopyButton'
+import { LayoutPicker, type WallLayout } from './LayoutPicker'
 
 interface Testimonial {
   id: string
@@ -28,7 +29,7 @@ interface Props {
 
 export function WallCurator({ wall, approved, appUrl }: Props) {
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set(wall.testimonial_ids))
-  const [layout, setLayout] = useState(wall.layout)
+  const [layout, setLayout] = useState<WallLayout>(wall.layout as WallLayout)
   const [saved, setSaved] = useState(false)
   const [pending, startTransition] = useTransition()
 
@@ -53,34 +54,28 @@ export function WallCurator({ wall, approved, appUrl }: Props) {
   return (
     <div className="space-y-8">
       {/* Controls */}
-      <div className="flex items-center gap-4">
-        <div className="flex items-center gap-2">
-          <label className="text-sm font-medium text-gray-700">Layout</label>
-          <select
-            value={layout}
-            onChange={e => { setLayout(e.target.value); setSaved(false) }}
-            className="rounded-xl border border-gray-200 px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-300"
-          >
-            <option value="grid">Grid</option>
-            <option value="list">List</option>
-            <option value="carousel">Carousel</option>
-          </select>
+      <div className="space-y-4">
+        <div className="max-w-md">
+          <label className="block text-sm font-medium text-gray-700 mb-2">Layout</label>
+          <LayoutPicker value={layout} onChange={v => { setLayout(v); setSaved(false) }} />
         </div>
-        <button
-          onClick={handleSave}
-          disabled={pending}
-          className="px-4 py-1.5 bg-indigo-600 text-white text-sm font-medium rounded-xl hover:bg-indigo-700 disabled:opacity-50 transition-colors"
-        >
-          {pending ? 'Saving…' : saved ? '✓ Saved' : 'Save wall'}
-        </button>
-        <span className="text-sm text-gray-400">{selectedIds.size} selected</span>
+        <div className="flex items-center gap-4">
+          <button
+            onClick={handleSave}
+            disabled={pending}
+            className="px-4 py-1.5 bg-brand text-white text-sm font-medium rounded-xl hover:bg-brand-strong disabled:opacity-50 transition-colors"
+          >
+            {pending ? 'Saving…' : saved ? '✓ Saved' : 'Save wall'}
+          </button>
+          <span className="text-sm text-gray-400">{selectedIds.size} selected</span>
+        </div>
       </div>
 
       {/* Testimonial picker */}
       {approved.length === 0 ? (
         <div className="bg-white rounded-2xl border border-gray-100 p-12 text-center text-gray-400 text-sm">
           No approved testimonials yet. Approve some from the{' '}
-          <a href="/app/testimonials" className="text-indigo-600 hover:underline">Testimonials</a> page.
+          <a href="/app/testimonials" className="text-brand hover:underline">Testimonials</a> page.
         </div>
       ) : (
         <div className="grid gap-3 sm:grid-cols-2">
@@ -94,7 +89,7 @@ export function WallCurator({ wall, approved, appUrl }: Props) {
                 onClick={() => toggle(t.id)}
                 className={`text-left p-4 rounded-2xl border-2 transition-all ${
                   checked
-                    ? 'border-indigo-400 bg-indigo-50'
+                    ? 'border-brand bg-accent-soft'
                     : 'border-gray-100 bg-white hover:border-gray-200'
                 }`}
               >
@@ -102,7 +97,7 @@ export function WallCurator({ wall, approved, appUrl }: Props) {
                   {t.author_photo_url ? (
                     <img src={t.author_photo_url} alt="" className="w-8 h-8 rounded-full object-cover shrink-0" />
                   ) : (
-                    <div className="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center text-xs font-bold shrink-0">
+                    <div className="w-8 h-8 rounded-full bg-accent-soft text-brand flex items-center justify-center text-xs font-bold shrink-0">
                       {initials}
                     </div>
                   )}
@@ -110,7 +105,7 @@ export function WallCurator({ wall, approved, appUrl }: Props) {
                     <div className="text-sm font-medium text-gray-900">{t.author_name}</div>
                     {t.author_title && <div className="text-xs text-gray-400">{t.author_title}</div>}
                   </div>
-                  <div className={`ml-auto w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${checked ? 'border-indigo-500 bg-indigo-500' : 'border-gray-300'}`}>
+                  <div className={`ml-auto w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${checked ? 'border-brand bg-brand' : 'border-gray-300'}`}>
                     {checked && <span className="text-white text-xs">✓</span>}
                   </div>
                 </div>

@@ -1,14 +1,24 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google";
+import { Inter, Fraunces } from "next/font/google";
 import "./globals.css";
+import { CookieBanner } from "@/components/CookieBanner";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Body — Inter (neutral, tall x-height, the SaaS workhorse)
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
+});
+
+// Display — Fraunces (warm, high-contrast serif; the "Testament" voice)
+const fraunces = Fraunces({
+  variable: "--font-fraunces",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Trustwall",
+  title: "TrustWall",
   description: "Collect video + text testimonials with one link.",
 };
 
@@ -18,8 +28,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geistSans.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={`${inter.variable} ${fraunces.variable} h-full antialiased`}>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <CookieBanner />
+      </body>
     </html>
   );
 }

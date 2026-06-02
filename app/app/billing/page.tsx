@@ -129,9 +129,9 @@ function UpgradeCard({
   const boundAction = priceId ? action.bind(null, priceId) : null
 
   return (
-    <div className={`rounded-2xl border-2 p-5 ${highlighted ? 'border-indigo-400 bg-indigo-50' : 'border-gray-100 bg-white'}`}>
+    <div className={`rounded-2xl border-2 p-5 ${highlighted ? 'border-brand bg-accent-soft' : 'border-gray-100 bg-white'}`}>
       <p className="font-bold text-gray-900">{name}</p>
-      <p className="text-lg font-semibold text-indigo-600 mt-0.5 mb-3">{price}</p>
+      <p className="text-lg font-semibold text-brand mt-0.5 mb-3">{price}</p>
       <ul className="space-y-1.5 text-sm text-gray-600 mb-5">
         {features.map(f => (
           <li key={f} className="flex items-center gap-2"><span className="text-green-500">✓</span>{f}</li>
@@ -142,7 +142,7 @@ function UpgradeCard({
           <button
             className={`w-full py-2 rounded-xl text-sm font-medium transition-colors ${
               highlighted
-                ? 'bg-indigo-600 text-white hover:bg-indigo-700'
+                ? 'bg-brand text-white hover:bg-brand-strong'
                 : 'bg-gray-900 text-white hover:bg-gray-800'
             }`}
           >

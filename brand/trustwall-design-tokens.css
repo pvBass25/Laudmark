@@ -1,0 +1,164 @@
+/* ============================================================================
+   TRUSTWALL — BRAND DESIGN TOKENS  (3 proposed directions)
+   ----------------------------------------------------------------------------
+   Drop-in replacement for the @theme block in app/globals.css (Tailwind v4).
+   Each direction below is COMPLETE and self-contained. To apply one:
+
+     1. Open app/globals.css
+     2. Replace the existing @theme { … } block with ONE block below
+     3. Add the matching font <link> (see FONTS, bottom) or wire via next/font
+
+   Token contract is identical to your current setup, so every existing
+   `bg-brand` / `text-ink` / `border-line` utility keeps working — the app
+   reskins with zero markup changes. New tokens added: secondary, secondary-
+   strong, tertiary, tertiary-soft, spark (for richer marketing surfaces).
+
+   INTERACTIVE RULE (per brief): everything clickable shares ONE color.
+   --color-brand = links AND buttons AND active states. --color-brand-strong
+   is only its hover/pressed shade. Never introduce a second link color.
+
+   Contrast: every text/interactive token is WCAG 2.1 AA (most AAA) on its
+   intended background. Ratios noted inline. on-brand-soft is for LARGE/
+   secondary text on a brand fill (AA-large). Citron in "Proof" is a
+   DECORATIVE spark only — never use it for text.
+   ============================================================================ */
+
+
+/* ┌──────────────────────────────────────────────────────────────────────┐
+   │  DIRECTION A — "TESTAMENT"   Editorial trust · warm paper + deep ink   │
+   │  Personality: premium, honest, established. Serif headline + clean sans.│
+   │  Display: Fraunces   ·   Body: Inter                                    │
+   └──────────────────────────────────────────────────────────────────────┘ */
+@theme {
+  /* backgrounds */
+  --color-canvas:        #FBF8F2;  /* page background (warm paper)   */
+  --color-subtle:        #F4ECDE;  /* alternating section bands      */
+  --color-surface:       #FFFFFF;  /* cards (lift off the paper)     */
+  --color-line:          #E9DECB;  /* borders / hairlines            */
+  --color-grey10:        #F6F0E6;  /* form field fill                */
+  /* text */
+  --color-ink:           #211C16;  /* primary text   — 15.9:1 AAA    */
+  --color-muted:         #5E5341;  /* secondary text —  7.1:1 AAA    */
+  /* interactive — LINKS + BUTTONS (the one true accent) */
+  --color-brand:         #A8531B;  /* sienna/amber   —  5.1:1 AA     */
+  --color-brand-strong:  #844014;  /* hover/pressed  —  7.3:1 AAA    */
+  --color-on-brand:      #FFFFFF;  /* text on brand  —  5.4:1 AA     */
+  --color-on-brand-soft: #F4DEC8;  /* muted-on-brand —  4.1 (lg)     */
+  --color-highlight:     #8A4514;  /* highlighted words — 6.7:1 AA   */
+  --color-accent-soft:   #F6E8D4;  /* tinted chips / pills           */
+  /* extended palette */
+  --color-secondary:     #9A3412;  /* terracotta — 6.9:1 (2nd accent)*/
+  --color-secondary-strong:#7C2A0E;
+  --color-tertiary:      #8C7B63;  /* warm stone — borders/illus.    */
+  --color-tertiary-soft: #E8DFD0;
+  --color-spark:         #E0A23C;  /* marigold — DECORATIVE only     */
+
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-sans:    "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+
+/* ┌──────────────────────────────────────────────────────────────────────┐
+   │  DIRECTION B — "PROOF"   Crisp modern · white + obsidian + mulberry    │
+   │  Personality: confident, exact, high-contrast. Geometric grotesque.     │
+   │  Display: Space Grotesk   ·   Body: Inter   ·   Mono: JetBrains Mono     │
+   └──────────────────────────────────────────────────────────────────────┘
+@theme {
+  --color-canvas:        #FFFFFF;
+  --color-subtle:        #F5F5F3;
+  --color-surface:       #FFFFFF;
+  --color-line:          #E6E5E0;
+  --color-grey10:        #F4F4F2;
+  --color-ink:           #1A1916;  | 17.6:1 AAA
+  --color-muted:         #5B5A52;  |  6.9:1 AAA
+  --color-brand:         #8A2A52;  | mulberry — 8.3:1 AAA (links+buttons)
+  --color-brand-strong:  #6E1E40;  | 10.9:1 AAA
+  --color-on-brand:      #FFFFFF;  |  8.3:1 AAA
+  --color-on-brand-soft: #F3D9E4;  |  6.3:1 AA
+  --color-highlight:     #6E1E40;
+  --color-accent-soft:   #F7E7EE;
+  --color-secondary:     #211F1A;  | obsidian — dark sections/buttons
+  --color-secondary-strong:#121110;
+  --color-tertiary:      #C7E03A;  | citron — DECORATIVE SPARK ONLY (fails text)
+  --color-tertiary-soft: #EEF6C8;
+  --color-spark:         #C7E03A;
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-sans:    "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, monospace;
+}
+*/
+
+
+/* ┌──────────────────────────────────────────────────────────────────────┐
+   │  DIRECTION C — "CHORUS"   Friendly humanist · warm white + coral + plum │
+   │  Personality: warm, optimistic, human. Characterful + rounded.          │
+   │  Display: Bricolage Grotesque   ·   Body: Manrope                       │
+   └──────────────────────────────────────────────────────────────────────┘
+@theme {
+  --color-canvas:        #FFF8F4;
+  --color-subtle:        #FBEFE8;
+  --color-surface:       #FFFFFF;
+  --color-line:          #F0E1D8;
+  --color-grey10:        #FAEDE5;
+  --color-ink:           #2A1D17;  | 15.5:1 AAA
+  --color-muted:         #6E5B50;  |  6.1:1 AA
+  --color-brand:         #C2401C;  | coral — 4.9:1 AA (links+buttons)
+  --color-brand-strong:  #9C3214;  |  6.9:1 AA
+  --color-on-brand:      #FFFFFF;  |  5.2:1 AA
+  --color-on-brand-soft: #FCE0D2;  |  4.1 (lg)
+  --color-highlight:     #9C3214;
+  --color-accent-soft:   #FCE4D8;
+  --color-secondary:     #7B2D52;  | plum — 8.5:1 (2nd voice)
+  --color-secondary-strong:#5E2240;
+  --color-tertiary:      #E7A33C;  | marigold — large/decorative
+  --color-tertiary-soft: #FBE8CF;
+  --color-spark:         #E7A33C;
+  --font-display: "Bricolage Grotesque", system-ui, sans-serif;
+  --font-sans:    "Manrope", system-ui, -apple-system, sans-serif;
+}
+*/
+
+
+/* ============================================================================
+   PLAIN CSS VARIABLES  (for non-Tailwind contexts: /public/widget.js, the SEO
+   embed, Resend emails). Mirrors DIRECTION A — change values to match your
+   chosen direction. Use var(--tw-brand) for any link or button.
+   ============================================================================ */
+:root {
+  --tw-canvas:#FBF8F2; --tw-surface:#FFFFFF; --tw-line:#E9DECB;
+  --tw-ink:#211C16;    --tw-muted:#5E5341;
+  --tw-brand:#A8531B;  --tw-brand-strong:#844014; --tw-on-brand:#FFFFFF;
+  --tw-secondary:#9A3412; --tw-tertiary:#8C7B63; --tw-spark:#E0A23C;
+  --tw-radius-field:12px; --tw-radius-card:16px; --tw-radius-pill:999px;
+}
+a, .tw-link { color: var(--tw-brand); text-underline-offset: 2px; }
+a:hover, .tw-link:hover { color: var(--tw-brand-strong); }
+.tw-btn {
+  background: var(--tw-brand); color: var(--tw-on-brand);
+  border: none; border-radius: var(--tw-radius-field);
+  padding: 10px 18px; font-weight: 600; cursor: pointer;
+  transition: background .15s ease;
+}
+.tw-btn:hover { background: var(--tw-brand-strong); }
+
+
+/* ============================================================================
+   FONTS — add the line for your chosen direction to app/layout.tsx <head>,
+   or load via next/font (recommended for performance).
+
+   A · Testament:
+   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+   B · Proof:
+   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+   C · Chorus:
+   <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+   Typical scale (works for all three):
+     hero      clamp(2.5rem, 5vw, 4rem)   --font-display  weight 600  tracking -0.02em
+     h2        2rem                        --font-display  weight 600
+     h3        1.25rem                     --font-display  weight 600
+     body      1rem / 1.7                  --font-sans     weight 400
+     small     0.8125rem                   --font-sans     weight 500
+   ============================================================================ */
