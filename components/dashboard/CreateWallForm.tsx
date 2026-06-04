@@ -17,24 +17,24 @@ export function CreateWallForm() {
   )
 
   return (
-    <form action={action} className="bg-white rounded-2xl border border-gray-100 p-6 space-y-4">
-      <h2 className="font-semibold text-gray-900">New wall</h2>
+    <form action={action} className="bg-surface rounded-2xl shadow-card p-6 space-y-4">
+      <h2 className="font-semibold text-ink">New wall</h2>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">Wall name</label>
+        <label className="block text-sm font-medium text-muted mb-1">Wall name</label>
         <input name="name" required placeholder="Wall of Love"
-          className="w-full rounded-xl border border-gray-200 bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40" />
+          className="w-full rounded-xl bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40" />
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1.5">Layout</label>
+        <label className="block text-sm font-medium text-muted mb-1.5">Layout</label>
         <LayoutPicker name="layout" defaultValue="grid" />
       </div>
 
-      {error && <p className="text-red-600 text-sm">{error}</p>}
+      {error && <p className="text-red-700 text-sm">{error}</p>}
 
       <button type="submit" disabled={pending}
-        className="px-4 py-2 bg-brand text-white text-sm font-medium rounded-xl hover:bg-brand-strong disabled:opacity-50 transition-colors">
+        className="px-4 py-2 bg-brand text-on-brand text-sm font-medium rounded-xl hover:bg-brand-strong disabled:opacity-50 transition-colors">
         {pending ? 'Creating…' : 'Create wall'}
       </button>
     </form>

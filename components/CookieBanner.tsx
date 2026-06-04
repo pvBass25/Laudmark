@@ -31,7 +31,7 @@ export function CookieBanner() {
       role="dialog"
       aria-live="polite"
       aria-label="Cookie notice"
-      className="fixed bottom-4 inset-x-4 z-50 mx-auto max-w-2xl rounded-2xl border border-line bg-surface shadow-lg p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4"
+      className="fixed bottom-4 inset-x-4 z-50 mx-auto max-w-2xl rounded-2xl bg-surface shadow-card-lg p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4"
     >
       <p className="text-sm text-muted leading-relaxed flex-1">
         We use essential cookies to keep you signed in and run the site. We don&apos;t use

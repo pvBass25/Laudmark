@@ -76,7 +76,7 @@ export default async function WallPage({ params }: Props) {
         />
       )}
 
-      <div className="min-h-screen bg-gray-50 py-12 px-4">
+      <div className="min-h-screen bg-canvas py-12 px-4">
         {/* Brand header */}
         <div className="max-w-5xl mx-auto mb-10 text-center">
           {profile?.brand_logo_url ? (
@@ -84,16 +84,16 @@ export default async function WallPage({ params }: Props) {
           ) : (
             <span className="text-2xl font-bold" style={{ color: brandColor }}>{brandName}</span>
           )}
-          <h1 className="text-3xl font-bold text-gray-900 mt-2">{wall.name}</h1>
+          <h1 className="text-3xl font-bold text-ink mt-2">{wall.name}</h1>
           {testimonials.length > 0 && (
-            <p className="text-gray-500 mt-2 text-sm">{testimonials.length} verified {testimonials.length === 1 ? 'review' : 'reviews'}</p>
+            <p className="text-muted mt-2 text-sm">{testimonials.length} verified {testimonials.length === 1 ? 'review' : 'reviews'}</p>
           )}
         </div>
 
         {/* Testimonials grid */}
         <div className="max-w-5xl mx-auto">
           {testimonials.length === 0 ? (
-            <p className="text-center text-gray-400">No testimonials yet.</p>
+            <p className="text-center text-tertiary">No testimonials yet.</p>
           ) : wall.layout === 'grid' ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {testimonials.map(t => <Card key={t.id} t={t} />)}
@@ -115,7 +115,7 @@ export default async function WallPage({ params }: Props) {
 
         {/* Powered by footer — Free plan only */}
         {planConfig.brandingFooter && (
-          <div className="text-center mt-10 text-xs text-gray-400">
+          <div className="text-center mt-10 text-xs text-tertiary">
             Powered by{' '}
             <a href="https://trustwall.app" target="_blank" rel="noopener noreferrer" className="text-brand hover:underline">
               Trustwall
@@ -143,7 +143,7 @@ function Card({ t }: { t: Testimonial }) {
 
   return (
     <article
-      className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
+      className="bg-surface rounded-2xl p-6 shadow-card"
       itemScope
       itemType="https://schema.org/Review"
     >
@@ -158,7 +158,7 @@ function Card({ t }: { t: Testimonial }) {
       {text && (
         <blockquote
           itemProp="reviewBody"
-          className="text-gray-700 text-sm leading-relaxed mb-5 m-0 p-0"
+          className="text-muted text-sm leading-relaxed mb-5 m-0 p-0"
         >
           {text}
         </blockquote>
@@ -179,8 +179,8 @@ function Card({ t }: { t: Testimonial }) {
           </div>
         )}
         <div>
-          <strong itemProp="name" className="text-sm font-semibold text-gray-900 block">{t.author_name}</strong>
-          {t.author_title && <span className="text-xs text-gray-400">{t.author_title}</span>}
+          <strong itemProp="name" className="text-sm font-semibold text-ink block">{t.author_name}</strong>
+          {t.author_title && <span className="text-xs text-tertiary">{t.author_title}</span>}
         </div>
       </div>
     </article>

@@ -28,8 +28,8 @@ export async function POST(req: NextRequest) {
         ? { customer: profile.stripe_customer_id }
         : { customer_email: user.email ?? undefined }),
       line_items: [{ price: parsed.data.priceId, quantity: 1 }],
-      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/app/billing?upgraded=1`,
-      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/app/billing`,
+      success_url: `${process.env.NEXT_PUBLIC_APP_URL}/app/settings?upgraded=1`,
+      cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/app/settings`,
       metadata: { userId: user.id },
     })
     return NextResponse.json({ url: session.url })

@@ -14,7 +14,10 @@ export default async function WallsPage() {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-2xl font-bold text-gray-900">Walls</h1>
+      <div>
+        <h1 className="text-2xl font-bold text-ink">Walls</h1>
+        <p className="text-sm text-muted mt-1">Curate testimonials into a wall and grab the embed code.</p>
+      </div>
 
       {walls?.length ? (
         <div className="space-y-3">
@@ -22,20 +25,20 @@ export default async function WallsPage() {
             <Link
               key={w.id}
               href={`/app/walls/${w.id}`}
-              className="flex items-center justify-between bg-white rounded-2xl border border-gray-100 px-5 py-4 hover:border-gray-200 transition-colors"
+              className="flex items-center justify-between bg-surface rounded-2xl shadow-card px-5 py-4 hover:shadow-card-lg transition-shadow"
             >
               <div>
-                <div className="font-medium text-gray-900 text-sm">{w.name}</div>
-                <div className="text-xs text-gray-400 mt-0.5 capitalize">
+                <div className="font-medium text-ink text-sm">{w.name}</div>
+                <div className="text-xs text-tertiary mt-0.5 capitalize">
                   {w.layout} · {w.testimonial_ids?.length ?? 0} testimonial{w.testimonial_ids?.length !== 1 ? 's' : ''}
                 </div>
               </div>
-              <span className="text-gray-300 text-sm">→</span>
+              <span className="text-tertiary text-sm">→</span>
             </Link>
           ))}
         </div>
       ) : (
-        <div className="bg-white rounded-2xl border border-gray-100 p-12 text-center text-gray-400 text-sm">
+        <div className="bg-surface rounded-2xl shadow-card p-12 text-center text-tertiary text-sm">
           No walls yet. Create one below.
         </div>
       )}

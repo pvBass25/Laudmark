@@ -22,7 +22,7 @@ export default function NotFound() {
           </Link>
           <Link
             href="/pricing"
-            className="border border-line text-ink px-6 py-3 rounded-xl font-medium hover:bg-subtle transition-colors"
+            className="bg-subtle text-ink px-6 py-3 rounded-xl font-medium hover:bg-tertiary-soft transition-colors"
           >
             See pricing
           </Link>

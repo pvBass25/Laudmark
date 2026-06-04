@@ -10,7 +10,7 @@ const inter = Inter({
   display: "swap",
 });
 
-// Display — Fraunces (warm, high-contrast serif; the "Testament" voice)
+// Display — Fraunces (high-contrast serif; the editorial "Harbor" voice)
 const fraunces = Fraunces({
   variable: "--font-fraunces",
   subsets: ["latin"],

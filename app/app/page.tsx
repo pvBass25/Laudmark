@@ -21,35 +21,35 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Overview</h1>
-        <p className="text-sm text-gray-400 mt-1">{user?.email}</p>
+        <h1 className="text-2xl font-bold text-ink">Overview</h1>
+        <p className="text-sm text-muted mt-1">Quick stats and your latest walls at a glance.</p>
       </div>
 
       <div className="grid grid-cols-3 gap-4">
         {stats.map(s => (
-          <Link key={s.label} href={s.href} className="bg-white rounded-2xl border border-gray-100 p-6 hover:border-gray-200 transition-colors">
-            <div className="text-3xl font-bold text-gray-900">{s.value}</div>
-            <div className="text-sm text-gray-500 mt-1">{s.label}</div>
+          <Link key={s.label} href={s.href} className="bg-surface rounded-2xl shadow-card p-6 hover:shadow-card-lg transition-shadow">
+            <div className="text-3xl font-bold text-ink">{s.value}</div>
+            <div className="text-sm text-muted mt-1">{s.label}</div>
           </Link>
         ))}
       </div>
 
       <div>
         <div className="flex items-center justify-between mb-3">
-          <h2 className="font-semibold text-gray-700">Your walls</h2>
+          <h2 className="font-semibold text-ink">Your walls</h2>
           <Link href="/app/walls" className="text-sm text-brand hover:underline">View all</Link>
         </div>
         {!walls?.length ? (
-          <div className="bg-white rounded-2xl border border-gray-100 p-8 text-center text-gray-400 text-sm">
+          <div className="bg-surface rounded-2xl shadow-card p-8 text-center text-tertiary text-sm">
             No walls yet.{' '}
             <Link href="/app/walls" className="text-brand hover:underline">Create one</Link>
           </div>
         ) : (
           <div className="space-y-2">
             {walls.map(w => (
-              <Link key={w.id} href={`/app/walls/${w.id}`} className="flex items-center justify-between bg-white rounded-xl border border-gray-100 px-4 py-3 hover:border-gray-200 transition-colors">
-                <span className="text-sm font-medium text-gray-700">{w.name}</span>
-                <span className="text-xs text-gray-400">→</span>
+              <Link key={w.id} href={`/app/walls/${w.id}`} className="flex items-center justify-between bg-surface rounded-xl shadow-card px-4 py-3 hover:shadow-card-lg transition-shadow">
+                <span className="text-sm font-medium text-ink">{w.name}</span>
+                <span className="text-xs text-tertiary">→</span>
               </Link>
             ))}
           </div>
