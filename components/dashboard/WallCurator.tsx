@@ -56,24 +56,24 @@ export function WallCurator({ wall, approved, appUrl }: Props) {
       {/* Controls */}
       <div className="space-y-4">
         <div className="max-w-md">
-          <label className="block text-sm font-medium text-gray-700 mb-2">Layout</label>
+          <label className="block text-sm font-medium text-muted mb-2">Layout</label>
           <LayoutPicker value={layout} onChange={v => { setLayout(v); setSaved(false) }} />
         </div>
         <div className="flex items-center gap-4">
           <button
             onClick={handleSave}
             disabled={pending}
-            className="px-4 py-1.5 bg-brand text-white text-sm font-medium rounded-xl hover:bg-brand-strong disabled:opacity-50 transition-colors"
+            className="px-4 py-1.5 bg-brand text-on-brand text-sm font-medium rounded-xl hover:bg-brand-strong disabled:opacity-50 transition-colors"
           >
             {pending ? 'Saving…' : saved ? '✓ Saved' : 'Save wall'}
           </button>
-          <span className="text-sm text-gray-400">{selectedIds.size} selected</span>
+          <span className="text-sm text-muted">{selectedIds.size} selected</span>
         </div>
       </div>
 
       {/* Testimonial picker */}
       {approved.length === 0 ? (
-        <div className="bg-white rounded-2xl border border-gray-100 p-12 text-center text-gray-400 text-sm">
+        <div className="bg-surface rounded-2xl shadow-card p-12 text-center text-muted text-sm">
           No approved testimonials yet. Approve some from the{' '}
           <a href="/app/testimonials" className="text-brand hover:underline">Testimonials</a> page.
         </div>
@@ -87,10 +87,10 @@ export function WallCurator({ wall, approved, appUrl }: Props) {
               <button
                 key={t.id}
                 onClick={() => toggle(t.id)}
-                className={`text-left p-4 rounded-2xl border-2 transition-all ${
+                className={`text-left p-4 rounded-2xl shadow-card transition-colors ${
                   checked
-                    ? 'border-brand bg-accent-soft'
-                    : 'border-gray-100 bg-white hover:border-gray-200'
+                    ? 'bg-accent-soft'
+                    : 'bg-surface hover:bg-subtle'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-2">
@@ -102,11 +102,11 @@ export function WallCurator({ wall, approved, appUrl }: Props) {
                     </div>
                   )}
                   <div>
-                    <div className="text-sm font-medium text-gray-900">{t.author_name}</div>
-                    {t.author_title && <div className="text-xs text-gray-400">{t.author_title}</div>}
+                    <div className="text-sm font-medium text-ink">{t.author_name}</div>
+                    {t.author_title && <div className="text-xs text-tertiary">{t.author_title}</div>}
                   </div>
-                  <div className={`ml-auto w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${checked ? 'border-brand bg-brand' : 'border-gray-300'}`}>
-                    {checked && <span className="text-white text-xs">✓</span>}
+                  <div className={`ml-auto w-5 h-5 rounded-full flex items-center justify-center shrink-0 ${checked ? 'bg-brand' : 'bg-grey10'}`}>
+                    {checked && <span className="text-on-brand text-xs">✓</span>}
                   </div>
                 </div>
                 {t.rating && (
@@ -114,7 +114,7 @@ export function WallCurator({ wall, approved, appUrl }: Props) {
                     {[1,2,3,4,5].map(n => <span key={n} className={`text-xs ${n <= t.rating! ? 'text-amber-400' : 'text-gray-200'}`}>★</span>)}
                   </div>
                 )}
-                {text && <p className="text-xs text-gray-600 line-clamp-3 leading-relaxed">{text}</p>}
+                {text && <p className="text-xs text-muted line-clamp-3 leading-relaxed">{text}</p>}
               </button>
             )
           })}
@@ -122,29 +122,29 @@ export function WallCurator({ wall, approved, appUrl }: Props) {
       )}
 
       {/* Embed code */}
-      <div className="bg-white rounded-2xl border border-gray-100 p-6 space-y-4">
-        <h2 className="font-semibold text-gray-900">Get embed code</h2>
+      <div className="bg-surface rounded-2xl shadow-card p-6 space-y-4">
+        <h2 className="font-semibold text-ink">Get embed code</h2>
 
         <div className="space-y-3">
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <p className="text-sm font-medium text-gray-700">Live widget <span className="text-xs text-gray-400 font-normal">(auto-updates)</span></p>
+              <p className="text-sm font-medium text-muted">Live widget <span className="text-xs text-tertiary font-normal">(auto-updates)</span></p>
               <CopyButton text={widgetCode} label="Copy" />
             </div>
-            <pre className="bg-gray-50 rounded-xl p-3 text-xs text-gray-600 overflow-x-auto">{widgetCode}</pre>
+            <pre className="bg-grey10 rounded-xl p-3 text-xs text-muted overflow-x-auto">{widgetCode}</pre>
           </div>
 
           <div>
-            <p className="text-sm font-medium text-gray-700 mb-1.5">Hosted wall page</p>
+            <p className="text-sm font-medium text-muted mb-1.5">Hosted wall page</p>
             <div className="flex items-center gap-2">
-              <code className="text-xs text-gray-500 bg-gray-50 rounded-lg px-3 py-2 flex-1 truncate">
+              <code className="text-xs text-muted bg-grey10 rounded-lg px-3 py-2 flex-1 truncate">
                 {appUrl}/wall/{wall.id}
               </code>
               <CopyButton text={`${appUrl}/wall/${wall.id}`} label="Copy" />
               <a
                 href={`/wall/${wall.id}`}
                 target="_blank"
-                className="text-xs px-3 py-1.5 rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors"
+                className="text-xs px-3 py-1.5 rounded-lg bg-subtle text-ink hover:bg-tertiary-soft transition-colors"
               >
                 Preview ↗
               </a>

@@ -30,8 +30,8 @@ export default function LoginForm({ next }: { next?: string }) {
   if (sent) {
     return (
       <div className="text-center space-y-2">
-        <p className="text-sm font-medium text-gray-800">Check your inbox</p>
-        <p className="text-sm text-gray-500">We sent a magic link to <strong>{email}</strong>.</p>
+        <p className="text-sm font-medium text-ink">Check your inbox</p>
+        <p className="text-sm text-muted">We sent a magic link to <strong>{email}</strong>.</p>
       </div>
     )
   }
@@ -44,7 +44,7 @@ export default function LoginForm({ next }: { next?: string }) {
         placeholder="you@example.com"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="w-full rounded-lg border border-gray-200 bg-grey10 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40"
+        className="w-full rounded-lg bg-grey10 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40"
       />
       {error && <p className="text-sm text-red-500">{error}</p>}
       <button

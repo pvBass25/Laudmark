@@ -1,6 +1,12 @@
 /* ============================================================================
    TRUSTWALL — BRAND DESIGN TOKENS  (3 proposed directions)
    ----------------------------------------------------------------------------
+   ⚠ SUPERSEDED / ARCHIVED. The shipped brand is now "Harbor" (cool, muted
+   slate-teal) — NOT one of the three directions below. These (A·Testament,
+   B·Proof, C·Chorus) are the original exploration; Testament (A) was the prior
+   shipped look. Source of truth: STYLEGUIDE.md + DESIGN-SYSTEM-BRIEF.md, with
+   the live Harbor @theme block in app/globals.css. Kept for history only.
+   ----------------------------------------------------------------------------
    Drop-in replacement for the @theme block in app/globals.css (Tailwind v4).
    Each direction below is COMPLETE and self-contained. To apply one:
 

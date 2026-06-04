@@ -24,8 +24,8 @@ export default async function WallDetailPage({ params }: { params: Promise<{ wal
   return (
     <div className="space-y-6">
       <div className="flex items-center gap-3">
-        <Link href="/app/walls" className="text-sm text-gray-400 hover:text-gray-600">← Walls</Link>
-        <h1 className="text-2xl font-bold text-gray-900">{wall.name}</h1>
+        <Link href="/app/walls" className="text-sm text-muted hover:text-ink">← Walls</Link>
+        <h1 className="text-2xl font-bold text-ink">{wall.name}</h1>
       </div>
 
       <WallCurator

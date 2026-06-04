@@ -58,17 +58,17 @@ const PLANS = [
 
 export default function PricingPage() {
   return (
-    <main className="min-h-screen bg-gray-50 py-16 px-6">
+    <main className="min-h-screen bg-canvas py-16 px-6">
       {/* Nav */}
       <div className="max-w-5xl mx-auto mb-2 flex items-center justify-between">
-        <Link href="/" className="font-bold text-gray-900">Trustwall</Link>
+        <Link href="/" className="font-bold text-ink">Trustwall</Link>
         <Link href="/login" className="text-sm text-brand hover:underline">Sign in →</Link>
       </div>
 
       {/* Header */}
       <div className="text-center max-w-xl mx-auto mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-3">Simple, honest pricing</h1>
-        <p className="text-gray-500">Start free. Upgrade when you need SEO embeds and automation.</p>
+        <h1 className="text-4xl font-bold text-ink mb-3">Simple, honest pricing</h1>
+        <p className="text-muted">Start free. Upgrade when you need SEO embeds and automation.</p>
       </div>
 
       {/* Plan cards */}
@@ -76,10 +76,10 @@ export default function PricingPage() {
         {PLANS.map(plan => (
           <div
             key={plan.name}
-            className={`rounded-2xl border-2 p-7 flex flex-col ${
+            className={`rounded-2xl p-7 flex flex-col bg-surface ${
               plan.highlighted
-                ? 'border-brand bg-white shadow-lg shadow-accent-soft'
-                : 'border-gray-100 bg-white'
+                ? 'shadow-card-lg'
+                : 'shadow-card'
             }`}
           >
             {plan.highlighted && (
@@ -87,21 +87,21 @@ export default function PricingPage() {
                 Most popular
               </div>
             )}
-            <h2 className="font-bold text-xl text-gray-900">{plan.name}</h2>
+            <h2 className="font-bold text-xl text-ink">{plan.name}</h2>
             <div className="mt-1 mb-1">
-              <span className="text-4xl font-bold text-gray-900">{plan.price}</span>
-              <span className="text-gray-400 text-sm">{plan.period}</span>
+              <span className="text-4xl font-bold text-ink">{plan.price}</span>
+              <span className="text-tertiary text-sm">{plan.period}</span>
             </div>
-            <p className="text-sm text-gray-500 mb-5">{plan.description}</p>
+            <p className="text-sm text-muted mb-5">{plan.description}</p>
 
             <ul className="space-y-2 mb-5 flex-1">
               {plan.features.map(f => (
-                <li key={f} className="flex items-start gap-2 text-sm text-gray-700">
+                <li key={f} className="flex items-start gap-2 text-sm text-muted">
                   <span className="text-green-500 mt-0.5 shrink-0">✓</span>{f}
                 </li>
               ))}
               {plan.excluded.map(f => (
-                <li key={f} className="flex items-start gap-2 text-sm text-gray-300">
+                <li key={f} className="flex items-start gap-2 text-sm text-tertiary">
                   <span className="mt-0.5 shrink-0">✗</span>{f}
                 </li>
               ))}
@@ -111,8 +111,8 @@ export default function PricingPage() {
               href={plan.href}
               className={`text-center py-2.5 rounded-xl text-sm font-semibold transition-colors ${
                 plan.highlighted
-                  ? 'bg-brand text-white hover:bg-brand-strong'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-brand text-on-brand hover:bg-brand-strong'
+                  : 'bg-subtle text-ink hover:bg-tertiary-soft'
               }`}
             >
               {plan.cta}
@@ -121,7 +121,7 @@ export default function PricingPage() {
         ))}
       </div>
 
-      <p className="text-center text-xs text-gray-400 mt-10">
+      <p className="text-center text-xs text-tertiary mt-10">
         All plans include video + text collection, consent capture, and AI enrichment. Cancel anytime.
       </p>
     </main>

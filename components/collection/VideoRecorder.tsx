@@ -148,8 +148,8 @@ export function VideoRecorder({ slug, brandColor, onComplete }: Props) {
   if (recorderState === 'error') {
     return (
       <div className="text-center py-8 space-y-4">
-        <p className="text-red-600 text-sm">{errorMsg}</p>
-        <button onClick={startStream} className="px-4 py-2 rounded-lg border border-gray-200 text-sm">
+        <p className="text-red-700 text-sm">{errorMsg}</p>
+        <button onClick={startStream} className="px-4 py-2 rounded-lg bg-subtle text-ink text-sm hover:bg-tertiary-soft transition-colors">
           Try again
         </button>
       </div>
@@ -187,7 +187,7 @@ export function VideoRecorder({ slug, brandColor, onComplete }: Props) {
         <button
           onClick={startRecording}
           style={{ backgroundColor: brandColor }}
-          className="w-full py-3 rounded-xl text-white font-semibold text-base"
+          className="w-full py-3 rounded-xl text-on-brand font-semibold text-base"
         >
           Start recording
         </button>
@@ -204,18 +204,18 @@ export function VideoRecorder({ slug, brandColor, onComplete }: Props) {
 
       {recorderState === 'preview' && (
         <div className="space-y-2">
-          {errorMsg && <p className="text-red-600 text-sm text-center">{errorMsg}</p>}
+          {errorMsg && <p className="text-red-700 text-sm text-center">{errorMsg}</p>}
           <div className="flex gap-3">
             <button
               onClick={reRecord}
-              className="flex-1 py-3 rounded-xl border border-gray-200 text-gray-700 font-medium"
+              className="flex-1 py-3 rounded-xl bg-subtle text-ink font-medium hover:bg-tertiary-soft transition-colors"
             >
               Re-record
             </button>
             <button
               onClick={upload}
               style={{ backgroundColor: brandColor }}
-              className="flex-1 py-3 rounded-xl text-white font-semibold"
+              className="flex-1 py-3 rounded-xl text-on-brand font-semibold"
             >
               Use this
             </button>

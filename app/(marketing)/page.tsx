@@ -59,21 +59,21 @@ const MOCK_ITEMS = [
     initials: 'SC', bg: 'bg-accent-soft', fg: 'text-brand',
     name: 'Sarah Chen', role: 'Business Coach', stars: 5,
     text: '"My revenue doubled in 90 days. The systems James taught completely transformed how I run my practice."',
-    status: 'approved', statusBg: 'bg-green-100', statusFg: 'text-green-700',
+    status: 'approved', statusBg: 'bg-green-50', statusFg: 'text-green-700',
     typeLabel: '🎥 Video',
   },
   {
-    initials: 'MR', bg: 'bg-orange-100', fg: 'text-orange-800',
+    initials: 'MR', bg: 'bg-subtle', fg: 'text-muted',
     name: 'Marcus Reid', role: 'Course Creator', stars: 5,
     text: '"Worth every penny and then some. I was skeptical at first but the results speak for themselves."',
-    status: 'pending', statusBg: 'bg-amber-100', statusFg: 'text-amber-700',
+    status: 'pending', statusBg: 'bg-amber-50', statusFg: 'text-amber-700',
     typeLabel: '✍️ Text',
   },
   {
     initials: 'PS', bg: 'bg-stone-200', fg: 'text-stone-700',
     name: 'Priya Sharma', role: 'Yoga Studio Owner', stars: 4,
     text: '"Completely changed how I approach client onboarding. Highly recommend to anyone serious about growth."',
-    status: 'approved', statusBg: 'bg-green-100', statusFg: 'text-green-700',
+    status: 'approved', statusBg: 'bg-green-50', statusFg: 'text-green-700',
     typeLabel: '✍️ Text',
   },
 ]
@@ -82,15 +82,15 @@ function Stars({ n }: { n: number }) {
   return (
     <span>
       <span className="text-amber-400">{'★'.repeat(n)}</span>
-      <span className="text-line">{'★'.repeat(5 - n)}</span>
+      <span className="text-gray-200">{'★'.repeat(5 - n)}</span>
     </span>
   )
 }
 
 function BrowserFrame({ url, children }: { url: string; children: ReactNode }) {
   return (
-    <div className="rounded-xl border border-line shadow-2xl overflow-hidden">
-      <div className="bg-subtle border-b border-line px-3 py-2.5 flex items-center gap-2">
+    <div className="bg-surface rounded-xl shadow-card-lg overflow-hidden">
+      <div className="bg-subtle px-3 py-2.5 flex items-center gap-2">
         <div className="flex gap-1.5 shrink-0">
           <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
           <div className="w-2.5 h-2.5 rounded-full bg-amber-400" />
@@ -138,7 +138,7 @@ export default function LandingPage() {
           <Link href="/login" className="bg-brand text-on-brand px-6 py-3 rounded-xl font-semibold hover:bg-brand-strong transition-colors">
             Get started free →
           </Link>
-          <Link href="/pricing" className="border border-line text-ink px-6 py-3 rounded-xl font-medium hover:bg-subtle transition-colors">
+          <Link href="/pricing" className="bg-subtle text-ink px-6 py-3 rounded-xl font-medium hover:bg-tertiary-soft transition-colors">
             See pricing
           </Link>
         </div>
@@ -146,7 +146,7 @@ export default function LandingPage() {
       </section>
 
       {/* Platforms bar */}
-      <section className="bg-subtle border-y border-line py-4 px-6">
+      <section className="bg-subtle py-4 px-6">
         <div className="max-w-5xl mx-auto flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
           <span className="text-xs text-muted font-medium uppercase tracking-wider">Works with</span>
           {PLATFORMS.map(p => (
@@ -179,7 +179,7 @@ export default function LandingPage() {
             </div>
             <div className="space-y-2">
               {MOCK_ITEMS.map((item) => (
-                <div key={item.name} className="flex items-start gap-3 bg-surface border border-line rounded-lg p-3">
+                <div key={item.name} className="flex items-start gap-3 bg-surface shadow-card rounded-lg p-3">
                   <div className={`w-8 h-8 rounded-full ${item.bg} ${item.fg} flex items-center justify-center text-xs font-bold shrink-0`}>
                     {item.initials}
                   </div>
@@ -208,7 +208,7 @@ export default function LandingPage() {
       </section>
 
       {/* How it works */}
-      <section className="bg-subtle border-y border-line px-6 py-20">
+      <section className="bg-subtle px-6 py-20">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-ink mb-3">Up and running in 10 minutes</h2>
@@ -239,12 +239,12 @@ export default function LandingPage() {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="rounded-xl border border-line overflow-hidden">
-            <div className="bg-red-50 border-b border-red-100 px-4 py-2.5 flex items-center gap-2">
+          <div className="rounded-xl shadow-card overflow-hidden">
+            <div className="bg-red-50 px-4 py-2.5 flex items-center gap-2">
               <span>❌</span>
               <span className="text-sm font-semibold text-red-700">Other testimonial tools</span>
             </div>
-            <pre className="bg-gray-50 p-4 text-xs text-muted overflow-x-auto leading-relaxed font-mono whitespace-pre-wrap">
+            <pre className="bg-grey10 p-4 text-xs text-muted overflow-x-auto leading-relaxed font-mono whitespace-pre-wrap">
 {`<!-- Google crawler sees: nothing -->
 
 <iframe
@@ -260,12 +260,12 @@ export default function LandingPage() {
      No star ratings in search. -->`}
             </pre>
           </div>
-          <div className="rounded-xl border border-brand/30 overflow-hidden">
-            <div className="bg-accent-soft border-b border-brand/20 px-4 py-2.5 flex items-center gap-2">
+          <div className="rounded-xl shadow-card overflow-hidden">
+            <div className="bg-accent-soft px-4 py-2.5 flex items-center gap-2">
               <span>✅</span>
               <span className="text-sm font-semibold text-brand-strong">Trustwall</span>
             </div>
-            <pre className="bg-canvas p-4 text-xs text-muted overflow-x-auto leading-relaxed font-mono whitespace-pre-wrap">
+            <pre className="bg-grey10 p-4 text-xs text-muted overflow-x-auto leading-relaxed font-mono whitespace-pre-wrap">
 {`<!-- Google indexes every word -->
 
 <blockquote class="tw-review">
@@ -292,7 +292,7 @@ export default function LandingPage() {
       </section>
 
       {/* Features */}
-      <section className="bg-subtle border-y border-line px-6 py-20">
+      <section className="bg-subtle px-6 py-20">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-ink mb-3">Everything you need, nothing you don&apos;t</h2>
@@ -303,7 +303,7 @@ export default function LandingPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {FEATURES.map(f => (
-              <div key={f.title} className="bg-surface border border-line rounded-2xl p-6">
+              <div key={f.title} className="bg-surface shadow-card rounded-2xl p-6">
                 <span className="text-3xl mb-3 block">{f.icon}</span>
                 <h3 className="font-semibold text-ink mb-2">{f.title}</h3>
                 <p className="text-sm text-muted leading-relaxed">{f.body}</p>
@@ -324,7 +324,7 @@ export default function LandingPage() {
         </div>
         <BrowserFrame url="janecoaching.com/results">
           <div className="bg-white">
-            <div className="border-b border-gray-100 px-6 py-3 flex items-center justify-between">
+            <div className="px-6 py-3 flex items-center justify-between">
               <span className="font-semibold text-gray-800 text-sm">Jane Thompson Coaching</span>
               <div className="hidden md:flex gap-5 text-xs text-gray-400">
                 <span>About</span>
@@ -343,7 +343,7 @@ export default function LandingPage() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
                 {MOCK_ITEMS.map((item) => (
-                  <div key={item.name} className="border border-gray-100 rounded-xl p-4 bg-white shadow-sm">
+                  <div key={item.name} className="rounded-xl p-4 bg-white shadow-sm">
                     <div className="flex items-center gap-2.5 mb-3">
                       <div className={`w-8 h-8 rounded-full ${item.bg} ${item.fg} flex items-center justify-center text-xs font-bold shrink-0`}>
                         {item.initials}

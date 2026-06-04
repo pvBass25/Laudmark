@@ -1,37 +1,46 @@
 @import "tailwindcss";
 
 /* ──────────────────────────────────────────────────────────────
-   BRAND PALETTE — "Testament" (warm editorial, WCAG 2.1 AA / AAA)
+   BRAND PALETTE — "Harbor" (muted) — cool, modern, elegant. WCAG AA/AAA.
    Swap this whole block to re-skin the entire site.
-   Verified contrast vs --color-canvas (#FBF8F2):
-     ink      15.9 : 1  (AAA)   muted     7.1 : 1 (AAA)
-     brand     5.1 : 1  (AA)    brand-strong / highlight  7.3 / 6.7 : 1 (AA)
-     secondary 6.9 : 1  (AA)
-   On-brand pairs (vs --color-brand #A8531B):
-     on-brand (white on brand)         5.4 : 1 (AA)
-     on-brand-soft (#F4DEC8 on brand)  4.1 : 1 (AA large/secondary text)
+   Verified contrast vs --color-canvas (#E2E8E4, soft sage green):
+     ink       13.2 : 1 (AAA)   muted      5.6 : 1 (AA)
+     brand      6.1 : 1 (AA)    brand-strong / highlight  8.4 / 6.1 : 1 (AAA/AA)
+     secondary  4.8 : 1 (AA)    tertiary   4.9 : 1 (AA)
+   On-brand pairs (vs --color-brand #3C5A54):
+     on-brand (white on brand)         7.5 : 1 (AAA)
+     on-brand-soft (#CDDAD6 on brand)  5.2 : 1 (AA)
+   Active state is carried by tint fills, not borders: accent-soft (#C9D5CF)
+     reads brand text at 5.0 : 1 (AA) and steps clearly off the canvas.
    Interactive rule: --color-brand is the ONE color for links AND buttons;
    --color-brand-strong is only its hover/pressed shade.
+   Type: Fraunces (display) + Inter (body).
    ────────────────────────────────────────────────────────────── */
 @theme {
-  --color-canvas:           #FBF8F2;  /* page background (warm paper)   */
-  --color-subtle:           #F4ECDE;  /* alternating section bands      */
-  --color-surface:          #FFFFFF;  /* cards                          */
-  --color-line:             #E9DECB;  /* borders / hairlines            */
-  --color-grey10:           #F6F0E6;  /* form field fill                */
-  --color-ink:              #211C16;  /* primary text                   */
-  --color-muted:            #5E5341;  /* secondary text                 */
-  --color-brand:            #A8531B;  /* links + buttons (the accent)   */
-  --color-brand-strong:     #844014;  /* hover / emphasis               */
-  --color-on-brand:         #FFFFFF;  /* text on a brand surface        */
-  --color-on-brand-soft:    #F4DEC8;  /* muted text on brand            */
-  --color-highlight:        #8A4514;  /* highlighted words              */
-  --color-accent-soft:      #F6E8D4;  /* tinted chips / pills           */
-  --color-secondary:        #9A3412;  /* terracotta — 2nd accent        */
-  --color-secondary-strong: #7C2A0E;  /* terracotta hover               */
-  --color-tertiary:         #8C7B63;  /* warm stone — borders / illus.  */
-  --color-tertiary-soft:    #E8DFD0;  /* stone tint                     */
-  --color-spark:            #E0A23C;  /* marigold — decorative / stars  */
+  --color-canvas:           #E2E8E4;  /* page background (soft sage green) */
+  --color-subtle:           #DAE1DC;  /* alternating section bands (sage) */
+  --color-surface:          #FFFFFF;  /* cards                           */
+  --color-line:             #DDDED5;  /* borders / hairlines             */
+  --color-grey10:           #F0F0EB;  /* form field fill                 */
+  --color-ink:              #1C201F;  /* primary text                    */
+  --color-muted:            #565B56;  /* secondary text                  */
+  --color-brand:            #3C5A54;  /* links + buttons (muted teal)    */
+  --color-brand-strong:     #2C443F;  /* hover / emphasis                */
+  --color-on-brand:         #FFFFFF;  /* text on a brand surface         */
+  --color-on-brand-soft:    #CDDAD6;  /* muted text on brand             */
+  --color-highlight:        #3C5A54;  /* highlighted words               */
+  --color-accent-soft:      #C9D5CF;  /* active fills / chips / pills     */
+  --color-secondary:        #776046;  /* dusty clay — 2nd accent         */
+  --color-secondary-strong: #695340;  /* clay hover                      */
+  --color-tertiary:         #5F635D;  /* cool stone — meta / hints       */
+  --color-tertiary-soft:    #E3E5DE;  /* stone tint                      */
+  --color-spark:            #C8A06A;  /* soft sand — decorative / stars  */
+
+  /* Soft, cool elevation — replaces borders for card/surface separation.
+     Tuned on --color-ink (#1C201F) at low alpha so it reads as a soft,
+     neutral lift. Use `shadow-card` on any lifted surface. */
+  --shadow-card:    0 1px 2px rgba(28, 32, 31, 0.05), 0 4px 12px rgba(28, 32, 31, 0.06);
+  --shadow-card-lg: 0 6px 24px rgba(28, 32, 31, 0.10);
 
   --font-sans:    var(--font-inter);
   --font-display: var(--font-fraunces);
@@ -54,4 +63,23 @@ h1, h2 {
 ::selection {
   background: var(--color-accent-soft);
   color: var(--color-ink);
+}
+
+/* Squircle box — iOS-style superellipse corners.
+   `corner-shape` ships in Chromium 139+; browsers without it fall back
+   gracefully to the plain `border-radius` rounded rectangle. */
+.squircle-box {
+  width: 150px;
+  height: 150px;
+  background-color: var(--color-brand);
+  border-radius: 32px;
+  corner-shape: squircle;
+}
+
+/* ── Squircle corners, app-wide ──────────────────────────────────────────
+   Upgrade every rounded element to an iOS-style superellipse corner — EXCEPT
+   `rounded-full`, so circular avatars, pills, and status dots stay round.
+   Chromium 139+; other browsers keep the normal `border-radius`. */
+:where([class*="rounded"]):not([class*="rounded-full"]) {
+  corner-shape: squircle;
 }

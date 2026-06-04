@@ -13,7 +13,7 @@ export function CopyButton({ text, label = 'Copy link' }: { text: string; label?
   return (
     <button
       onClick={handleCopy}
-      className="text-xs px-3 py-1.5 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+      className="text-xs px-3 py-1.5 rounded-lg bg-subtle text-ink hover:bg-tertiary-soft transition-colors"
     >
       {copied ? '✓ Copied' : label}
     </button>

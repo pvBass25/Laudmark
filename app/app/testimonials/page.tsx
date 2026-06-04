@@ -25,21 +25,24 @@ export default async function TestimonialsPage({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Testimonials</h1>
-        <span className="text-sm text-gray-400">{testimonials?.length ?? 0} shown</span>
+      <div className="flex items-start justify-between">
+        <div>
+          <h1 className="text-2xl font-bold text-ink">Testimonials</h1>
+          <p className="text-sm text-muted mt-1">Review, approve, edit, and hide what you collect.</p>
+        </div>
+        <span className="text-sm text-tertiary">{testimonials?.length ?? 0} shown</span>
       </div>
 
       {/* Filter tabs */}
-      <div className="flex gap-1 bg-gray-100 p-1 rounded-xl w-fit">
+      <div className="flex gap-1 bg-subtle p-1 rounded-xl w-fit">
         {TABS.map(tab => (
           <a
             key={tab}
             href={tab === 'all' ? '/app/testimonials' : `/app/testimonials?status=${tab}`}
             className={`px-4 py-1.5 rounded-lg text-sm font-medium capitalize transition-colors ${
               activeTab === tab
-                ? 'bg-white shadow-sm text-gray-900'
-                : 'text-gray-500 hover:text-gray-700'
+                ? 'bg-surface shadow-card text-ink'
+                : 'text-muted hover:text-ink'
             }`}
           >
             {tab}
@@ -48,7 +51,7 @@ export default async function TestimonialsPage({
       </div>
 
       {!testimonials?.length && (
-        <div className="bg-white rounded-2xl border border-gray-100 p-16 text-center text-gray-400">
+        <div className="bg-surface rounded-2xl shadow-card p-16 text-center text-tertiary">
           No testimonials{activeTab !== 'all' ? ` with status "${activeTab}"` : ''} yet.
         </div>
       )}

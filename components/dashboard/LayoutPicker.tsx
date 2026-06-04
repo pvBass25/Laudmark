@@ -72,10 +72,10 @@ export function LayoutPicker({
               role="radio"
               aria-checked={active}
               onClick={() => select(opt.value)}
-              className={`flex flex-col items-center gap-2 rounded-xl border-2 px-3 py-4 text-center transition-all focus:outline-none focus:ring-2 focus:ring-brand/40 ${
+              className={`flex flex-col items-center gap-2 rounded-xl px-3 py-4 text-center transition-colors focus:outline-none focus:ring-2 focus:ring-brand/40 ${
                 active
-                  ? 'border-brand bg-accent-soft'
-                  : 'border-line bg-grey10 hover:border-gray-300'
+                  ? 'bg-accent-soft shadow-card'
+                  : 'bg-grey10 text-muted hover:bg-tertiary-soft'
               }`}
             >
               <span className={active ? 'text-brand' : 'text-muted'}>{opt.icon}</span>

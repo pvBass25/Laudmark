@@ -15,3 +15,15 @@ export async function updateBrandSettings(formData: FormData) {
 
   revalidatePath('/app/settings')
 }
+
+export async function updateProfile(formData: FormData) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('Unauthorized')
+
+  await supabase.from('profiles').update({
+    full_name: (formData.get('full_name') as string)?.trim() || null,
+  }).eq('id', user.id)
+
+  revalidatePath('/app/settings')
+}

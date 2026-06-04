@@ -83,9 +83,9 @@ function buildEmbedHtml(items: Testimonial[], layout: string, brandingFooter: bo
   const cards = items.map(t => buildCard(t, layout)).join('\n')
 
   const footer = brandingFooter
-    ? `<p style="text-align:center;margin:16px 0 0;font-size:12px;color:#9ca3af;font-family:system-ui,sans-serif;">
+    ? `<p style="text-align:center;margin:16px 0 0;font-size:12px;color:#5F635D;font-family:system-ui,sans-serif;">
         Powered by <a href="https://trustwall.app" target="_blank" rel="noopener noreferrer"
-          style="color:#A8531B;text-decoration:none;font-weight:500;">Trustwall</a>
+          style="color:#3C5A54;text-decoration:none;font-weight:500;">Trustwall</a>
        </p>`
     : ''
 
@@ -98,33 +98,33 @@ function buildCard(t: Testimonial, layout: string): string {
 
   const cardStyle = [
     'background:#fff',
-    'border-radius:12px',
+    'border-radius:16px',
     'padding:20px',
-    'box-shadow:0 1px 4px rgba(0,0,0,.08)',
+    'box-shadow:0 1px 2px rgba(28,32,31,.05), 0 4px 12px rgba(28,32,31,.06)',
     'box-sizing:border-box',
     layout === 'carousel' ? 'min-width:280px;flex-shrink:0;scroll-snap-align:start' : '',
   ].filter(Boolean).join(';')
 
   const stars = t.rating
-    ? `<div style="color:#f59e0b;font-size:15px;letter-spacing:1px;margin-bottom:10px;" aria-label="${t.rating} out of 5 stars">${'★'.repeat(t.rating)}${'☆'.repeat(5 - t.rating)}</div>`
+    ? `<div style="color:#FBBF24;font-size:15px;letter-spacing:1px;margin-bottom:10px;" aria-label="${t.rating} out of 5 stars">${'★'.repeat(t.rating)}${'☆'.repeat(5 - t.rating)}</div>`
     : ''
 
   const avatar = t.author_photo_url
     ? `<img src="${esc(t.author_photo_url)}" alt="${esc(t.author_name)}" width="36" height="36"
          style="width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0;" />`
-    : `<div aria-hidden="true" style="width:36px;height:36px;border-radius:50%;background:#F4ECDE;color:#A8531B;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">${initials(t.author_name)}</div>`
+    : `<div aria-hidden="true" style="width:36px;height:36px;border-radius:50%;background:#C9D5CF;color:#3C5A54;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex-shrink:0;">${initials(t.author_name)}</div>`
 
   const title = t.author_title
-    ? `<span style="display:block;font-size:12px;color:#9ca3af;margin-top:1px;">${esc(t.author_title)}</span>`
+    ? `<span style="display:block;font-size:12px;color:#5F635D;margin-top:1px;">${esc(t.author_title)}</span>`
     : ''
 
   return `<div style="${cardStyle}" itemscope itemtype="https://schema.org/Review">
   ${stars}
-  <blockquote itemprop="reviewBody" style="margin:0 0 16px;padding:0;font-size:15px;line-height:1.65;color:#374151;">${esc(text)}</blockquote>
+  <blockquote itemprop="reviewBody" style="margin:0 0 16px;padding:0;font-size:15px;line-height:1.65;color:#565B56;">${esc(text)}</blockquote>
   <div style="display:flex;align-items:center;gap:10px;" itemprop="author" itemscope itemtype="https://schema.org/Person">
     ${avatar}
     <div>
-      <strong itemprop="name" style="font-size:14px;color:#111827;display:block;">${esc(t.author_name)}</strong>
+      <strong itemprop="name" style="font-size:14px;color:#1C201F;display:block;">${esc(t.author_name)}</strong>
       ${title}
     </div>
   </div>
