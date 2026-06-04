@@ -15,6 +15,7 @@ async function getData(wallId: string) {
     .from('walls')
     .select('id, name, layout, testimonial_ids, user_id')
     .eq('id', wallId)
+    .eq('status', 'published')
     .single()
 
   if (!wall) return null

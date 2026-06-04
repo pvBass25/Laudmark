@@ -14,6 +14,7 @@ export async function GET(
     .from('walls')
     .select('id, name, layout, testimonial_ids, user_id')
     .eq('id', wallId)
+    .eq('status', 'published')
     .single()
 
   if (!wall) return NextResponse.json({ error: 'Not found' }, { status: 404 })

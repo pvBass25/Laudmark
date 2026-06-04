@@ -37,6 +37,21 @@ export async function updateWall(id: string, testimonialIds: string[], layout: s
   revalidatePath(`/app/walls/${id}`)
 }
 
+export async function setWallStatus(id: string, status: 'draft' | 'published') {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('Unauthorized')
+
+  await supabase
+    .from('walls')
+    .update({ status })
+    .eq('id', id)
+    .eq('user_id', user.id)
+
+  revalidatePath(`/app/walls/${id}`)
+  revalidatePath('/app/walls')
+}
+
 export async function deleteWall(id: string) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()

@@ -1,6 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
-import Link from 'next/link'
+import { NavLink } from '@/components/dashboard/NavLink'
 
 export default async function AppLayout({ children }: { children: React.ReactNode }) {
   const supabase = await createClient()
@@ -28,16 +28,5 @@ export default async function AppLayout({ children }: { children: React.ReactNod
       </aside>
       <main className="flex-1 p-8 overflow-auto">{children}</main>
     </div>
-  )
-}
-
-function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return (
-    <Link
-      href={href}
-      className="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
-    >
-      {children}
-    </Link>
   )
 }
