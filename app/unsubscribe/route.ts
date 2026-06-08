@@ -55,8 +55,8 @@ function renderPage(result: 'ok' | 'invalid'): string {
     ? "You won't receive any more testimonial reminders from this sender."
     : 'This unsubscribe link is invalid or has already been used — you can safely ignore it.'
   const icon = ok ? '✓' : '!'
-  const iconBg = ok ? '#F6E8D4' : '#fef2f2'
-  const iconColor = ok ? '#A8531B' : '#dc2626'
+  const iconBg = ok ? '#C9D5CF' : '#fef2f2'
+  const iconColor = ok ? '#3C5A54' : '#dc2626'
 
   return `<!DOCTYPE html>
 <html lang="en">
@@ -66,11 +66,11 @@ function renderPage(result: 'ok' | 'invalid'): string {
   <meta name="robots" content="noindex" />
   <title>${heading} · Trustwall</title>
 </head>
-<body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#FBF8F2;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;">
-  <main style="background:#fff;border:1px solid #E9DECB;border-radius:16px;padding:40px;max-width:420px;width:calc(100% - 32px);text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.04);">
+<body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#E2E8E4;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;">
+  <main style="background:#fff;border-radius:16px;padding:40px;max-width:420px;width:calc(100% - 32px);text-align:center;box-shadow:0 1px 2px rgba(28,32,31,.05), 0 4px 12px rgba(28,32,31,.06);">
     <div style="width:48px;height:48px;border-radius:50%;background:${iconBg};color:${iconColor};font-size:24px;font-weight:700;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;">${icon}</div>
-    <h1 style="margin:0 0 10px;font-size:20px;color:#211C16;">${heading}</h1>
-    <p style="margin:0;font-size:15px;line-height:1.6;color:#5E5341;">${message}</p>
+    <h1 style="margin:0 0 10px;font-size:20px;color:#1C201F;">${heading}</h1>
+    <p style="margin:0;font-size:15px;line-height:1.6;color:#565B56;">${message}</p>
   </main>
 </body>
 </html>`
