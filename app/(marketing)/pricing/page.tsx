@@ -67,7 +67,7 @@ export default function PricingPage() {
 
       {/* Header */}
       <div className="text-center max-w-xl mx-auto mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-3">Simple, honest pricing</h1>
+        <h1 className="text-4xl font-bold text-gray-900 mb-3 leading-[48px]">Simple, honest pricing</h1>
         <p className="text-gray-500">Start free. Upgrade when you need SEO embeds and automation.</p>
       </div>
 

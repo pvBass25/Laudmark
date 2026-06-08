@@ -17,7 +17,7 @@ export default async function CollectionPagesPage() {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-2xl font-bold text-gray-900">Collection pages</h1>
+      <h1 className="text-2xl font-bold text-gray-900 leading-[48px]">Collection pages</h1>
 
       {pages?.length ? (
         <div className="space-y-3">

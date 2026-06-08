@@ -85,7 +85,7 @@ export default async function WallPage({ params }: Props) {
           ) : (
             <span className="text-2xl font-bold" style={{ color: brandColor }}>{brandName}</span>
           )}
-          <h1 className="text-3xl font-bold text-gray-900 mt-2">{wall.name}</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mt-2 leading-[48px]">{wall.name}</h1>
           {testimonials.length > 0 && (
             <p className="text-gray-500 mt-2 text-sm">{testimonials.length} verified {testimonials.length === 1 ? 'review' : 'reviews'}</p>
           )}

@@ -14,7 +14,7 @@ export default async function SettingsPage() {
   return (
     <div className="space-y-8 max-w-lg">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
+        <h1 className="text-2xl font-bold text-gray-900 leading-[48px]">Settings</h1>
         <p className="text-sm text-gray-400 mt-1">Plan: <span className="capitalize font-medium text-gray-600">{profile?.plan ?? 'free'}</span></p>
       </div>
 

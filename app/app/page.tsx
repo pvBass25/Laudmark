@@ -21,7 +21,7 @@ export default async function DashboardPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Overview</h1>
+        <h1 className="text-2xl font-bold text-gray-900 leading-[48px]">Overview</h1>
         <p className="text-sm text-gray-400 mt-1">{user?.email}</p>
       </div>
 

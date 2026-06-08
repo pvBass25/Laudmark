@@ -26,7 +26,7 @@ export default async function WallDetailPage({ params }: { params: Promise<{ wal
     <div className="space-y-6">
       <div className="flex items-center gap-3">
         <Link href="/app/walls" className="text-sm text-gray-400 hover:text-gray-600">← Walls</Link>
-        <h1 className="text-2xl font-bold text-gray-900">{wall.name}</h1>
+        <h1 className="text-2xl font-bold text-gray-900 leading-[48px]">{wall.name}</h1>
         <div className="ml-auto">
           <WallPublishToggle id={wall.id} status={wall.status} />
         </div>

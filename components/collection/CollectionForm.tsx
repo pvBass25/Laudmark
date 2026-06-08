@@ -120,7 +120,7 @@ export function CollectionForm({ page, brand }: { page: PageData; brand: BrandDa
       <div className="flex-1 px-4 py-6 w-full max-w-lg mx-auto space-y-6">
         {/* Page title + prompt */}
         <div>
-          <h1 className="text-xl font-semibold text-gray-900">{page.title}</h1>
+          <h1 className="text-xl font-semibold text-gray-900 leading-[48px]">{page.title}</h1>
           <p className="text-gray-500 text-sm mt-1">{prompt}</p>
         </div>
 

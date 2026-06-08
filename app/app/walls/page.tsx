@@ -17,7 +17,7 @@ export default async function WallsPage() {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-2xl font-bold text-gray-900">Walls</h1>
+      <h1 className="text-2xl font-bold text-gray-900 leading-[48px]">Walls</h1>
 
       {walls?.length ? (
         <div className="space-y-3">

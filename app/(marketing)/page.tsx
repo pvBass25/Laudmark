@@ -125,7 +125,7 @@ export default function LandingPage() {
         <div className="inline-flex items-center gap-2 bg-accent-soft text-brand-strong text-xs font-medium px-3 py-1.5 rounded-full mb-6">
           ✨ Collect video + text testimonials with one link
         </div>
-        <h1 className="text-5xl font-bold tracking-tight text-ink leading-tight mb-5">
+        <h1 className="text-5xl font-bold tracking-tight text-ink leading-[48px] mb-5">
           Show them in a widget that{' '}
           <span className="text-highlight">boosts your Google ranking</span>{' '}
           instead of slowing your site

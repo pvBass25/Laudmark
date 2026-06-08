@@ -4,7 +4,7 @@ export default function TermsPage() {
   return (
     <main className="max-w-2xl mx-auto px-6 py-16">
       <Link href="/" className="text-sm text-brand hover:underline mb-8 block">← Trustwall</Link>
-      <h1 className="text-3xl font-bold text-gray-900 mb-2">Terms of Service</h1>
+      <h1 className="text-3xl font-bold text-gray-900 mb-2 leading-[48px]">Terms of Service</h1>
       <p className="text-sm text-gray-400 mb-8">Last updated: June 2026</p>
 
       <div className="space-y-6 text-sm text-gray-700 leading-relaxed">

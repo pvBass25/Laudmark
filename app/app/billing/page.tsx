@@ -27,7 +27,7 @@ export default async function BillingPage({
   return (
     <div className="space-y-8 max-w-2xl">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Billing</h1>
+        <h1 className="text-2xl font-bold text-gray-900 leading-[48px]">Billing</h1>
         {upgraded && (
           <div className="mt-3 bg-green-50 border border-green-200 text-green-700 rounded-xl px-4 py-3 text-sm">
             🎉 Plan upgraded successfully! Your new features are active.
