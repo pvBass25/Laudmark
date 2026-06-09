@@ -25,7 +25,7 @@ const FEATURES = [
   {
     icon: '🔍',
     title: 'SEO-positive embed',
-    body: 'Review text appears in raw HTML at first paint. Competitors use iframes — Google sees nothing and your page slows down. Trustwall earns you star ratings in search results and keeps your Lighthouse score clean.',
+    body: 'Review text appears in raw HTML at first paint. Competitors use iframes — Google sees nothing and your page slows down. LaudMark earns you star ratings in search results and keeps your Lighthouse score clean.',
   },
   {
     icon: '🎥',
@@ -35,7 +35,7 @@ const FEATURES = [
   {
     icon: '⚡',
     title: 'Automated request sequences',
-    body: 'Send a request right after a purchase or call. Trustwall follows up with two more nudges over 10 days, stopping automatically when someone responds. Other tools charge $99+/mo for this.',
+    body: 'Send a request right after a purchase or call. LaudMark follows up with two more nudges over 10 days, stopping automatically when someone responds. Other tools charge $99+/mo for this.',
   },
   {
     icon: '✅',
@@ -89,7 +89,7 @@ function Stars({ n }: { n: number }) {
 
 function BrowserFrame({ url, children }: { url: string; children: ReactNode }) {
   return (
-    <div className="bg-surface rounded-xl shadow-card-lg overflow-hidden">
+    <div className="bg-surface rounded-xl overflow-hidden">
       <div className="bg-subtle px-3 py-2.5 flex items-center gap-2">
         <div className="flex gap-1.5 shrink-0">
           <div className="w-2.5 h-2.5 rounded-full bg-red-400" />
@@ -111,7 +111,7 @@ export default function LandingPage() {
 
       {/* Nav */}
       <nav className="flex items-center justify-between px-6 py-4 max-w-5xl mx-auto">
-        <span className="font-bold text-lg text-ink">Trustwall</span>
+        <span className="font-bold text-lg text-ink">LaudMark</span>
         <div className="flex items-center gap-4">
           <Link href="/pricing" className="text-sm text-muted hover:text-ink transition-colors">Pricing</Link>
           <Link href="/login" className="text-sm bg-ink text-on-brand px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">
@@ -135,10 +135,10 @@ export default function LandingPage() {
           HTML — Google indexes it, visitors trust it, and your pagespeed stays green.
         </p>
         <div className="flex items-center justify-center gap-3 flex-wrap">
-          <Link href="/login" className="bg-brand text-on-brand px-6 py-3 rounded-xl font-semibold hover:bg-brand-strong transition-colors">
+          <Link href="/login" className="bg-brand text-on-brand px-6 py-3 rounded-lg font-semibold hover:bg-brand-strong transition-colors">
             Get started free →
           </Link>
-          <Link href="/pricing" className="bg-subtle text-ink px-6 py-3 rounded-xl font-medium hover:bg-tertiary-soft transition-colors">
+          <Link href="/pricing" className="bg-subtle text-ink px-6 py-3 rounded-lg font-medium hover:bg-tertiary-soft transition-colors">
             See pricing
           </Link>
         </div>
@@ -164,7 +164,7 @@ export default function LandingPage() {
             your site in minutes.
           </p>
         </div>
-        <BrowserFrame url="app.trustwall.io/app/testimonials">
+        <BrowserFrame url="app.laudmark.io/app/testimonials">
           <div className="bg-canvas p-4">
             <div className="flex items-center justify-between mb-4">
               <div>
@@ -179,7 +179,7 @@ export default function LandingPage() {
             </div>
             <div className="space-y-2">
               {MOCK_ITEMS.map((item) => (
-                <div key={item.name} className="flex items-start gap-3 bg-surface shadow-card rounded-lg p-3">
+                <div key={item.name} className="flex items-start gap-3 bg-surface rounded-lg p-3">
                   <div className={`w-8 h-8 rounded-full ${item.bg} ${item.fg} flex items-center justify-center text-xs font-bold shrink-0`}>
                     {item.initials}
                   </div>
@@ -230,7 +230,7 @@ export default function LandingPage() {
       <section className="max-w-5xl mx-auto px-6 py-20">
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 bg-accent-soft text-brand-strong text-xs font-medium px-3 py-1.5 rounded-full mb-4">
-            🏆 The Trustwall difference
+            🏆 The LaudMark difference
           </div>
           <h2 className="text-3xl font-bold text-ink mb-3">The only embed Google can actually read</h2>
           <p className="text-muted text-lg max-w-xl mx-auto">
@@ -239,7 +239,7 @@ export default function LandingPage() {
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="rounded-xl shadow-card overflow-hidden">
+          <div className="rounded-xl overflow-hidden">
             <div className="bg-red-50 px-4 py-2.5 flex items-center gap-2">
               <span>❌</span>
               <span className="text-sm font-semibold text-red-700">Other testimonial tools</span>
@@ -260,10 +260,10 @@ export default function LandingPage() {
      No star ratings in search. -->`}
             </pre>
           </div>
-          <div className="rounded-xl shadow-card overflow-hidden">
+          <div className="rounded-xl overflow-hidden">
             <div className="bg-accent-soft px-4 py-2.5 flex items-center gap-2">
               <span>✅</span>
-              <span className="text-sm font-semibold text-brand-strong">Trustwall</span>
+              <span className="text-sm font-semibold text-brand-strong">LaudMark</span>
             </div>
             <pre className="bg-grey10 p-4 text-xs text-muted overflow-x-auto leading-relaxed font-mono whitespace-pre-wrap">
 {`<!-- Google indexes every word -->
@@ -286,7 +286,7 @@ export default function LandingPage() {
           </div>
         </div>
         <p className="text-center text-sm text-muted mt-5">
-          Trustwall&apos;s embed is real HTML. Google indexes it. Your star ratings appear in search
+          LaudMark&apos;s embed is real HTML. Google indexes it. Your star ratings appear in search
           results. Competitors&apos; iframes disappear into a black box.
         </p>
       </section>
@@ -303,7 +303,7 @@ export default function LandingPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {FEATURES.map(f => (
-              <div key={f.title} className="bg-surface shadow-card rounded-2xl p-6">
+              <div key={f.title} className="bg-surface rounded-2xl p-6">
                 <span className="text-3xl mb-3 block">{f.icon}</span>
                 <h3 className="font-semibold text-ink mb-2">{f.title}</h3>
                 <p className="text-sm text-muted leading-relaxed">{f.body}</p>
@@ -343,7 +343,7 @@ export default function LandingPage() {
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
                 {MOCK_ITEMS.map((item) => (
-                  <div key={item.name} className="rounded-xl p-4 bg-white shadow-sm">
+                  <div key={item.name} className="rounded-xl p-4 bg-white">
                     <div className="flex items-center gap-2.5 mb-3">
                       <div className={`w-8 h-8 rounded-full ${item.bg} ${item.fg} flex items-center justify-center text-xs font-bold shrink-0`}>
                         {item.initials}
@@ -358,12 +358,12 @@ export default function LandingPage() {
                   </div>
                 ))}
               </div>
-              <p className="text-center text-[10px] text-gray-300">Powered by Trustwall</p>
+              <p className="text-center text-[10px] text-gray-300">Powered by LaudMark</p>
             </div>
           </div>
         </BrowserFrame>
         <p className="text-center text-xs text-muted mt-4">
-          The &ldquo;Powered by Trustwall&rdquo; footer is removed on paid plans.
+          The &ldquo;Powered by LaudMark&rdquo; footer is removed on paid plans.
         </p>
       </section>
 
@@ -371,7 +371,7 @@ export default function LandingPage() {
       <section className="bg-brand text-on-brand text-center px-6 py-16 mx-6 mb-16 rounded-3xl max-w-5xl md:mx-auto">
         <h2 className="text-3xl font-bold mb-3">Ready to collect better testimonials?</h2>
         <p className="text-on-brand-soft mb-7 text-lg">Start free. Upgrade when you&apos;re ready to unlock SEO + automation.</p>
-        <Link href="/login" className="inline-block bg-canvas text-brand font-semibold px-8 py-3 rounded-xl hover:bg-accent-soft transition-colors">
+        <Link href="/login" className="inline-block bg-canvas text-brand font-semibold px-8 py-3 rounded-lg hover:bg-accent-soft transition-colors">
           Get started free
         </Link>
       </section>

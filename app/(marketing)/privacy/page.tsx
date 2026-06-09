@@ -3,7 +3,7 @@ import Link from 'next/link'
 export default function PrivacyPage() {
   return (
     <main className="max-w-2xl mx-auto px-6 py-16">
-      <Link href="/" className="text-sm text-brand hover:underline mb-8 block">← Trustwall</Link>
+      <Link href="/" className="text-sm text-brand hover:underline mb-8 block">← LaudMark</Link>
       <h1 className="text-3xl font-bold text-ink mb-2">Privacy Policy</h1>
       <p className="text-sm text-tertiary mb-8">Last updated: June 2026</p>
 
@@ -15,7 +15,7 @@ export default function PrivacyPage() {
 
         <section>
           <h2 className="font-semibold text-ink text-base mb-2">How we use it</h2>
-          <p>Your data is used solely to operate the Trustwall service — storing and displaying testimonials you collect, processing payments, and sending request emails on your behalf. We do not sell or share your data with third parties for marketing purposes.</p>
+          <p>Your data is used solely to operate the LaudMark service — storing and displaying testimonials you collect, processing payments, and sending request emails on your behalf. We do not sell or share your data with third parties for marketing purposes.</p>
         </section>
 
         <section>
@@ -33,7 +33,7 @@ export default function PrivacyPage() {
         <section>
           <h2 className="font-semibold text-ink text-base mb-2">Testimonial submitters (your customers)</h2>
           <p>Testimonials are only published when explicit consent is given at submission time. Consent is stored with a timestamp and IP address. A submitter may request deletion of their testimonial by contacting the business that collected it, or by emailing us at privacy@trustwall.app.</p>
-          <p className="mt-2">Deleting a testimonial from Trustwall permanently removes the associated video from storage.</p>
+          <p className="mt-2">Deleting a testimonial from LaudMark permanently removes the associated video from storage.</p>
         </section>
 
         <section>

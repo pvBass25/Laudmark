@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
-import { TestimonialCard } from '@/components/dashboard/TestimonialCard'
+import { TestimonialsWorkbench } from '@/components/dashboard/TestimonialsWorkbench'
 
-const TABS = ['all', 'pending', 'approved', 'hidden'] as const
+const STATUS_TABS = ['all', 'pending', 'approved', 'hidden'] as const
 
 export default async function TestimonialsPage({
   searchParams,
@@ -12,55 +12,39 @@ export default async function TestimonialsPage({
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  let query = supabase
-    .from('testimonials')
-    .select('id, author_name, author_title, author_photo_url, rating, raw_text, clean_text, pull_quote, themes, sentiment, status, created_at, type, video_url')
-    .eq('user_id', user!.id)
-    .order('created_at', { ascending: false })
+  const [{ data: testimonials }, { data: walls }] = await Promise.all([
+    supabase
+      .from('testimonials')
+      .select('id, author_name, author_title, author_photo_url, rating, raw_text, clean_text, pull_quote, themes, sentiment, status, created_at, type, video_url')
+      .eq('user_id', user!.id)
+      .order('created_at', { ascending: false }),
+    supabase
+      .from('walls')
+      .select('id, name, layout, testimonial_ids')
+      .eq('user_id', user!.id)
+      .order('created_at', { ascending: false }),
+  ])
 
-  const activeTab = TABS.includes(status as typeof TABS[number]) ? status as typeof TABS[number] : 'all'
-  if (activeTab !== 'all') query = query.eq('status', activeTab)
-
-  const { data: testimonials } = await query
+  const initialStatus = STATUS_TABS.includes(status as typeof STATUS_TABS[number])
+    ? (status as typeof STATUS_TABS[number])
+    : 'all'
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-start justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-ink">Testimonials</h1>
-          <p className="text-sm text-muted mt-1">Review, approve, edit, and hide what you collect.</p>
-        </div>
-        <span className="text-sm text-tertiary">{testimonials?.length ?? 0} shown</span>
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-2xl font-bold text-ink">Testimonials &amp; Walls</h1>
+        <p className="text-sm text-muted mt-1">
+          Review what clients submit, then group the approved ones into walls you can embed — all in one place.
+        </p>
       </div>
 
-      {/* Filter tabs */}
-      <div className="flex gap-1 bg-subtle p-1 rounded-xl w-fit">
-        {TABS.map(tab => (
-          <a
-            key={tab}
-            href={tab === 'all' ? '/app/testimonials' : `/app/testimonials?status=${tab}`}
-            className={`px-4 py-1.5 rounded-lg text-sm font-medium capitalize transition-colors ${
-              activeTab === tab
-                ? 'bg-surface shadow-card text-ink'
-                : 'text-muted hover:text-ink'
-            }`}
-          >
-            {tab}
-          </a>
-        ))}
-      </div>
-
-      {!testimonials?.length && (
-        <div className="bg-surface rounded-2xl shadow-card p-16 text-center text-tertiary">
-          No testimonials{activeTab !== 'all' ? ` with status "${activeTab}"` : ''} yet.
-        </div>
-      )}
-
-      <div className="space-y-4">
-        {testimonials?.map(t => (
-          <TestimonialCard key={t.id} testimonial={t} />
-        ))}
-      </div>
+      <TestimonialsWorkbench
+        testimonials={testimonials ?? []}
+        walls={walls ?? []}
+        appUrl={appUrl}
+        initialStatus={initialStatus}
+      />
     </div>
   )
 }

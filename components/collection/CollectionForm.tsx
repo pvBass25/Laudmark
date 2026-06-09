@@ -113,7 +113,7 @@ export function CollectionForm({ page, brand }: { page: PageData; brand: BrandDa
             className="h-8 mx-auto object-contain"
           />
         ) : (
-          <span className="font-bold text-lg">{brand.brand_name ?? 'Trustwall'}</span>
+          <span className="font-bold text-lg">{brand.brand_name ?? 'LaudMark'}</span>
         )}
       </header>
 
@@ -171,7 +171,7 @@ export function CollectionForm({ page, brand }: { page: PageData; brand: BrandDa
             <div className="flex gap-3">
               <button
                 onClick={() => setStep('choose')}
-                className="flex-1 py-3 rounded-xl bg-subtle text-ink font-medium hover:bg-tertiary-soft transition-colors"
+                className="flex-1 py-3 rounded-lg bg-subtle text-ink font-medium hover:bg-tertiary-soft transition-colors"
               >
                 Back
               </button>
@@ -179,7 +179,7 @@ export function CollectionForm({ page, brand }: { page: PageData; brand: BrandDa
                 onClick={() => setStep('details')}
                 disabled={text.trim().length < 5}
                 style={text.trim().length >= 5 ? { backgroundColor: brandColor } : undefined}
-                className="flex-1 py-3 rounded-xl text-on-brand font-semibold disabled:bg-gray-200 disabled:text-gray-400"
+                className="flex-1 py-3 rounded-lg text-on-brand font-semibold disabled:bg-gray-200 disabled:text-gray-400"
               >
                 Next
               </button>
@@ -200,7 +200,7 @@ export function CollectionForm({ page, brand }: { page: PageData; brand: BrandDa
                 onChange={e => setAuthorName(e.target.value)}
                 placeholder="Jane Smith"
                 autoComplete="name"
-                className="w-full rounded-xl bg-grey10 px-4 py-3 text-sm focus:outline-none focus:ring-2"
+                className="w-full rounded-lg bg-grey10 px-4 py-3 text-sm focus:outline-none focus:ring-2"
                 style={{ '--tw-ring-color': brandColor } as React.CSSProperties}
               />
             </div>
@@ -215,7 +215,7 @@ export function CollectionForm({ page, brand }: { page: PageData; brand: BrandDa
                 value={authorTitle}
                 onChange={e => setAuthorTitle(e.target.value)}
                 placeholder="Life coach at Bloom Coaching"
-                className="w-full rounded-xl bg-grey10 px-4 py-3 text-sm focus:outline-none focus:ring-2"
+                className="w-full rounded-lg bg-grey10 px-4 py-3 text-sm focus:outline-none focus:ring-2"
                 style={{ '--tw-ring-color': brandColor } as React.CSSProperties}
               />
             </div>
@@ -231,7 +231,7 @@ export function CollectionForm({ page, brand }: { page: PageData; brand: BrandDa
                 onChange={e => setAuthorEmail(e.target.value)}
                 placeholder="you@example.com"
                 autoComplete="email"
-                className="w-full rounded-xl bg-grey10 px-4 py-3 text-sm focus:outline-none focus:ring-2"
+                className="w-full rounded-lg bg-grey10 px-4 py-3 text-sm focus:outline-none focus:ring-2"
                 style={{ '--tw-ring-color': brandColor } as React.CSSProperties}
               />
               <p className="text-xs text-tertiary mt-1">We&apos;ll let you know when your testimonial is published.</p>
@@ -315,7 +315,7 @@ export function CollectionForm({ page, brand }: { page: PageData; brand: BrandDa
               onClick={handleSubmit}
               disabled={!consent || !authorName.trim() || submitting}
               style={consent && authorName.trim() && !submitting ? { backgroundColor: brandColor } : undefined}
-              className="w-full py-3.5 rounded-xl text-on-brand font-semibold text-base disabled:bg-gray-200 disabled:text-gray-400 transition-opacity active:opacity-80"
+              className="w-full py-3.5 rounded-lg text-on-brand font-semibold text-base disabled:bg-gray-200 disabled:text-gray-400 transition-opacity active:opacity-80"
             >
               {submitting ? 'Submitting…' : 'Submit testimonial'}
             </button>

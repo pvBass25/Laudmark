@@ -18,7 +18,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "TrustWall",
+  title: "LaudMark",
   description: "Collect video + text testimonials with one link.",
 };
 

@@ -36,11 +36,11 @@
   --color-tertiary-soft:    #E3E5DE;  /* stone tint                      */
   --color-spark:            #C8A06A;  /* soft sand — decorative / stars  */
 
-  /* Soft, cool elevation — replaces borders for card/surface separation.
-     Tuned on --color-ink (#1C201F) at low alpha so it reads as a soft,
-     neutral lift. Use `shadow-card` on any lifted surface. */
-  --shadow-card:    0 1px 2px rgba(28, 32, 31, 0.05), 0 4px 12px rgba(28, 32, 31, 0.06);
-  --shadow-card-lg: 0 6px 24px rgba(28, 32, 31, 0.10);
+  /* No shadows. Surfaces are separated by fill color alone (bg-surface white
+     on bg-canvas sage green provides enough contrast). Tokens kept as `none`
+     so existing class names parse without error. */
+  --shadow-card:    none;
+  --shadow-card-lg: none;
 
   --font-sans:    var(--font-inter);
   --font-display: var(--font-fraunces);

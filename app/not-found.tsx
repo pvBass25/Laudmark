@@ -16,13 +16,13 @@ export default function NotFound() {
         <div className="flex items-center justify-center gap-3 flex-wrap">
           <Link
             href="/"
-            className="bg-brand text-on-brand px-6 py-3 rounded-xl font-semibold hover:bg-brand-strong transition-colors"
+            className="bg-brand text-on-brand px-6 py-3 rounded-lg font-semibold hover:bg-brand-strong transition-colors"
           >
             Go home
           </Link>
           <Link
             href="/pricing"
-            className="bg-subtle text-ink px-6 py-3 rounded-xl font-medium hover:bg-tertiary-soft transition-colors"
+            className="bg-subtle text-ink px-6 py-3 rounded-lg font-medium hover:bg-tertiary-soft transition-colors"
           >
             See pricing
           </Link>

@@ -26,7 +26,7 @@ export async function GET(
 
   const plan = (profile?.plan ?? 'free') as Plan
   const { brandingFooter, seoEmbed } = PLANS[plan]
-  const brandName = profile?.brand_name ?? 'Trustwall'
+  const brandName = profile?.brand_name ?? 'LaudMark'
 
   // Fetch testimonials in wall order, consented + approved only
   let testimonials: Testimonial[] = []
@@ -85,7 +85,7 @@ function buildEmbedHtml(items: Testimonial[], layout: string, brandingFooter: bo
   const footer = brandingFooter
     ? `<p style="text-align:center;margin:16px 0 0;font-size:12px;color:#5F635D;font-family:system-ui,sans-serif;">
         Powered by <a href="https://trustwall.app" target="_blank" rel="noopener noreferrer"
-          style="color:#3C5A54;text-decoration:none;font-weight:500;">Trustwall</a>
+          style="color:#3C5A54;text-decoration:none;font-weight:500;">LaudMark</a>
        </p>`
     : ''
 

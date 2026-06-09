@@ -23,6 +23,28 @@ export async function createWall(formData: FormData) {
   redirect(`/app/walls/${data.id}`)
 }
 
+// Like createWall, but returns the new id instead of redirecting — used by the
+// combined Testimonials & Walls page so it can create a wall and select it
+// inline without leaving the page.
+export async function createWallNamed(name: string, layout: string): Promise<string> {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('Unauthorized')
+
+  const trimmed = name.trim()
+  if (!trimmed) throw new Error('Name is required')
+
+  const { data, error } = await supabase.from('walls').insert({
+    user_id: user.id,
+    name: trimmed,
+    layout,
+  }).select('id').single()
+
+  if (error) throw new Error(error.message)
+  revalidatePath('/app/testimonials')
+  return data.id
+}
+
 export async function updateWall(id: string, testimonialIds: string[], layout: string) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
@@ -35,6 +57,7 @@ export async function updateWall(id: string, testimonialIds: string[], layout: s
     .eq('user_id', user.id)
 
   revalidatePath(`/app/walls/${id}`)
+  revalidatePath('/app/testimonials')
 }
 
 export async function deleteWall(id: string) {

@@ -5,9 +5,9 @@ function getResend() {
   if (!_resend) _resend = new Resend(process.env.RESEND_API_KEY!)
   return _resend
 }
-const FROM = () => process.env.RESEND_FROM ?? 'Trustwall <hello@trustwall.app>'
+const FROM = () => process.env.RESEND_FROM ?? 'LaudMark <hello@trustwall.app>'
 // CAN-SPAM / EU law require a valid physical postal address in marketing email.
-const POSTAL_ADDRESS = () => process.env.COMPANY_ADDRESS ?? 'Trustwall · [your business postal address]'
+const POSTAL_ADDRESS = () => process.env.COMPANY_ADDRESS ?? 'LaudMark · [your business postal address]'
 
 function baseHtml(body: string, unsubscribeNote?: string): string {
   return `<!DOCTYPE html>
