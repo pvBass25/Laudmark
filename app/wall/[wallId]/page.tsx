@@ -63,7 +63,7 @@ export default async function WallPage({ params }: Props) {
   if (!data) notFound()
 
   const { wall, profile, testimonials, planConfig } = data
-  const brandName = profile?.brand_name ?? 'Trustwall'
+  const brandName = profile?.brand_name ?? 'LaudMark'
   const brandColor = profile?.brand_color ?? '#111111'
   const jsonLd = planConfig.seoEmbed ? buildJsonLd(brandName, testimonials) : null
 
@@ -118,7 +118,7 @@ export default async function WallPage({ params }: Props) {
           <div className="text-center mt-10 text-xs text-tertiary">
             Powered by{' '}
             <a href="https://trustwall.app" target="_blank" rel="noopener noreferrer" className="text-brand hover:underline">
-              Trustwall
+              LaudMark
             </a>
           </div>
         )}

@@ -19,13 +19,13 @@ export default async function CollectionPagesPage() {
     <div className="space-y-8">
       <div>
         <h1 className="text-2xl font-bold text-ink">Collection pages</h1>
-        <p className="text-sm text-muted mt-1">Create and share links where clients leave testimonials.</p>
+        <p className="text-sm text-muted mt-1">Each page is a shareable link where clients record a video or write a testimonial — no account needed on their end. Create one per brand, offer, or campaign.</p>
       </div>
 
       {pages?.length ? (
         <div className="space-y-3">
           {pages.map(p => (
-            <div key={p.id} className="bg-surface rounded-2xl shadow-card px-5 py-4 flex items-center justify-between gap-4">
+            <div key={p.id} className="bg-surface rounded-2xl px-5 py-4 flex items-center justify-between gap-4">
               <div>
                 <div className="font-medium text-ink text-sm">{p.title}</div>
                 <div className="text-xs text-tertiary mt-0.5">/c/{p.slug}</div>
@@ -44,7 +44,7 @@ export default async function CollectionPagesPage() {
           ))}
         </div>
       ) : (
-        <div className="bg-surface rounded-2xl shadow-card p-12 text-center text-tertiary text-sm">
+        <div className="bg-surface rounded-2xl p-12 text-center text-tertiary text-sm">
           No collection pages yet. Create your first one below.
         </div>
       )}

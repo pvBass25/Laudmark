@@ -64,7 +64,7 @@ function renderPage(result: 'ok' | 'invalid'): string {
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta name="robots" content="noindex" />
-  <title>${heading} · Trustwall</title>
+  <title>${heading} · LaudMark</title>
 </head>
 <body style="margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:#E2E8E4;font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;">
   <main style="background:#fff;border-radius:16px;padding:40px;max-width:420px;width:calc(100% - 32px);text-align:center;box-shadow:0 1px 2px rgba(28,32,31,.05), 0 4px 12px rgba(28,32,31,.06);">

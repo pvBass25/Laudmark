@@ -187,7 +187,7 @@ export function VideoRecorder({ slug, brandColor, onComplete }: Props) {
         <button
           onClick={startRecording}
           style={{ backgroundColor: brandColor }}
-          className="w-full py-3 rounded-xl text-on-brand font-semibold text-base"
+          className="w-full py-3 rounded-lg text-on-brand font-semibold text-base"
         >
           Start recording
         </button>
@@ -196,7 +196,7 @@ export function VideoRecorder({ slug, brandColor, onComplete }: Props) {
       {recorderState === 'recording' && (
         <button
           onClick={stopRecording}
-          className="w-full py-3 rounded-xl bg-red-500 text-white font-semibold text-base"
+          className="w-full py-3 rounded-lg bg-red-500 text-white font-semibold text-base"
         >
           Stop recording
         </button>
@@ -208,14 +208,14 @@ export function VideoRecorder({ slug, brandColor, onComplete }: Props) {
           <div className="flex gap-3">
             <button
               onClick={reRecord}
-              className="flex-1 py-3 rounded-xl bg-subtle text-ink font-medium hover:bg-tertiary-soft transition-colors"
+              className="flex-1 py-3 rounded-lg bg-subtle text-ink font-medium hover:bg-tertiary-soft transition-colors"
             >
               Re-record
             </button>
             <button
               onClick={upload}
               style={{ backgroundColor: brandColor }}
-              className="flex-1 py-3 rounded-xl text-on-brand font-semibold"
+              className="flex-1 py-3 rounded-lg text-on-brand font-semibold"
             >
               Use this
             </button>

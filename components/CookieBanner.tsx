@@ -43,7 +43,7 @@ export function CookieBanner() {
       </p>
       <button
         onClick={accept}
-        className="shrink-0 bg-brand text-on-brand text-sm font-semibold px-5 py-2.5 rounded-xl hover:bg-brand-strong transition-colors"
+        className="shrink-0 bg-brand text-on-brand text-sm font-semibold px-5 py-2.5 rounded-lg hover:bg-brand-strong transition-colors"
       >
         Got it
       </button>

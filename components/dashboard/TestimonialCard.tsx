@@ -25,7 +25,16 @@ const STATUS_COLORS: Record<string, string> = {
   hidden: 'bg-gray-100 text-gray-500',
 }
 
-export function TestimonialCard({ testimonial: t }: { testimonial: Testimonial }) {
+// Optional wall-curation control: shown on approved testimonials when a wall is
+// active on the combined Testimonials & Walls page, so you can add/remove a
+// testimonial from that wall right here.
+interface WallToggle {
+  inWall: boolean
+  wallName: string
+  onToggle: () => void
+}
+
+export function TestimonialCard({ testimonial: t, wallToggle }: { testimonial: Testimonial; wallToggle?: WallToggle }) {
   const [pending, startTransition] = useTransition()
   const [editing, setEditing] = useState(false)
   const [draftText, setDraftText] = useState(t.clean_text ?? t.raw_text ?? '')
@@ -51,7 +60,7 @@ export function TestimonialCard({ testimonial: t }: { testimonial: Testimonial }
   }
 
   return (
-    <div className={`bg-surface rounded-2xl shadow-card p-5 space-y-4 transition-opacity ${pending ? 'opacity-50' : ''}`}>
+    <div className={`bg-surface rounded-2xl p-5 space-y-4 transition-opacity ${pending ? 'opacity-50' : ''}`}>
       <div className="flex items-start justify-between gap-4">
         {/* Author */}
         <div className="flex items-center gap-3 min-w-0">
@@ -96,14 +105,14 @@ export function TestimonialCard({ testimonial: t }: { testimonial: Testimonial }
             value={draftText}
             onChange={e => setDraftText(e.target.value)}
             rows={4}
-            className="w-full rounded-xl bg-grey10 px-3 py-2 text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-brand/40"
+            className="w-full rounded-lg bg-grey10 px-3 py-2 text-sm leading-relaxed focus:outline-none focus:ring-2 focus:ring-brand/40"
           />
           <label className="block text-xs font-medium text-muted">Pull quote <span className="font-normal text-tertiary">(short highlight)</span></label>
           <input
             value={draftQuote}
             onChange={e => setDraftQuote(e.target.value)}
             placeholder="A punchy one-liner from the testimonial"
-            className="w-full rounded-xl bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40"
+            className="w-full rounded-lg bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40"
           />
           <div className="flex gap-2 pt-1">
             <button onClick={handleSave} disabled={pending}
@@ -136,9 +145,19 @@ export function TestimonialCard({ testimonial: t }: { testimonial: Testimonial }
 
       {/* Actions + date */}
       <div className="flex items-center justify-between pt-3">
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           {!editing && (
             <>
+              {wallToggle && (
+                <button onClick={wallToggle.onToggle} disabled={pending}
+                  className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-colors ${
+                    wallToggle.inWall
+                      ? 'bg-accent-soft text-brand hover:bg-tertiary-soft'
+                      : 'bg-brand text-on-brand hover:bg-brand-strong'
+                  }`}>
+                  {wallToggle.inWall ? `✓ In ${wallToggle.wallName}` : `+ Add to ${wallToggle.wallName}`}
+                </button>
+              )}
               {t.status !== 'approved' && (
                 <button onClick={() => handleStatus('approved')} disabled={pending}
                   className="text-xs px-3 py-1.5 rounded-lg bg-green-50 text-green-700 hover:bg-green-100 font-medium transition-colors">

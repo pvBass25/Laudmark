@@ -11,7 +11,7 @@
 
 import type { ReactNode } from 'react'
 
-export const metadata = { title: 'Style guide · Laudmark' }
+export const metadata = { title: 'Style guide · LaudMark' }
 
 // ── Token data (mirrors STYLEGUIDE.md §1 + the @theme block in globals.css) ──
 type Swatch = { name: string; util: string; hex: string; use: string }
@@ -80,7 +80,7 @@ export default function StyleGuidePage() {
         <div className={SWATCH_GRID}>
           {FILLS.map(s => (
             <div key={s.name} className="space-y-2">
-              <div className={`${s.util} h-16 rounded-xl shadow-card`} />
+              <div className={`${s.util} h-16 rounded-xl`} />
               <div>
                 <div className="text-sm font-medium text-ink">{s.name}</div>
                 <div className="text-xs text-tertiary font-mono">{s.util}</div>
@@ -96,7 +96,7 @@ export default function StyleGuidePage() {
         <div className={SWATCH_GRID}>
           {BRAND.map(s => (
             <div key={s.name} className="space-y-2">
-              <div className={`${s.util} h-16 rounded-xl shadow-card flex items-center justify-center`}>
+              <div className={`${s.util} h-16 rounded-xl flex items-center justify-center`}>
                 <span className={`${s.on} font-display text-xl`}>Aa</span>
               </div>
               <div>
@@ -117,7 +117,7 @@ export default function StyleGuidePage() {
         <div className={SWATCH_GRID}>
           {TEXT.map(s => (
             <div key={s.name} className="space-y-2">
-              <div className={`${s.tile ?? 'bg-surface'} h-16 rounded-xl shadow-card flex items-center justify-center`}>
+              <div className={`${s.tile ?? 'bg-surface'} h-16 rounded-xl flex items-center justify-center`}>
                 <span className={`${s.util} font-display text-2xl font-semibold`}>Aa</span>
               </div>
               <div>
@@ -132,7 +132,7 @@ export default function StyleGuidePage() {
 
       {/* TYPOGRAPHY */}
       <Section title="Typography">
-        <div className="bg-surface rounded-2xl shadow-card p-6 space-y-5">
+        <div className="bg-surface rounded-2xl p-6 space-y-5">
           <div className="space-y-1">
             <div className="text-5xl font-bold tracking-tight text-ink leading-tight font-display">Collect trust, honestly.</div>
             <Cls>text-5xl font-bold tracking-tight · Fraunces (h1)</Cls>
@@ -164,21 +164,21 @@ export default function StyleGuidePage() {
 
       {/* BUTTONS */}
       <Section title="Buttons">
-        <div className="bg-surface rounded-2xl shadow-card p-6 space-y-4">
+        <div className="bg-surface rounded-2xl p-6 space-y-4">
           <div className="flex flex-wrap items-center gap-3">
-            <button type="button" className="bg-brand text-on-brand px-6 py-3 rounded-xl font-semibold hover:bg-brand-strong disabled:opacity-50 transition-colors">Primary action</button>
-            <button type="button" className="bg-subtle text-ink px-6 py-3 rounded-xl font-medium hover:bg-tertiary-soft transition-colors">Secondary</button>
+            <button type="button" className="bg-brand text-on-brand px-6 py-3 rounded-lg font-semibold hover:bg-brand-strong disabled:opacity-50 transition-colors">Primary action</button>
+            <button type="button" className="bg-subtle text-ink px-6 py-3 rounded-lg font-medium hover:bg-tertiary-soft transition-colors">Secondary</button>
             <button type="button" className="bg-ink text-on-brand px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Ink action</button>
             <button type="button" className="bg-brand text-on-brand px-6 py-3 rounded-full font-semibold hover:bg-brand-strong transition-colors">Pill</button>
-            <button type="button" disabled className="bg-brand text-on-brand px-6 py-3 rounded-xl font-semibold disabled:opacity-50 transition-colors">Disabled</button>
+            <button type="button" disabled className="bg-brand text-on-brand px-6 py-3 rounded-lg font-semibold disabled:opacity-50 transition-colors">Disabled</button>
           </div>
-          <Cls>bg-brand text-on-brand hover:bg-brand-strong rounded-xl · always transition-colors</Cls>
+          <Cls>bg-brand text-on-brand hover:bg-brand-strong rounded-lg · always transition-colors</Cls>
         </div>
       </Section>
 
       {/* LINKS */}
       <Section title="Links">
-        <div className="bg-surface rounded-2xl shadow-card p-6 space-y-2">
+        <div className="bg-surface rounded-2xl p-6 space-y-2">
           <p className="text-sm text-muted">
             Inline <a href="#top" className="text-brand font-medium hover:text-brand-strong underline underline-offset-2">link styling</a> — same brand colour as buttons, always.
           </p>
@@ -188,52 +188,52 @@ export default function StyleGuidePage() {
 
       {/* FORM FIELDS */}
       <Section title="Form fields">
-        <div className="bg-surface rounded-2xl shadow-card p-6 space-y-4 max-w-md">
+        <div className="bg-surface rounded-2xl p-6 space-y-4 max-w-md">
           <div className="space-y-1">
             <label className="text-sm font-medium text-ink">Text input</label>
-            <input type="text" placeholder="grey10 fill, soft teal focus ring" className="w-full rounded-xl bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40" />
+            <input type="text" placeholder="grey10 fill, soft teal focus ring" className="w-full rounded-lg bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40" />
           </div>
           <div className="space-y-1">
             <label className="text-sm font-medium text-ink">Textarea</label>
-            <textarea rows={3} placeholder="Tell us what changed…" className="w-full rounded-xl bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40" />
+            <textarea rows={3} placeholder="Tell us what changed…" className="w-full rounded-lg bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40" />
           </div>
           <div className="space-y-1">
             <label className="text-sm font-medium text-ink">Select</label>
-            <select className="w-full rounded-xl bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40">
+            <select className="w-full rounded-lg bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40">
               <option>Grid</option>
               <option>Carousel</option>
               <option>List</option>
             </select>
           </div>
-          <Cls>rounded-xl bg-grey10 · focus:ring-2 focus:ring-brand/40</Cls>
+          <Cls>rounded-lg bg-grey10 · focus:ring-2 focus:ring-brand/40</Cls>
         </div>
       </Section>
 
       {/* SINGLE-SELECT BOXES */}
       <Section title="Single-select boxes (no dropdowns)">
         <div role="radiogroup" aria-label="Layout demo" className="grid grid-cols-3 gap-3 max-w-lg">
-          <button type="button" role="radio" aria-checked={true} className="bg-accent-soft text-brand shadow-card rounded-xl px-4 py-6 text-sm font-medium">
+          <button type="button" role="radio" aria-checked={true} className="bg-accent-soft text-brand rounded-lg px-4 py-6 text-sm font-medium">
             Grid
             <div className="text-xs text-brand-strong mt-1">active</div>
           </button>
-          <button type="button" role="radio" aria-checked={false} className="bg-grey10 text-muted hover:bg-tertiary-soft rounded-xl px-4 py-6 text-sm font-medium transition-colors">Carousel</button>
-          <button type="button" role="radio" aria-checked={false} className="bg-grey10 text-muted hover:bg-tertiary-soft rounded-xl px-4 py-6 text-sm font-medium transition-colors">List</button>
+          <button type="button" role="radio" aria-checked={false} className="bg-grey10 text-muted hover:bg-tertiary-soft rounded-lg px-4 py-6 text-sm font-medium transition-colors">Carousel</button>
+          <button type="button" role="radio" aria-checked={false} className="bg-grey10 text-muted hover:bg-tertiary-soft rounded-lg px-4 py-6 text-sm font-medium transition-colors">List</button>
         </div>
-        <Cls>active: bg-accent-soft text-brand shadow-card · inactive: bg-grey10 text-muted</Cls>
+        <Cls>active: bg-accent-soft text-brand · inactive: bg-grey10 text-muted</Cls>
       </Section>
 
-      {/* CARDS & ELEVATION */}
-      <Section title="Cards & elevation">
+      {/* CARDS & SURFACES */}
+      <Section title="Cards & surfaces">
         <div className="grid sm:grid-cols-3 gap-4">
-          <div className="bg-surface rounded-2xl shadow-card p-6">
-            <div className="font-semibold text-ink">Resting card</div>
-            <p className="text-sm text-muted mt-1">bg-surface · shadow-card</p>
+          <div className="bg-surface rounded-2xl p-6">
+            <div className="font-semibold text-ink">Standard card</div>
+            <p className="text-sm text-muted mt-1">bg-surface · no shadow</p>
           </div>
-          <div className="bg-surface rounded-2xl shadow-card-lg p-6">
-            <div className="font-semibold text-ink">Raised card</div>
-            <p className="text-sm text-muted mt-1">shadow-card-lg (hover / modal)</p>
+          <div className="bg-subtle rounded-2xl p-6">
+            <div className="font-semibold text-ink">Subtle card</div>
+            <p className="text-sm text-muted mt-1">bg-subtle · section bands</p>
           </div>
-          <div className="bg-accent-soft rounded-2xl shadow-card p-6">
+          <div className="bg-accent-soft rounded-2xl p-6">
             <div className="font-semibold text-brand">Selected card</div>
             <p className="text-sm text-brand-strong mt-1">bg-accent-soft (fill, no border)</p>
           </div>
@@ -242,7 +242,7 @@ export default function StyleGuidePage() {
 
       {/* SEMANTIC COLOURS */}
       <Section title="Semantic colours (state, not brand)">
-        <div className="bg-surface rounded-2xl shadow-card p-6 space-y-4">
+        <div className="bg-surface rounded-2xl p-6 space-y-4">
           <div className="flex flex-wrap items-center gap-2">
             <Badge className="bg-green-50 text-green-700">Approved</Badge>
             <Badge className="bg-amber-50 text-amber-700">Pending</Badge>
@@ -258,8 +258,8 @@ export default function StyleGuidePage() {
       </Section>
 
       {/* CONVENTIONS FOOTNOTE */}
-      <section className="bg-subtle rounded-2xl shadow-card p-6 text-sm text-muted space-y-2">
-        <p><span className="font-semibold text-ink">Borderless.</span> No borders anywhere — separate surfaces with fills + <code className="font-mono">shadow-card</code> + spacing. The only exception is the accessibility focus ring.</p>
+      <section className="bg-subtle rounded-2xl p-6 text-sm text-muted space-y-2">
+        <p><span className="font-semibold text-ink">Borderless &amp; shadowless.</span> No borders or shadows anywhere — separate surfaces with fills + spacing alone. The only exception is the accessibility focus ring.</p>
         <p><span className="font-semibold text-ink">Squircles.</span> Every rounded element renders as an iOS superellipse corner (Chromium 139+), except <code className="font-mono">rounded-full</code>.</p>
         <p><span className="font-semibold text-ink">Source of truth.</span> This page mirrors <code className="font-mono">STYLEGUIDE.md</code> and the <code className="font-mono">@theme</code> block in <code className="font-mono">app/globals.css</code> — edit those to re-skin the whole app.</p>
       </section>

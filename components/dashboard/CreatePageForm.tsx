@@ -26,7 +26,7 @@ export function CreatePageForm({ appUrl }: { appUrl: string }) {
         <div className="flex items-center gap-2">
           <span className="text-sm text-tertiary">/c/</span>
           <input name="slug" required placeholder="my-coaching" pattern="[a-z0-9-]+"
-            className="flex-1 rounded-xl bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40" />
+            className="flex-1 rounded-lg bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40" />
         </div>
         <p className="text-xs text-tertiary mt-1">Lowercase letters, numbers, hyphens only</p>
 
@@ -50,19 +50,19 @@ export function CreatePageForm({ appUrl }: { appUrl: string }) {
       <div>
         <label className="block text-sm font-medium text-muted mb-1">Page title</label>
         <input name="title" required defaultValue="Share your experience"
-          className="w-full rounded-xl bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40" />
+          className="w-full rounded-lg bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40" />
       </div>
 
       <div>
         <label className="block text-sm font-medium text-muted mb-1">Prompt question</label>
         <input name="prompt" required placeholder="How has working with us changed things for you?"
-          className="w-full rounded-xl bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40" />
+          className="w-full rounded-lg bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40" />
       </div>
 
       {error && <p className="text-red-700 text-sm">{error}</p>}
 
       <button type="submit" disabled={pending}
-        className="px-4 py-2 bg-brand text-on-brand text-sm font-medium rounded-xl hover:bg-brand-strong disabled:opacity-50 transition-colors">
+        className="px-4 py-2 bg-brand text-on-brand text-sm font-medium rounded-lg hover:bg-brand-strong disabled:opacity-50 transition-colors">
         {pending ? 'Creating…' : 'Create page'}
       </button>
     </form>

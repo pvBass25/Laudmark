@@ -61,7 +61,7 @@ export default function PricingPage() {
     <main className="min-h-screen bg-canvas py-16 px-6">
       {/* Nav */}
       <div className="max-w-5xl mx-auto mb-2 flex items-center justify-between">
-        <Link href="/" className="font-bold text-ink">Trustwall</Link>
+        <Link href="/" className="font-bold text-ink">LaudMark</Link>
         <Link href="/login" className="text-sm text-brand hover:underline">Sign in →</Link>
       </div>
 
@@ -76,11 +76,7 @@ export default function PricingPage() {
         {PLANS.map(plan => (
           <div
             key={plan.name}
-            className={`rounded-2xl p-7 flex flex-col bg-surface ${
-              plan.highlighted
-                ? 'shadow-card-lg'
-                : 'shadow-card'
-            }`}
+            className="rounded-2xl p-7 flex flex-col bg-surface"
           >
             {plan.highlighted && (
               <div className="text-xs font-semibold text-brand bg-accent-soft px-3 py-1 rounded-full w-fit mb-3">
@@ -109,7 +105,7 @@ export default function PricingPage() {
 
             <Link
               href={plan.href}
-              className={`text-center py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+              className={`text-center py-2.5 rounded-lg text-sm font-semibold transition-colors ${
                 plan.highlighted
                   ? 'bg-brand text-on-brand hover:bg-brand-strong'
                   : 'bg-subtle text-ink hover:bg-tertiary-soft'

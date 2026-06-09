@@ -21,15 +21,17 @@ export async function createCheckoutSession(priceId: string) {
       ? { customer: profile.stripe_customer_id }
       : { customer_email: user.email ?? undefined }),
     line_items: [{ price: priceId, quantity: 1 }],
-    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/app/settings?upgraded=1`,
-    cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/app/settings`,
+    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/app/account?upgraded=1`,
+    cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/app/account`,
     metadata: { userId: user.id },
   })
 
   redirect(session.url!)
 }
 
-export async function createPortalSession() {
+// Returns the Stripe Billing Portal URL (instead of redirecting) so the client
+// can open it in a new tab.
+export async function createPortalUrl(): Promise<string> {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error('Unauthorized')
@@ -44,8 +46,8 @@ export async function createPortalSession() {
 
   const session = await stripe.billingPortal.sessions.create({
     customer: profile.stripe_customer_id,
-    return_url: `${process.env.NEXT_PUBLIC_APP_URL}/app/settings`,
+    return_url: `${process.env.NEXT_PUBLIC_APP_URL}/app/account`,
   })
 
-  redirect(session.url)
+  return session.url
 }

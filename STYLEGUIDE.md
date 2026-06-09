@@ -1,3 +1,28 @@
+<!-- ════════════════════════════════════════════════════════════════════════
+  ⛔ CHANGE-CONTROL & STYLE LOCK — HIGHEST PRIORITY · NON-NEGOTIABLE · PERMANENT
+  Reproduced VERBATIM at the top of EVERY .md file in this project, by direct
+  standing order of the project owner. It governs every part of the project
+  equally — marketing, product, dashboard, emails, embeds, configs, scripts.
+  No exceptions. Never remove, move, or weaken this block.
+═════════════════════════════════════════════════════════════════════════════ -->
+
+> # ⛔ CHANGE-CONTROL & STYLE LOCK (read first — overrides everything below)
+>
+> 1. **Change NOTHING unless the user gives a direct, explicit command to change
+>    that specific thing.** No refactors, no cleanups, no restructuring, no new
+>    files, no renamed or moved files, no "better" or "different" approaches, no
+>    extra features, no proactive fixes. If the user did not explicitly ask for it,
+>    do not touch it. **Doing nothing is the correct default.**
+> 2. **The style guide IS the brand.** `STYLEGUIDE.md` (the "Harbor" direction)
+>    together with `app/globals.css` is the SINGLE source of truth for ALL styling,
+>    everywhere. When the user asks for a change, implement it ONLY by reusing the
+>    tokens, components, and patterns already defined there. **Never invent or
+>    introduce a new or different color, font, spacing, radius, component, or style.
+>    Never create a new look.** If it is not already in the style guide, STOP and ask.
+> 3. This applies to EVERY part of the project equally — it does not matter whether
+>    it is the marketing page or the actual product. The brand is the style guide.
+> 4. When unsure whether a change is in scope or on-brand, STOP and ask first.
+
 # TrustWall UI Style Guide — "Harbor" (muted)
 
 > Reference for all UI styling. When adding or editing UI, match these patterns so
@@ -5,9 +30,10 @@
 > truth** — always prefer a token class (`bg-brand`, `text-ink`, `shadow-card`)
 > over a raw Tailwind color (`bg-teal-600`, `text-gray-500`).
 >
-> **The UI is fully borderless: no outlines or borders on any element** (cards, fields,
-> buttons, selection boxes, badges, dividers). Separate and lift surfaces with fills +
-> `shadow-card` + spacing. The only exception is the accessibility focus ring. See §11.
+> **The UI is fully borderless and shadowless: no outlines, borders, or box-shadows on
+> any element** (cards, fields, buttons, selection boxes, badges, dividers). Surfaces are
+> separated by fill color alone (`bg-surface` white on `bg-canvas` sage green). The only
+> exception is the accessibility focus ring. See §11.
 >
 > The full visual brand exploration (other directions, logos) lives in `/brand`.
 > The interactive guide is published as a live Cowork artifact. This file is the
@@ -60,8 +86,9 @@ app, edit that one block.** Alternate directions are saved in
 clickable — links *and* buttons *and* active states. `brand-strong` is only its
 hover/pressed shade. Never introduce a second link color.
 
-**Elevation (borderless):** the UI uses **no borders** — lift cards and surfaces off
-the greige with the soft `shadow-card` / `shadow-card-lg` tokens instead (see §7, §11).
+**Elevation (borderless, shadowless):** the UI uses **no borders and no shadows** —
+surfaces are separated by fill color alone (`bg-surface` white on `bg-canvas` sage
+provides enough contrast). See §7, §11.
 **Stars:** gold — `text-amber-400` filled, `text-gray-200` empty (or `text-spark` for a
 softer sand).
 
@@ -98,15 +125,15 @@ buttons, and UI labels in Inter** — Fraunces at small sizes reads too heavy.
 
 ```html
 <!-- Primary -->
-class="bg-brand text-on-brand px-6 py-3 rounded-xl font-semibold
+class="bg-brand text-on-brand px-6 py-3 rounded-lg font-semibold
        hover:bg-brand-strong disabled:opacity-50 transition-colors"
 <!-- Secondary (quiet fill) -->
-class="bg-subtle text-ink px-6 py-3 rounded-xl font-medium hover:bg-tertiary-soft transition-colors"
+class="bg-subtle text-ink px-6 py-3 rounded-lg font-medium hover:bg-tertiary-soft transition-colors"
 <!-- Ink (quiet dark action) -->
 class="bg-ink text-on-brand px-4 py-2 rounded-lg hover:opacity-90 transition-opacity"
 ```
 
-Radius `rounded-xl` (pills `rounded-full`); corners render as iOS squircles (§9);
+Radius `rounded-lg` (8px; pills `rounded-full`); corners render as iOS squircles (§9);
 always `transition-colors`; disabled `disabled:opacity-50`.
 
 ---
@@ -126,11 +153,11 @@ Same `brand` color as buttons — always.
 **Every text input, textarea, and select uses a `grey10` fill.**
 
 ```html
-class="w-full rounded-xl bg-grey10 px-3 py-2 text-sm
+class="w-full rounded-lg bg-grey10 px-3 py-2 text-sm
        focus:outline-none focus:ring-2 focus:ring-brand/40"
 ```
 
-- **Fill:** `bg-grey10` (required) · **Radius:** `rounded-xl` / `rounded-2xl` (large)
+- **Fill:** `bg-grey10` (required) · **Radius:** `rounded-lg` (8px) / `rounded-2xl` (large)
 - **Focus ring:** `focus:ring-2 focus:ring-brand/40` — soft teal, standard everywhere
   including auth.
 - **Collection page** fields use the owner's brand color as the ring via inline
@@ -143,22 +170,22 @@ class="w-full rounded-xl bg-grey10 px-3 py-2 text-sm
 Canonical: **`components/dashboard/LayoutPicker.tsx`**.
 
 - 3-up grid; each option a `<button role="radio" aria-checked>`; wrapper `role="radiogroup"`
-- **Active:** `bg-accent-soft shadow-card` with `text-brand` · **Inactive:** `bg-grey10` with `text-muted`, hover `bg-tertiary-soft`
-- No borders — the filled `accent-soft` + soft shadow carries the active state
+- **Active:** `bg-accent-soft` with `text-brand` · **Inactive:** `bg-grey10` with `text-muted`, hover `bg-tertiary-soft`
+- No borders, no shadows — the filled `accent-soft` carries the active state
 
 ---
 
 ## 7. Cards & surfaces
 
-Borderless — a soft shadow lifts the surface off the greige (never a border):
+Borderless and shadowless — surfaces are separated by fill color alone:
 
 ```html
-class="bg-surface rounded-2xl shadow-card p-6"
+class="bg-surface rounded-2xl p-6"
 ```
 
 - Radius `rounded-2xl` · Padding `p-6` standard, `p-4` compact, `p-12` empty states
-- Elevation: `shadow-card` (resting), `shadow-card-lg` (raised/hover/modals)
-- **Selected / active card:** `bg-accent-soft` (fill only — no border)
+- No shadows — `bg-surface` (white) on `bg-canvas` (sage green) provides the separation
+- **Selected / active card:** `bg-accent-soft` (fill only — no border, no shadow)
 
 ---
 
@@ -184,7 +211,7 @@ Decorative avatar chips use calm fills only — `bg-accent-soft text-brand`,
 `app/globals.css` upgrades every rounded element to an **iOS-style squircle**
 (`corner-shape: squircle`) app-wide, except `rounded-full` (avatars, pills, dots stay
 round). Progressive enhancement: Chromium 139+ shows the superellipse; other browsers
-fall back to normal `border-radius`. Keep using the normal `rounded-xl` / `rounded-2xl`
+fall back to normal `border-radius`. Keep using the normal `rounded-lg` / `rounded-2xl`
 radii — the squircle shaping is applied globally.
 
 ---
@@ -202,15 +229,15 @@ radii — the squircle shaping is applied globally.
 
 ## 11. Conventions
 
-- **No outlines / borders (hard rule).** The product is **fully borderless** — never add
-  `border`, `border-*`, `border-2`, or hairline dividers (`border-t/b/y`) to any element.
-  Separate and lift surfaces with **fills** (`bg-surface` / `bg-grey10` / `bg-subtle`) +
-  **`shadow-card`** + spacing. Tables that need row separation use zebra striping
-  (`[&>tr:nth-child(even)]:bg-subtle`), not row rules. The ONE exception is the
+- **No outlines, borders, or shadows (hard rule).** The product is **fully borderless
+  and shadowless** — never add `border`, `border-*`, `shadow-*`, or hairline dividers
+  (`border-t/b/y`) to any element. Separate surfaces with **fills** (`bg-surface` /
+  `bg-grey10` / `bg-subtle`) + spacing alone. Tables that need row separation use zebra
+  striping (`[&>tr:nth-child(even)]:bg-subtle`), not row rules. The ONE exception is the
   accessibility **focus ring** (`focus:ring-2 focus:ring-brand/40`) — always keep it.
-  (`border-line` is retired.)
-- **Token first.** Reach for `bg-brand` / `text-muted` / `shadow-card` before raw `gray-*` / hex.
-- **Radii ladder:** fields/buttons `rounded-xl`, cards `rounded-2xl`, pills `rounded-full`
+  (`border-line` and `shadow-card` / `shadow-card-lg` are both retired.)
+- **Token first.** Reach for `bg-brand` / `text-muted` before raw `gray-*` / hex.
+- **Radii ladder:** fields/buttons `rounded-lg` (8px), cards `rounded-2xl` (16px), pills `rounded-full`
   (all shaped as squircles except `rounded-full`).
 - **Headlines in Fraunces, everything else in Inter** (see §2).
 - **Never reintroduce indigo/violet/purple/sky** — and keep the teal *muted*, not the
