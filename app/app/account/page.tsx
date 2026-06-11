@@ -189,28 +189,33 @@ function UpgradeCard({
 
   return (
     <div className={`rounded-2xl p-5 ${highlighted ? 'bg-accent-soft' : 'bg-surface'}`}>
-      <p className="font-bold text-ink">{name}</p>
-      <p className="text-lg font-semibold text-brand mt-0.5 mb-3">{price}</p>
-      <ul className="space-y-1.5 text-sm text-muted mb-5">
+      {/* Header row mirrors the current-plan card: name/price left, action top-right */}
+      <div className="flex items-center justify-between mb-4">
+        <div>
+          <p className="font-bold text-ink">{name}</p>
+          <p className="text-lg font-semibold text-brand mt-0.5">{price}</p>
+        </div>
+        {boundAction ? (
+          <form action={boundAction}>
+            <button
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                highlighted
+                  ? 'bg-brand text-on-brand hover:bg-brand-strong'
+                  : 'bg-ink text-on-brand hover:opacity-90'
+              }`}
+            >
+              Upgrade to {name} ↗
+            </button>
+          </form>
+        ) : (
+          <p className="text-xs text-tertiary">Stripe price not configured</p>
+        )}
+      </div>
+      <ul className="space-y-1.5 text-sm text-muted">
         {features.map(f => (
           <li key={f} className="flex items-center gap-2"><span className="text-green-500">✓</span>{f}</li>
         ))}
       </ul>
-      {boundAction ? (
-        <form action={boundAction}>
-          <button
-            className={`w-full py-2 rounded-lg text-sm font-medium transition-colors ${
-              highlighted
-                ? 'bg-brand text-on-brand hover:bg-brand-strong'
-                : 'bg-ink text-on-brand hover:opacity-90'
-            }`}
-          >
-            Upgrade to {name}
-          </button>
-        </form>
-      ) : (
-        <p className="text-xs text-tertiary text-center">Stripe price not configured</p>
-      )}
     </div>
   )
 }

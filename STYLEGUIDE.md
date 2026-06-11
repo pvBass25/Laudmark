@@ -245,3 +245,26 @@ radii — the squircle shaping is applied globally.
 - To re-skin: swap the `@theme` block in `app/globals.css` (alternates in
   `brand/trustwall-design-tokens.css`).
 ```
+
+---
+
+## 12. App shell & left nav — fixed, full-height (hard rule)
+
+**The dashboard left nav is fixed and spans the entire height of the page — it NEVER
+scrolls with the content.** Everything in it, including the bottom block (utility links,
+Style guide, Sign out, account email), must stay visible at all times. The page content
+scrolls; the nav does not.
+
+Canonical implementation: **`app/app/layout.tsx`**.
+
+- **The nav is `position: fixed`.** The `<aside>` uses `fixed inset-y-0 left-0 z-30 w-56`
+  with `flex flex-col`, so it's pinned to the viewport (top to bottom) and physically cannot
+  scroll with the page — no dependence on the height/overflow chain. The bottom group uses
+  `mt-auto` so it stays anchored to the bottom edge.
+- **Offset the content, let the page scroll.** `<main>` gets `ml-56` (matching the nav width)
+  and the outer wrapper is `min-h-screen bg-canvas`. The page scrolls normally; the fixed nav
+  stays put. Do NOT use a `h-screen + overflow-hidden + overflow-auto` flex shell — it proved
+  unreliable and let the whole shell scroll.
+- **Applies everywhere, by construction.** Every `/app/*` page shares this one layout, so the
+  rule is applied once in the layout and covers all dashboard documents — never re-do it
+  per-page.

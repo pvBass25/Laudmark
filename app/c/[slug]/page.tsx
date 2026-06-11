@@ -6,11 +6,33 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
   const { slug } = await params
   const supabase = createServiceClient()
 
-  const { data: page } = await supabase
+  // Include collect_rating, but fall back gracefully if migration 0004 hasn't
+  // been applied yet (column missing) so the public page never hard-fails.
+  let page: {
+    id: string
+    slug: string
+    title: string
+    prompt_questions: string[]
+    user_id: string
+    collect_rating: boolean
+  } | null = null
+
+  const withRating = await supabase
     .from('collection_pages')
-    .select('id, slug, title, prompt_questions, user_id')
+    .select('id, slug, title, prompt_questions, user_id, collect_rating')
     .eq('slug', slug)
     .single()
+
+  if (withRating.data) {
+    page = withRating.data
+  } else {
+    const base = await supabase
+      .from('collection_pages')
+      .select('id, slug, title, prompt_questions, user_id')
+      .eq('slug', slug)
+      .single()
+    if (base.data) page = { ...base.data, collect_rating: true }
+  }
 
   if (!page) notFound()
 
@@ -27,6 +49,7 @@ export default async function CollectionPage({ params }: { params: Promise<{ slu
         slug: page.slug,
         title: page.title,
         prompt_questions: page.prompt_questions,
+        collect_rating: page.collect_rating,
       }}
       brand={{
         brand_name: profile?.brand_name ?? null,

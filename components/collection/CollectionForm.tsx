@@ -10,6 +10,7 @@ interface PageData {
   slug: string
   title: string
   prompt_questions: string[]
+  collect_rating: boolean
 }
 
 interface BrandData {
@@ -268,26 +269,28 @@ export function CollectionForm({ page, brand }: { page: PageData; brand: BrandDa
               </div>
             </div>
 
-            {/* Star rating */}
-            <div>
-              <label className="block text-sm font-medium text-muted mb-1.5">
-                Rating <span className="text-tertiary font-normal">(optional)</span>
-              </label>
-              <div className="flex gap-1">
-                {[1, 2, 3, 4, 5].map(n => (
-                  <button
-                    key={n}
-                    type="button"
-                    onClick={() => setRating(rating === n ? null : n)}
-                    className={`text-3xl leading-none transition-colors ${
-                      n <= (rating ?? 0) ? 'text-amber-400' : 'text-gray-200'
-                    }`}
-                  >
-                    ★
-                  </button>
-                ))}
+            {/* Star rating — only when the page is set to collect one */}
+            {page.collect_rating && (
+              <div>
+                <label className="block text-sm font-medium text-muted mb-1.5">
+                  Rating <span className="text-tertiary font-normal">(optional)</span>
+                </label>
+                <div className="flex gap-1">
+                  {[1, 2, 3, 4, 5].map(n => (
+                    <button
+                      key={n}
+                      type="button"
+                      onClick={() => setRating(rating === n ? null : n)}
+                      className={`text-3xl leading-none transition-colors ${
+                        n <= (rating ?? 0) ? 'text-amber-400' : 'text-gray-200'
+                      }`}
+                    >
+                      ★
+                    </button>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Consent */}
             <div className="rounded-2xl bg-grey10 p-4">

@@ -1,7 +1,9 @@
 import { notFound } from 'next/navigation'
-import { createServiceClient } from '@/lib/supabase/server'
+import { createClient, createServiceClient } from '@/lib/supabase/server'
 import { buildJsonLd } from '@/lib/schema-ld'
 import { PLANS, type Plan } from '@/lib/plans'
+import { WallLayoutEditor } from '@/components/dashboard/WallLayoutEditor'
+import type { WallLayout } from '@/components/dashboard/LayoutPicker'
 import type { Metadata } from 'next'
 
 interface Props {
@@ -67,6 +69,11 @@ export default async function WallPage({ params }: Props) {
   const brandColor = profile?.brand_color ?? '#111111'
   const jsonLd = planConfig.seoEmbed ? buildJsonLd(brandName, testimonials) : null
 
+  // Is the viewer the wall's owner? If so, show an auto-saving layout switcher.
+  // This is server-gated, so public visitors never receive the editor markup.
+  const { data: { user } } = await (await createClient()).auth.getUser()
+  const isOwner = !!user && user.id === wall.user_id
+
   return (
     <>
       {jsonLd && (
@@ -77,6 +84,8 @@ export default async function WallPage({ params }: Props) {
       )}
 
       <div className="min-h-screen bg-canvas py-12 px-4">
+        {isOwner && <WallLayoutEditor wallId={wall.id} layout={wall.layout as WallLayout} />}
+
         {/* Brand header */}
         <div className="max-w-5xl mx-auto mb-10 text-center">
           {profile?.brand_logo_url ? (
@@ -143,7 +152,7 @@ function Card({ t }: { t: Testimonial }) {
 
   return (
     <article
-      className="bg-surface rounded-2xl p-6 shadow-card"
+      className="bg-surface rounded-2xl p-6"
       itemScope
       itemType="https://schema.org/Review"
     >

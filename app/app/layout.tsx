@@ -8,17 +8,16 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   if (!user) redirect('/login')
 
   return (
-    <div className="h-screen bg-canvas flex overflow-hidden">
-      <aside className="w-56 shrink-0 bg-surface flex flex-col p-4 gap-1 h-screen">
+    <div className="min-h-screen bg-canvas">
+      <aside className="fixed inset-y-0 left-0 z-30 w-56 bg-surface flex flex-col p-4 gap-1">
         <span className="text-lg font-bold mb-4 px-2">LaudMark</span>
-        <NavLink href="/app">Overview</NavLink>
-        <NavLink href="/app/testimonials" also={['/app/walls']}>Testimonials &amp; Walls</NavLink>
-        <NavLink href="/app/pages">Collection pages</NavLink>
+        <NavLink href="/app/testimonials" also={['/app/walls']}>Walls &amp; Testimonials</NavLink>
+        <NavLink href="/app/pages">Collection Pages</NavLink>
         <NavLink href="/app/settings">Settings</NavLink>
         <NavLink href="/app/account">Account</NavLink>
         <div className="mt-auto pt-4">
           <a
-            href="https://trustwall-app-2026-1cztgala7-trustwall-projects.vercel.app"
+            href="/"
             target="_blank"
             rel="noopener noreferrer"
             className="block rounded-lg px-3 py-2 text-sm text-muted hover:bg-subtle hover:text-ink transition-colors"
@@ -42,7 +41,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
           <p className="px-3 pt-2 text-xs text-tertiary truncate">{user.email}</p>
         </div>
       </aside>
-      <main className="flex-1 p-8 overflow-auto">{children}</main>
+      <main className="ml-56 p-8">{children}</main>
     </div>
   )
 }

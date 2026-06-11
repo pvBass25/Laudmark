@@ -11,6 +11,12 @@ export function CreatePageForm({ appUrl }: { appUrl: string }) {
         await createCollectionPage(formData)
         return null
       } catch (e) {
+        // A successful create ends in redirect(), which throws a NEXT_REDIRECT
+        // control-flow signal. Re-throw it so navigation happens instead of being
+        // shown as a (fake) error. Only real errors become the inline message.
+        if (e && typeof e === 'object' && 'digest' in e && String((e as { digest?: unknown }).digest).startsWith('NEXT_REDIRECT')) {
+          throw e
+        }
         return (e as Error).message
       }
     },
@@ -58,6 +64,16 @@ export function CreatePageForm({ appUrl }: { appUrl: string }) {
         <input name="prompt" required placeholder="How has working with us changed things for you?"
           className="w-full rounded-lg bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40" />
       </div>
+
+      <label className="flex items-start gap-3 cursor-pointer rounded-xl bg-grey10 px-4 py-3">
+        <input type="checkbox" name="collectRating" defaultChecked className="mt-0.5 shrink-0 w-4 h-4" />
+        <span className="text-sm text-muted leading-snug">
+          <span className="font-medium text-ink">Let people add a star rating</span>
+          <span className="block text-xs text-tertiary mt-0.5">
+            Shows an optional 1–5 star picker on this page. Turn off if a rating doesn&apos;t fit (e.g. a story-style testimonial).
+          </span>
+        </span>
+      </label>
 
       {error && <p className="text-red-700 text-sm">{error}</p>}
 
