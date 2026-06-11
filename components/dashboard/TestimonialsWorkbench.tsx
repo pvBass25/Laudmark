@@ -64,13 +64,16 @@ export function TestimonialsWorkbench({
 }) {
   const router = useRouter()
   const [, startTransition] = useTransition()
+  // Dedicated transition + flag so the layout picker can show its own autosave status.
+  const [layoutPending, startLayoutTransition] = useTransition()
+  const [layoutSaved, setLayoutSaved] = useState(false)
   const [pageTab, setPageTab] = useState<PageTab>('walls')
   // Filters are multi-select: an empty set means "all". Status seeds from the URL.
   const [statusSet, setStatusSet] = useState<Set<string>>(
     () => new Set(initialStatus !== 'all' ? [initialStatus] : []),
   )
   const [wallSet, setWallSet] = useState<Set<string>>(() => new Set())
-  const [activeWallId, setActiveWallId] = useState<string | null>(walls[0]?.id ?? null)
+  const [activeWallId] = useState<string | null>(walls[0]?.id ?? null)
   const [creating, setCreating] = useState(false)
   const [newName, setNewName] = useState('')
   const [savingNew, setSavingNew] = useState(false)
@@ -91,21 +94,28 @@ export function TestimonialsWorkbench({
   const activeSet = activeWallId ? membership[activeWallId] : undefined
   const activeLayout: WallLayout = (activeWallId ? layouts[activeWallId] : undefined) ?? 'grid'
 
-  function toggleMembership(testimonialId: string) {
+  // Approving a testimonial auto-adds it to the active wall (single-wall view).
+  // Add-only and idempotent — re-approving an already-added one is a no-op.
+  function addToActiveWall(testimonialId: string) {
     if (!activeWallId) return
     const wallId = activeWallId
+    if (membership[wallId]?.has(testimonialId)) return
     const set = new Set(membership[wallId] ?? [])
-    if (set.has(testimonialId)) set.delete(testimonialId)
-    else set.add(testimonialId)
+    set.add(testimonialId)
     setMembership(prev => ({ ...prev, [wallId]: set }))
     startTransition(() => updateWall(wallId, [...set], layouts[wallId] ?? 'grid'))
   }
 
   function changeLayout(next: WallLayout) {
     if (!activeWallId) return
-    setLayouts(prev => ({ ...prev, [activeWallId]: next }))
-    const ids = [...(membership[activeWallId] ?? [])]
-    startTransition(() => updateWall(activeWallId, ids, next))
+    const wallId = activeWallId
+    setLayouts(prev => ({ ...prev, [wallId]: next }))
+    setLayoutSaved(false)
+    const ids = [...(membership[wallId] ?? [])]
+    startLayoutTransition(async () => {
+      await updateWall(wallId, ids, next)
+      setLayoutSaved(true)
+    })
   }
 
   function toggleInSet(setter: typeof setStatusSet, value: string) {
@@ -240,15 +250,7 @@ export function TestimonialsWorkbench({
             key={t.id}
             testimonial={t}
             wallMemberships={wallMembershipsFor(t)}
-            wallToggle={
-              withToggle && activeWall && t.status === 'approved'
-                ? {
-                    inWall: !!activeSet?.has(t.id),
-                    wallName: activeWall.name,
-                    onToggle: () => toggleMembership(t.id),
-                  }
-                : undefined
-            }
+            onApprove={withToggle && activeWall ? () => addToActiveWall(t.id) : undefined}
           />
         ))}
       </div>
@@ -280,7 +282,12 @@ export function TestimonialsWorkbench({
       </div>
 
       <div className="max-w-md">
-        <label className="block text-sm font-medium text-muted mb-2">Layout</label>
+        <div className="flex items-center justify-between mb-2">
+          <label className="block text-sm font-medium text-muted">Layout</label>
+          <span className="text-xs text-tertiary">
+            {layoutPending ? 'Saving…' : layoutSaved ? 'Saved ✓' : 'Saves automatically'}
+          </span>
+        </div>
         <LayoutPicker value={activeLayout} onChange={changeLayout} />
       </div>
 

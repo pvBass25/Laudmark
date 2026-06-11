@@ -35,16 +35,9 @@ const STATUS_ORDER: Status[] = ['approved', 'hidden', 'pending']
 // Colour + weight are added per-button; approve/disapprove still stand out via fill.
 const ACTION_BTN = 'text-sm px-4 py-2 rounded-lg transition-colors disabled:opacity-50'
 
-// Optional wall-curation control: shown on approved testimonials when a wall is
-// active on the combined Testimonials & Walls page, so you can add/remove a
-// testimonial from that wall right here.
-interface WallToggle {
-  inWall: boolean
-  wallName: string
-  onToggle: () => void
-}
-
-export function TestimonialCard({ testimonial: t, wallToggle, wallMemberships }: { testimonial: Testimonial; wallToggle?: WallToggle; wallMemberships?: string[] }) {
+// When a wall is in context (single-wall view), approving a testimonial auto-adds
+// it to that wall via onApprove — no separate "add to wall" step needed.
+export function TestimonialCard({ testimonial: t, onApprove, wallMemberships }: { testimonial: Testimonial; onApprove?: () => void; wallMemberships?: string[] }) {
   const [pending, startTransition] = useTransition()
   const [editing, setEditing] = useState(false)
   const [draftText, setDraftText] = useState(t.clean_text ?? t.raw_text ?? '')
@@ -54,6 +47,9 @@ export function TestimonialCard({ testimonial: t, wallToggle, wallMemberships }:
 
   function handleStatus(status: 'approved' | 'hidden' | 'pending') {
     startTransition(() => setTestimonialStatus(t.id, status))
+    // Approving ensures the testimonial is on the active wall (idempotent — a no-op
+    // if it's already there). Also lets re-approving recover already-approved ones.
+    if (status === 'approved') onApprove?.()
   }
 
   function handleSave() {
@@ -167,16 +163,6 @@ export function TestimonialCard({ testimonial: t, wallToggle, wallMemberships }:
         <div className="flex flex-wrap gap-2">
           {!editing && (
             <>
-              {wallToggle && (
-                <button onClick={wallToggle.onToggle} disabled={pending}
-                  className={`${ACTION_BTN} font-medium ${
-                    wallToggle.inWall
-                      ? 'bg-accent-soft text-brand hover:bg-tertiary-soft'
-                      : 'bg-brand text-on-brand hover:bg-brand-strong'
-                  }`}>
-                  {wallToggle.inWall ? `✓ In ${wallToggle.wallName}` : `+ Add to ${wallToggle.wallName}`}
-                </button>
-              )}
               <button onClick={() => setEditing(true)} disabled={pending}
                 className={`${ACTION_BTN} font-medium bg-subtle text-ink hover:bg-tertiary-soft`}>
                 ✏️ Edit
