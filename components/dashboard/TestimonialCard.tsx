@@ -1,5 +1,5 @@
 'use client'
-import { useState, useTransition } from 'react'
+import { useState, useTransition, useRef, useEffect } from 'react'
 import { setTestimonialStatus, updateTestimonial } from '@/app/app/testimonials/actions'
 
 interface Testimonial {
@@ -19,11 +19,21 @@ interface Testimonial {
   video_url: string | null
 }
 
-const STATUS_COLORS: Record<string, string> = {
-  pending: 'bg-amber-50 text-amber-700',
-  approved: 'bg-green-50 text-green-700',
-  hidden: 'bg-gray-100 text-gray-500',
+// Status lives as a single menu in the card's top-right (a best-practice status
+// selector, like Linear/Notion/GitHub): the pill shows the current status; click
+// it to change. The popover is dark (bg-ink) so it reads as elevated without a
+// shadow or border, per the style guide.
+type Status = 'approved' | 'hidden' | 'pending'
+const STATUS_META: Record<string, { label: string; pill: string; dot: string }> = {
+  approved: { label: 'Approved', pill: 'bg-green-50 text-green-700', dot: 'bg-green-500' },
+  hidden: { label: 'Disapproved', pill: 'bg-red-50 text-red-700', dot: 'bg-red-500' },
+  pending: { label: 'Needs review', pill: 'bg-amber-50 text-amber-700', dot: 'bg-amber-500' },
 }
+const STATUS_ORDER: Status[] = ['approved', 'hidden', 'pending']
+
+// One shared size for every action button in a card, so the row stays uniform.
+// Colour + weight are added per-button; approve/disapprove still stand out via fill.
+const ACTION_BTN = 'text-sm px-4 py-2 rounded-lg transition-colors disabled:opacity-50'
 
 // Optional wall-curation control: shown on approved testimonials when a wall is
 // active on the combined Testimonials & Walls page, so you can add/remove a
@@ -34,7 +44,7 @@ interface WallToggle {
   onToggle: () => void
 }
 
-export function TestimonialCard({ testimonial: t, wallToggle }: { testimonial: Testimonial; wallToggle?: WallToggle }) {
+export function TestimonialCard({ testimonial: t, wallToggle, wallMemberships }: { testimonial: Testimonial; wallToggle?: WallToggle; wallMemberships?: string[] }) {
   const [pending, startTransition] = useTransition()
   const [editing, setEditing] = useState(false)
   const [draftText, setDraftText] = useState(t.clean_text ?? t.raw_text ?? '')
@@ -77,14 +87,12 @@ export function TestimonialCard({ testimonial: t, wallToggle }: { testimonial: T
           </div>
         </div>
 
-        {/* Status + type */}
+        {/* Status menu + type */}
         <div className="flex items-center gap-2 shrink-0">
           {t.type === 'video' && (
             <span className="text-xs bg-accent-soft text-brand-strong px-2 py-0.5 rounded-full">🎥 video</span>
           )}
-          <span className={`text-xs px-2 py-0.5 rounded-full capitalize ${STATUS_COLORS[t.status] ?? ''}`}>
-            {t.status}
-          </span>
+          <StatusMenu status={t.status} disabled={pending} onChange={handleStatus} />
         </div>
       </div>
 
@@ -116,11 +124,11 @@ export function TestimonialCard({ testimonial: t, wallToggle }: { testimonial: T
           />
           <div className="flex gap-2 pt-1">
             <button onClick={handleSave} disabled={pending}
-              className="text-xs px-3 py-1.5 rounded-lg bg-brand text-on-brand font-medium hover:bg-brand-strong disabled:opacity-50 transition-colors">
+              className={`${ACTION_BTN} font-medium bg-brand text-on-brand hover:bg-brand-strong`}>
               {pending ? 'Saving…' : 'Save'}
             </button>
             <button onClick={handleCancel} disabled={pending}
-              className="text-xs px-3 py-1.5 rounded-lg bg-subtle text-ink hover:bg-tertiary-soft font-medium transition-colors">
+              className={`${ACTION_BTN} font-medium bg-subtle text-ink hover:bg-tertiary-soft`}>
               Cancel
             </button>
           </div>
@@ -143,6 +151,17 @@ export function TestimonialCard({ testimonial: t, wallToggle }: { testimonial: T
         </div>
       )}
 
+      {/* Wall memberships */}
+      {wallMemberships && wallMemberships.length > 0 && (
+        <div className="flex flex-wrap gap-1">
+          {wallMemberships.map(name => (
+            <span key={name} className="text-xs bg-accent-soft text-brand-strong px-2 py-0.5 rounded-full font-medium">
+              ✓ {name}
+            </span>
+          ))}
+        </div>
+      )}
+
       {/* Actions + date */}
       <div className="flex items-center justify-between pt-3">
         <div className="flex flex-wrap gap-2">
@@ -150,7 +169,7 @@ export function TestimonialCard({ testimonial: t, wallToggle }: { testimonial: T
             <>
               {wallToggle && (
                 <button onClick={wallToggle.onToggle} disabled={pending}
-                  className={`text-xs px-3 py-1.5 rounded-lg font-medium transition-colors ${
+                  className={`${ACTION_BTN} font-medium ${
                     wallToggle.inWall
                       ? 'bg-accent-soft text-brand hover:bg-tertiary-soft'
                       : 'bg-brand text-on-brand hover:bg-brand-strong'
@@ -158,26 +177,8 @@ export function TestimonialCard({ testimonial: t, wallToggle }: { testimonial: T
                   {wallToggle.inWall ? `✓ In ${wallToggle.wallName}` : `+ Add to ${wallToggle.wallName}`}
                 </button>
               )}
-              {t.status !== 'approved' && (
-                <button onClick={() => handleStatus('approved')} disabled={pending}
-                  className="text-xs px-3 py-1.5 rounded-lg bg-green-50 text-green-700 hover:bg-green-100 font-medium transition-colors">
-                  Approve
-                </button>
-              )}
-              {t.status !== 'hidden' && (
-                <button onClick={() => handleStatus('hidden')} disabled={pending}
-                  className="text-xs px-3 py-1.5 rounded-lg bg-subtle text-ink hover:bg-tertiary-soft font-medium transition-colors">
-                  Hide
-                </button>
-              )}
-              {t.status !== 'pending' && (
-                <button onClick={() => handleStatus('pending')} disabled={pending}
-                  className="text-xs px-3 py-1.5 rounded-lg bg-subtle text-ink hover:bg-tertiary-soft font-medium transition-colors">
-                  Reset
-                </button>
-              )}
               <button onClick={() => setEditing(true)} disabled={pending}
-                className="text-xs px-3 py-1.5 rounded-lg bg-subtle text-ink hover:bg-tertiary-soft font-medium transition-colors">
+                className={`${ACTION_BTN} font-medium bg-subtle text-ink hover:bg-tertiary-soft`}>
                 ✏️ Edit
               </button>
             </>
@@ -185,6 +186,83 @@ export function TestimonialCard({ testimonial: t, wallToggle }: { testimonial: T
         </div>
         <span className="text-xs text-tertiary">{new Date(t.created_at).toLocaleDateString()}</span>
       </div>
+    </div>
+  )
+}
+
+// Single status control in the card's top-right. The pill shows the current
+// status; clicking opens a menu to change it (approve / disapprove / needs
+// review). Replaces the old two-button approve/disapprove row.
+function StatusMenu({
+  status,
+  disabled,
+  onChange,
+}: {
+  status: string
+  disabled?: boolean
+  onChange: (s: Status) => void
+}) {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  const meta = STATUS_META[status] ?? STATUS_META.pending
+
+  useEffect(() => {
+    if (!open) return
+    function onDoc(e: MouseEvent) {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
+    }
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') setOpen(false)
+    }
+    document.addEventListener('mousedown', onDoc)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('mousedown', onDoc)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [open])
+
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        type="button"
+        onClick={() => setOpen(o => !o)}
+        disabled={disabled}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-label={`Status: ${meta.label}. Change status`}
+        className={`inline-flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-full disabled:opacity-50 ${meta.pill}`}
+      >
+        <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${meta.dot}`} aria-hidden />
+        <span className="leading-none">{meta.label}</span>
+        <svg width="9" height="9" viewBox="0 0 10 10" className="opacity-60 shrink-0" aria-hidden>
+          <path d="M2 3.5 L5 6.5 L8 3.5" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </button>
+
+      {open && (
+        <div role="menu" className="absolute right-0 mt-1.5 z-20 min-w-[180px] bg-ink rounded-lg p-1">
+          {STATUS_ORDER.map(s => {
+            const active = s === status
+            return (
+              <button
+                key={s}
+                type="button"
+                role="menuitemradio"
+                aria-checked={active}
+                onClick={() => { onChange(s); setOpen(false) }}
+                className={`w-full flex items-center gap-2.5 text-left text-sm px-2.5 py-1.5 rounded-md transition-colors ${
+                  active ? 'bg-white/15 text-white' : 'text-on-brand-soft hover:bg-white/10 hover:text-white'
+                }`}
+              >
+                <span className={`w-2 h-2 rounded-full shrink-0 ${STATUS_META[s].dot}`} aria-hidden />
+                <span className="flex-1">{STATUS_META[s].label}</span>
+                {active && <span className="text-xs" aria-hidden>✓</span>}
+              </button>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }

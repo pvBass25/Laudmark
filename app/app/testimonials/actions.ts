@@ -44,6 +44,8 @@ export async function setTestimonialStatus(id: string, status: 'approved' | 'hid
 
   revalidatePath('/app/testimonials')
   revalidatePath('/app')
+  revalidatePath('/demo')
+  revalidatePath('/wall', 'layout')
 }
 
 export async function updateTestimonial(
@@ -63,4 +65,6 @@ export async function updateTestimonial(
     .eq('user_id', user.id)
   revalidatePath('/app/testimonials')
   revalidatePath('/app')
+  revalidatePath('/demo')
+  revalidatePath('/wall', 'layout')
 }

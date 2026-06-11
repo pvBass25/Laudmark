@@ -57,6 +57,27 @@ export async function updateWall(id: string, testimonialIds: string[], layout: s
     .eq('user_id', user.id)
 
   revalidatePath(`/app/walls/${id}`)
+  revalidatePath(`/wall/${id}`)
+  revalidatePath('/app/testimonials')
+  revalidatePath('/demo')
+}
+
+// Layout-only update — used by the owner's auto-save layout switcher on the
+// public wall preview page. Owner-scoped (eq user_id); revalidates the preview
+// page and the dashboard so the change is applied everywhere.
+export async function setWallLayout(id: string, layout: string) {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('Unauthorized')
+
+  await supabase
+    .from('walls')
+    .update({ layout })
+    .eq('id', id)
+    .eq('user_id', user.id)
+
+  revalidatePath(`/wall/${id}`)
+  revalidatePath(`/app/walls/${id}`)
   revalidatePath('/app/testimonials')
 }
 

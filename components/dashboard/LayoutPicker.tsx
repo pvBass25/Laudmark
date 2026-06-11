@@ -5,27 +5,28 @@ import { useState, type ReactNode } from 'react'
 export type WallLayout = 'grid' | 'list' | 'carousel'
 
 const GridIcon = (
-  <div className="grid grid-cols-2 gap-1 w-7 h-7">
-    {Array.from({ length: 4 }).map((_, i) => (
-      <div key={i} className="rounded-[3px] bg-current" />
-    ))}
-  </div>
+  <span className="grid grid-cols-2 gap-[2px] w-4 h-4 shrink-0">
+    <span className="rounded-[1px] bg-current" />
+    <span className="rounded-[1px] bg-current" />
+    <span className="rounded-[1px] bg-current" />
+    <span className="rounded-[1px] bg-current" />
+  </span>
 )
 
 const ListIcon = (
-  <div className="flex flex-col gap-1.5 w-7 h-7 justify-center">
-    {Array.from({ length: 3 }).map((_, i) => (
-      <div key={i} className="h-1.5 rounded-[3px] bg-current" />
-    ))}
-  </div>
+  <span className="flex flex-col justify-center gap-[3px] w-4 h-4 shrink-0">
+    <span className="h-[2px] w-full rounded-full bg-current" />
+    <span className="h-[2px] w-full rounded-full bg-current" />
+    <span className="h-[2px] w-full rounded-full bg-current" />
+  </span>
 )
 
 const CarouselIcon = (
-  <div className="flex items-center gap-1 w-7 h-7 justify-center">
-    <div className="h-4 w-1 rounded-[2px] bg-current opacity-40" />
-    <div className="h-6 w-3.5 rounded-[3px] bg-current" />
-    <div className="h-4 w-1 rounded-[2px] bg-current opacity-40" />
-  </div>
+  <span className="flex items-center justify-center gap-[2px] w-4 h-4 shrink-0">
+    <span className="h-2.5 w-[3px] rounded-full bg-current opacity-40" />
+    <span className="h-3.5 w-[5px] rounded-[2px] bg-current" />
+    <span className="h-2.5 w-[3px] rounded-full bg-current opacity-40" />
+  </span>
 )
 
 const OPTIONS: { value: WallLayout; label: string; hint: string; icon: ReactNode }[] = [
@@ -71,18 +72,18 @@ export function LayoutPicker({
               type="button"
               role="radio"
               aria-checked={active}
+              title={opt.hint}
               onClick={() => select(opt.value)}
-              className={`flex flex-col items-center gap-2 rounded-lg px-3 py-4 text-center transition-colors focus:outline-none focus:ring-2 focus:ring-brand/40 ${
+              className={`flex items-center justify-center gap-2 rounded-lg px-3 py-2 transition-colors focus:outline-none focus:ring-2 focus:ring-brand/40 ${
                 active
                   ? 'bg-accent-soft'
                   : 'bg-grey10 text-muted hover:bg-tertiary-soft'
               }`}
             >
-              <span className={active ? 'text-brand' : 'text-muted'}>{opt.icon}</span>
+              <span className={`inline-flex items-center shrink-0 ${active ? 'text-brand' : 'text-muted'}`}>{opt.icon}</span>
               <span className={`text-sm font-medium ${active ? 'text-brand' : 'text-ink'}`}>
                 {opt.label}
               </span>
-              <span className="text-[11px] leading-tight text-muted">{opt.hint}</span>
             </button>
           )
         })}

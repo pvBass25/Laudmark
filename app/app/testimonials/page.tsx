@@ -33,7 +33,7 @@ export default async function TestimonialsPage({
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-ink">Testimonials &amp; Walls</h1>
+        <h1 className="text-2xl font-bold text-ink">Walls &amp; Testimonials</h1>
         <p className="text-sm text-muted mt-1">
           Review what clients submit, then group the approved ones into walls you can embed — all in one place.
         </p>
@@ -44,6 +44,8 @@ export default async function TestimonialsPage({
         walls={walls ?? []}
         appUrl={appUrl}
         initialStatus={initialStatus}
+        allowAddWall
+        showStats
       />
     </div>
   )

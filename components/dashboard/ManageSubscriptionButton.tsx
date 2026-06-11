@@ -30,7 +30,7 @@ export function ManageSubscriptionButton() {
       disabled={loading}
       className="px-4 py-2 rounded-lg bg-subtle text-ink text-sm hover:bg-tertiary-soft disabled:opacity-50 transition-colors"
     >
-      {loading ? 'Opening…' : 'Manage subscription'}
+      {loading ? 'Opening…' : 'Manage subscription ↗'}
     </button>
   )
 }
