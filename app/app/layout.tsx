@@ -7,6 +7,16 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 
+  // New accounts go through the setup wizard first. `onboarded_at` is added in
+  // migration 0005 — tolerate its absence (project convention) so the
+  // dashboard never breaks or redirect-loops if that migration isn't applied.
+  const { data: onboardRow, error: onboardError } = await supabase
+    .from('profiles')
+    .select('onboarded_at')
+    .eq('id', user.id)
+    .maybeSingle()
+  if (!onboardError && onboardRow && !onboardRow.onboarded_at) redirect('/onboarding')
+
   return (
     <div className="min-h-screen bg-canvas">
       <aside className="fixed inset-y-0 left-0 z-30 w-56 bg-surface flex flex-col p-4 gap-1">
@@ -16,6 +26,14 @@ export default async function AppLayout({ children }: { children: React.ReactNod
         <NavLink href="/app/settings">Settings</NavLink>
         <NavLink href="/app/account">Account</NavLink>
         <div className="mt-auto pt-4">
+          <a
+            href="/onboarding?preview=1"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block rounded-lg px-3 py-2 text-sm text-muted hover:bg-subtle hover:text-ink transition-colors"
+          >
+            Onboarding flow ↗
+          </a>
           <a
             href="/"
             target="_blank"

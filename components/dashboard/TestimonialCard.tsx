@@ -40,6 +40,7 @@ const ACTION_BTN = 'text-sm px-4 py-2 rounded-lg transition-colors disabled:opac
 export function TestimonialCard({ testimonial: t, onApprove, wallMemberships }: { testimonial: Testimonial; onApprove?: () => void; wallMemberships?: string[] }) {
   const [pending, startTransition] = useTransition()
   const [editing, setEditing] = useState(false)
+  const [showVideo, setShowVideo] = useState(false)
   const [draftText, setDraftText] = useState(t.clean_text ?? t.raw_text ?? '')
   const [draftQuote, setDraftQuote] = useState(t.pull_quote ?? '')
   const text = t.clean_text ?? t.raw_text ?? ''
@@ -138,6 +139,34 @@ export function TestimonialCard({ testimonial: t, onApprove, wallMemberships }: 
         </>
       )}
 
+      {/* Video playback — collapsed by default so long lists stay compact */}
+      {t.type === 'video' && t.video_url && !editing && (
+        showVideo ? (
+          <div className="space-y-2">
+            <video
+              src={t.video_url}
+              controls
+              autoPlay
+              playsInline
+              className="w-full max-h-80 rounded-xl bg-grey10"
+            />
+            <button
+              onClick={() => setShowVideo(false)}
+              className="text-xs px-3 py-1.5 rounded-lg bg-subtle text-ink hover:bg-tertiary-soft transition-colors"
+            >
+              Hide video
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => setShowVideo(true)}
+            className="text-xs px-3 py-1.5 rounded-lg bg-subtle text-ink hover:bg-tertiary-soft transition-colors"
+          >
+            ▶ Watch video
+          </button>
+        )
+      )}
+
       {/* Themes */}
       {t.themes?.length > 0 && (
         <div className="flex flex-wrap gap-1">
@@ -163,7 +192,7 @@ export function TestimonialCard({ testimonial: t, onApprove, wallMemberships }: 
         <div className="flex flex-wrap gap-2">
           {!editing && (
             <>
-              <button onClick={() => setEditing(true)} disabled={pending}
+              <button onClick={() => { setShowVideo(false); setEditing(true) }} disabled={pending}
                 className={`${ACTION_BTN} font-medium bg-subtle text-ink hover:bg-tertiary-soft`}>
                 ✏️ Edit
               </button>

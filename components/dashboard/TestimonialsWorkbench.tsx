@@ -141,6 +141,22 @@ export function TestimonialsWorkbench({
     }
   }
 
+  function closeCreate() {
+    if (savingNew) return
+    setCreating(false)
+    setNewName('')
+  }
+
+  // Close the New-wall modal on Escape (mirrors the dropdown/menu behaviour).
+  useEffect(() => {
+    if (!creating) return
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape' && !savingNew) { setCreating(false); setNewName('') }
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [creating, savingNew])
+
   const widgetFor = (id: string) => `<script async src="${appUrl}/widget.js" data-wall="${id}"></script>`
   const wallMembershipsFor = (t: Testimonial) =>
     walls.filter(w => membership[w.id]?.has(t.id)).map(w => w.name)
@@ -195,32 +211,58 @@ export function TestimonialsWorkbench({
     </div>
   )
 
-  const createForm = creating && (
-    <div className="bg-surface rounded-2xl p-4 flex items-center gap-2">
-      <input
-        autoFocus
-        value={newName}
-        onChange={e => setNewName(e.target.value)}
-        onKeyDown={e => { if (e.key === 'Enter') handleCreate() }}
-        placeholder="Wall name (e.g. Homepage)"
-        className="flex-1 rounded-lg bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40"
-      />
-      <button
-        onClick={handleCreate}
-        disabled={savingNew || !newName.trim()}
-        className="px-4 py-2 bg-brand text-on-brand text-sm font-medium rounded-lg hover:bg-brand-strong disabled:opacity-50 transition-colors"
+  // New-wall creation lives in a modal: a scrim over the page with a centered
+  // surface card. Backdrop click and Escape close it; clicks inside don't.
+  const createModal = creating && (
+    <div
+      className="fixed inset-0 z-50 bg-ink/50 flex items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="new-wall-title"
+      onClick={closeCreate}
+    >
+      <div
+        className="bg-surface rounded-2xl p-6 w-full max-w-md space-y-4"
+        onClick={e => e.stopPropagation()}
       >
-        {savingNew ? 'Creating…' : 'Create'}
-      </button>
+        <div>
+          <h2 id="new-wall-title" className="font-semibold text-ink">New wall</h2>
+          <p className="text-sm text-muted mt-1">Group approved testimonials into a wall you can embed.</p>
+        </div>
+        <input
+          autoFocus
+          value={newName}
+          onChange={e => setNewName(e.target.value)}
+          onKeyDown={e => { if (e.key === 'Enter') handleCreate() }}
+          placeholder="Wall name (e.g. Homepage)"
+          className="w-full rounded-lg bg-grey10 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand/40"
+        />
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleCreate}
+            disabled={savingNew || !newName.trim()}
+            className="px-4 py-2 bg-brand text-on-brand text-sm font-medium rounded-lg hover:bg-brand-strong disabled:opacity-50 transition-colors"
+          >
+            {savingNew ? 'Creating…' : 'Create wall'}
+          </button>
+          <button
+            onClick={closeCreate}
+            disabled={savingNew}
+            className="px-4 py-2 rounded-lg bg-subtle text-ink text-sm hover:bg-tertiary-soft disabled:opacity-50 transition-colors"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
     </div>
   )
 
   const addWallButton = allowAddWall && (
     <button
-      onClick={() => setCreating(c => !c)}
+      onClick={() => setCreating(true)}
       className="text-xs px-3 py-1.5 rounded-lg bg-subtle text-ink hover:bg-tertiary-soft font-medium transition-colors"
     >
-      {creating ? 'Cancel' : '+ New wall'}
+      + New wall
     </button>
   )
 
@@ -298,6 +340,8 @@ export function TestimonialsWorkbench({
   // ── Render ───────────────────────────────────────────────────────────────────
   return (
     <div className="space-y-8">
+      {createModal}
+
       {/* Overview stat cards — above the tabs */}
       {statCards}
 
@@ -342,13 +386,12 @@ export function TestimonialsWorkbench({
       {/* ═══ MULTI-WALL · WALLS TAB — list of walls, no testimonials ═══ */}
       {showTabs && pageTab === 'walls' && (
         <section className="space-y-4">
-          {createForm}
           <div className="space-y-3">
             {walls.map(w => {
               const count = membership[w.id]?.size ?? 0
               const layout = layouts[w.id] ?? 'grid'
               return (
-                <div key={w.id} className="bg-surface rounded-2xl p-6 flex items-start justify-between gap-4">
+                <div key={w.id} className="bg-surface rounded-2xl p-6 flex items-center justify-between gap-4">
                   <div>
                     <p className="font-medium text-ink">{w.name}</p>
                     <p className="text-sm text-muted mt-0.5 capitalize">{count} testimonials · {layout} layout</p>
@@ -403,14 +446,13 @@ export function TestimonialsWorkbench({
               </div>
             )}
             {/* Single wall: the add-wall button lives in the card's action row (see singleWallPanel). */}
-            {walls.length === 0
-              ? !creating && (
-                  <div className="bg-surface rounded-2xl p-8 text-center text-tertiary text-sm">
-                    No walls yet. Create one to start grouping approved testimonials into a wall you can embed.
-                  </div>
-                )
-              : singleWallPanel}
-            {createForm}
+            {walls.length === 0 ? (
+              <div className="bg-surface rounded-2xl p-8 text-center text-tertiary text-sm">
+                No walls yet. Create one to start grouping approved testimonials into a wall you can embed.
+              </div>
+            ) : (
+              singleWallPanel
+            )}
           </section>
 
           <section className="space-y-4">

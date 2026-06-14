@@ -2,6 +2,7 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
+import { deleteR2Objects } from '@/lib/r2'
 import { z } from 'zod'
 
 const CreatePageSchema = z.object({
@@ -57,6 +58,48 @@ export async function deleteCollectionPage(id: string) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error('Unauthorized')
-  await supabase.from('collection_pages').delete().eq('id', id).eq('user_id', user.id)
+  if (!z.string().uuid().safeParse(id).success) throw new Error('Invalid page id')
+
+  // The FK cascade removes this page's testimonials with it — capture their
+  // ids and stored files first so walls and R2 can be cleaned up afterwards.
+  // Abort if this read fails: the page delete below is irreversible, and once
+  // the cascade fires we can no longer recover these ids/urls for cleanup.
+  const { data: doomed, error: doomedErr } = await supabase
+    .from('testimonials')
+    .select('id, video_url, author_photo_url')
+    .eq('page_id', id)
+    .eq('user_id', user.id)
+  if (doomedErr) throw new Error(doomedErr.message)
+
+  const { error } = await supabase
+    .from('collection_pages')
+    .delete()
+    .eq('id', id)
+    .eq('user_id', user.id)
+  if (error) throw new Error(error.message)
+
+  if (doomed?.length) {
+    // walls.testimonial_ids has no FK — strip the deleted ids so wall counts
+    // and the curator don't keep referencing testimonials that no longer exist.
+    const deletedIds = new Set(doomed.map(t => t.id))
+    const { data: walls } = await supabase
+      .from('walls')
+      .select('id, testimonial_ids')
+      .eq('user_id', user.id)
+    for (const w of walls ?? []) {
+      const ids: string[] = w.testimonial_ids ?? []
+      const kept = ids.filter(tid => !deletedIds.has(tid))
+      if (kept.length !== ids.length) {
+        await supabase.from('walls').update({ testimonial_ids: kept }).eq('id', w.id).eq('user_id', user.id)
+      }
+    }
+
+    // Purge the deleted testimonials' videos AND author photos from R2 — both
+    // are uploaded through the same presigned flow (best-effort, never throws).
+    await deleteR2Objects(
+      doomed.flatMap(t => [t.video_url, t.author_photo_url]).filter((u): u is string => !!u),
+    )
+  }
+
   revalidatePath('/app/pages')
 }

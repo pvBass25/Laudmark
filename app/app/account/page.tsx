@@ -1,8 +1,10 @@
 import { createClient } from '@/lib/supabase/server'
 import { updateProfile } from './actions'
-import { createCheckoutSession } from '@/app/app/billing/actions'
+import { createCheckoutSession, changeSubscriptionPrice } from '@/app/app/billing/actions'
 import { ManageSubscriptionButton } from '@/components/dashboard/ManageSubscriptionButton'
+import { DowngradePanel } from '@/components/dashboard/DowngradePanel'
 import { PLANS } from '@/lib/plans'
+import { stripe } from '@/lib/stripe'
 
 const PLAN_LABELS = { free: 'Free', pro: 'Pro', studio: 'Studio' }
 const PLAN_PRICES = { free: '$0', pro: '$19/mo', studio: '$39/mo' }
@@ -10,9 +12,12 @@ const PLAN_PRICES = { free: '$0', pro: '$19/mo', studio: '$39/mo' }
 export default async function AccountPage({
   searchParams,
 }: {
-  searchParams: Promise<{ upgraded?: string }>
+  searchParams: Promise<{ upgraded?: string; changed?: string; plan?: string }>
 }) {
-  const { upgraded } = await searchParams
+  const { upgraded, changed, plan: planIntent } = await searchParams
+  // Carried over from the pricing CTA via onboarding for an already-onboarded
+  // user, so we can surface the plan they came to buy.
+  const intent = planIntent === 'pro' || planIntent === 'studio' ? planIntent : null
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
@@ -35,6 +40,42 @@ export default async function AccountPage({
   const proPriceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_PRO
   const studioPriceId = process.env.NEXT_PUBLIC_STRIPE_PRICE_STUDIO
 
+  // Live subscription state (renewal date, pending cancellation) for paid
+  // plans. Stripe being unreachable must never break the account page.
+  let cancelAtPeriodEnd = false
+  let periodEnd: string | undefined
+  if (plan !== 'free' && profile?.stripe_customer_id) {
+    try {
+      const subs = await stripe.subscriptions.list({
+        customer: profile.stripe_customer_id,
+        status: 'all',
+        limit: 10,
+      })
+      const sub = subs.data.find(s => ['active', 'trialing', 'past_due'].includes(s.status))
+      if (sub) {
+        cancelAtPeriodEnd = sub.cancel_at_period_end
+        const end = sub.items.data[0]?.current_period_end
+        if (end) {
+          periodEnd = new Date(end * 1000).toLocaleDateString('en-US', {
+            month: 'long', day: 'numeric', year: 'numeric',
+          })
+        }
+      }
+    } catch {}
+  }
+
+  // Live numbers for the downgrade consequences.
+  let testimonialCount = 0
+  let activeRequests = 0
+  if (plan !== 'free') {
+    const [tRes, rRes] = await Promise.all([
+      supabase.from('testimonials').select('id', { count: 'exact', head: true }).eq('user_id', user!.id),
+      supabase.from('requests').select('id', { count: 'exact', head: true }).eq('user_id', user!.id).eq('status', 'active'),
+    ])
+    testimonialCount = tRes.count ?? 0
+    activeRequests = rRes.count ?? 0
+  }
+
   return (
     <div className="space-y-8 max-w-2xl">
       <div>
@@ -43,8 +84,42 @@ export default async function AccountPage({
       </div>
 
       {upgraded && (
+        plan === 'free' ? (
+          <div className="bg-amber-50 text-amber-700 rounded-xl px-4 py-3 text-sm">
+            Payment received — your upgrade is activating. Your new features unlock in a moment; refresh this page shortly.
+          </div>
+        ) : (
+          <div className="bg-green-50 text-green-700 rounded-2xl p-6 space-y-3">
+            <p className="text-sm font-medium">🎉 Welcome to {PLAN_LABELS[plan]} — here&apos;s what just unlocked</p>
+            <ul className="space-y-1.5 text-sm">
+              <li className="flex items-center gap-2"><span>✓</span>SEO embed + JSON-LD — grab the embed code from your wall</li>
+              <li className="flex items-center gap-2"><span>✓</span>&quot;Powered by LaudMark&quot; branding is off</li>
+              <li className="flex items-center gap-2"><span>✓</span>Request automation</li>
+              <li className="flex items-center gap-2"><span>✓</span>Unlimited testimonials</li>
+              {plan === 'studio' && (
+                <li className="flex items-center gap-2"><span>✓</span>AI editing &amp; translation, up to 5 brands</li>
+              )}
+            </ul>
+            <a href="/app/testimonials" className="inline-block text-sm text-brand font-medium hover:text-brand-strong underline underline-offset-2">
+              Go to your walls →
+            </a>
+          </div>
+        )
+      )}
+
+      {changed === 'pro' && (
         <div className="bg-green-50 text-green-700 rounded-xl px-4 py-3 text-sm">
-          🎉 Plan upgraded successfully! Your new features are active.
+          You&apos;re now on Pro — the switch was prorated and takes effect immediately.
+        </div>
+      )}
+      {changed === 'cancel' && (
+        <div className="bg-amber-50 text-amber-700 rounded-xl px-4 py-3 text-sm">
+          Your subscription is set to cancel{periodEnd ? ` — you'll move to Free on ${periodEnd}` : ' — you’ll move to Free at the end of the billing period'}. You can resume below until then.
+        </div>
+      )}
+      {changed === 'resumed' && (
+        <div className="bg-green-50 text-green-700 rounded-xl px-4 py-3 text-sm">
+          Subscription resumed — your plan continues uninterrupted.
         </div>
       )}
 
@@ -93,6 +168,13 @@ export default async function AccountPage({
               <p className="text-2xl font-bold text-ink mt-0.5">
                 {PLAN_LABELS[plan]} <span className="text-base font-normal text-tertiary">{PLAN_PRICES[plan]}</span>
               </p>
+              {plan !== 'free' && periodEnd && (
+                cancelAtPeriodEnd ? (
+                  <p className="text-xs text-amber-700 mt-1">Ends on {periodEnd} — you&apos;ll move to Free</p>
+                ) : (
+                  <p className="text-xs text-tertiary mt-1">Renews on {periodEnd}</p>
+                )
+              )}
             </div>
             {plan !== 'free' && profile?.stripe_customer_id && (
               <ManageSubscriptionButton />
@@ -126,33 +208,56 @@ export default async function AccountPage({
         </div>
 
         {plan === 'free' && (
-          <div className="grid gap-4">
-            <UpgradeCard
-              name="Pro"
-              price="$19/mo"
-              features={['Unlimited testimonials', 'SEO embed + JSON-LD', 'Remove branding', 'Request automation']}
-              priceId={proPriceId}
-              action={createCheckoutSession}
-            />
-            <UpgradeCard
-              name="Studio"
-              price="$39/mo"
-              features={['Everything in Pro', 'AI caption editing', 'Up to 5 brands', 'White-label']}
-              priceId={studioPriceId}
-              action={createCheckoutSession}
-              highlighted
-            />
+          <div className="space-y-4">
+            {/* Plan intent carried from the pricing CTA — point the user at the
+                plan they came to buy and highlight that card. */}
+            {intent && (
+              <div className="bg-accent-soft text-brand-strong rounded-xl px-4 py-3 text-sm">
+                Ready to finish upgrading to {PLAN_LABELS[intent]}? Complete checkout below.
+              </div>
+            )}
+            <div className="grid gap-4">
+              <UpgradeCard
+                name="Pro"
+                price="$19/mo"
+                features={['Unlimited testimonials', 'SEO embed + JSON-LD', 'Remove branding', 'Request automation']}
+                priceId={proPriceId}
+                action={createCheckoutSession}
+                highlighted={intent === 'pro'}
+              />
+              <UpgradeCard
+                name="Studio"
+                price="$39/mo"
+                features={['Everything in Pro', 'AI caption editing', 'Up to 5 brands', 'White-label']}
+                priceId={studioPriceId}
+                action={createCheckoutSession}
+                highlighted={intent !== 'pro'}
+              />
+            </div>
           </div>
         )}
 
         {plan === 'pro' && (
+          // Existing subscribers change price on their current subscription —
+          // Checkout would create a second one.
           <UpgradeCard
             name="Studio"
             price="$39/mo"
             features={['Everything in Pro', 'AI caption editing', 'Up to 5 brands', 'White-label']}
             priceId={studioPriceId}
-            action={createCheckoutSession}
+            action={changeSubscriptionPrice}
             highlighted
+          />
+        )}
+
+        {plan !== 'free' && profile?.stripe_customer_id && (
+          <DowngradePanel
+            plan={plan}
+            proPriceId={proPriceId}
+            testimonialCount={testimonialCount}
+            activeRequests={activeRequests}
+            periodEnd={periodEnd}
+            cancelAtPeriodEnd={cancelAtPeriodEnd}
           />
         )}
       </section>

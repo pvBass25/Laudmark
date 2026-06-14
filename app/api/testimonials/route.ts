@@ -45,6 +45,14 @@ export async function POST(req: NextRequest) {
   if (type === 'video' && !videoUrl) {
     return NextResponse.json({ error: 'videoUrl is required for video testimonials' }, { status: 400 })
   }
+  // A legitimate video always comes from our own R2 upload flow, so pin the URL
+  // to our public base — otherwise this unauthenticated endpoint could store an
+  // arbitrary URL that later plays inside the owner's dashboard. Skipped when
+  // R2_PUBLIC_URL isn't configured (e.g. local dev without R2).
+  const r2Base = process.env.R2_PUBLIC_URL
+  if (videoUrl && r2Base && !videoUrl.startsWith(`${r2Base}/`)) {
+    return NextResponse.json({ error: 'Invalid input' }, { status: 400 })
+  }
 
   const supabase = createServiceClient()
 

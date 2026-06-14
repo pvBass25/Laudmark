@@ -16,7 +16,7 @@ const PLANS = [
     ],
     excluded: ['SEO embed + JSON-LD', 'Remove branding', 'Request automation'],
     cta: 'Get started free',
-    href: '/login',
+    href: `/login?next=${encodeURIComponent('/onboarding')}`,
     highlighted: false,
   },
   {
@@ -34,7 +34,7 @@ const PLANS = [
     ],
     excluded: ['AI caption editing', 'Multiple brands'],
     cta: 'Upgrade to Pro',
-    href: '/login',
+    href: `/login?next=${encodeURIComponent('/onboarding?plan=pro')}`,
     highlighted: true,
   },
   {
@@ -51,7 +51,7 @@ const PLANS = [
     ],
     excluded: [],
     cta: 'Upgrade to Studio',
-    href: '/login',
+    href: `/login?next=${encodeURIComponent('/onboarding?plan=studio')}`,
     highlighted: false,
   },
 ]

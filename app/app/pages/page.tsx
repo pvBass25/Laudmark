@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { CreatePageForm } from '@/components/dashboard/CreatePageForm'
 import { CopyButton } from '@/components/dashboard/CopyButton'
 import { RatingToggle } from '@/components/dashboard/RatingToggle'
+import { DeletePageButton } from '@/components/dashboard/DeletePageButton'
 import Link from 'next/link'
 
 interface PageRow {
@@ -35,6 +36,21 @@ export default async function CollectionPagesPage() {
     pages = withRating.data
   }
 
+  // Per-page testimonial counts, shown in the delete confirmation. Exact head
+  // counts (a row fetch would silently cap at PostgREST's 1000-row default and
+  // undercount large accounts). Accounts have at most a handful of pages.
+  const counts = new Map<string, number>()
+  if (pages?.length) {
+    await Promise.all(pages.map(async p => {
+      const { count } = await supabase
+        .from('testimonials')
+        .select('id', { count: 'exact', head: true })
+        .eq('page_id', p.id)
+        .eq('user_id', user!.id)
+      counts.set(p.id, count ?? 0)
+    }))
+  }
+
   const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'
 
   return (
@@ -48,9 +64,9 @@ export default async function CollectionPagesPage() {
         <div className="space-y-3">
           {pages.map(p => (
             <div key={p.id} className="bg-surface rounded-2xl px-5 py-4 flex items-center justify-between gap-4">
-              <div>
-                <div className="font-medium text-ink text-sm">{p.title}</div>
-                <div className="text-xs text-tertiary mt-0.5">/c/{p.slug}</div>
+              <div className="min-w-0">
+                <div className="font-medium text-ink text-sm truncate">{p.title}</div>
+                <div className="text-xs text-tertiary mt-0.5 truncate">/c/{p.slug}</div>
               </div>
               <div className="flex items-center gap-2 shrink-0">
                 <RatingToggle pageId={p.id} initial={p.collect_rating} />
@@ -62,6 +78,11 @@ export default async function CollectionPagesPage() {
                 >
                   Preview ↗
                 </Link>
+                {/* Extra left margin sets the destructive Delete apart from the
+                    other row actions (adds to the row's gap-2). */}
+                <div className="ml-3">
+                  <DeletePageButton pageId={p.id} testimonialCount={counts.get(p.id) ?? 0} />
+                </div>
               </div>
             </div>
           ))}
